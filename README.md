@@ -1,3 +1,1 @@
--e # Azul.js Website
-
-Content coming soon...
+# Azul.js Website
