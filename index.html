@@ -49,18 +49,21 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div class="jumbotron">
+    
+<div class="jumbotron">
+  <div class="container">
+    <h1>Azul.js</h1>
+    <p>
+      The most elegant object-relational mapping tool for Node.js.
+      Designed with ease of use in mind, Azul.js allows you to write
+      simple, expressive statements to access your application's data.
+    </p>
+  </div>
+</div>
+
+
       <div class="container">
-        <h1>Azul.js</h1>
-        <p>
-          The most elegant object-relational mapping tool for Node.js.
-          Designed with ease of use in mind, Azul.js allows you to write
-          simple, expressive statements to access your application's data.
-        </p>
-      </div>
-    </div>
-    <div class="container">
-      <h1 id="simple-api">Simple API</h1>
+        <h1 id="simple-api">Simple API</h1>
 <p>Azul.js exposes a simple API that follows patterns found in popular tools
 available in other languages. You&#39;ll feel right at home when working with
 Azul.js.</p>
@@ -79,7 +82,9 @@ Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<sp
 <span class="hljs-comment">// -&gt; select * from "articles";</span>
 <span class="hljs-comment">// -&gt; select * from "users" where "id" in (?, ?, ?) limit 3;</span>
 <span class="hljs-comment">// !&gt; [3,5,8]</span></code></pre>
-    </div>
+      </div>
+    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>
