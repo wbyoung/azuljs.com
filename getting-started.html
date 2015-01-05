@@ -52,7 +52,69 @@
     
       <div class="container">
         <h1 id="getting-started">Getting Started</h1>
-<p>Content coming soon&hellip;</p>
+<p>Getting started with Azul.js is quick and easy. First, you&#39;ll need to install
+the library and a database adapter via <code>nmp</code>. We&#39;ll use
+<a href="https://github.com/brianc/node-postgres">PostgreSQL</a> in this example, but Azul.js also supports
+<a href="https://github.com/felixge/node-mysql/">MySQL</a> and <a href="https://github.com/mapbox/node-sqlite3">SQLite3</a>. You&#39;ll also want to install
+Azul.js globally to have easy access to the <code>azul</code> command line tool.</p>
+<pre><code class="hljs bash">$ npm install --save azul pg
+$ npm install --global azul</code></pre>
+
+<h3 id="configuration">Configuration</h3>
+<p>Both your application and the <code>azul</code> command line application will need a way
+to connect to your database in order to update the database. The <code>azul</code> command
+line tool will connect to the database when running
+<a href="/guides/migrations.html">migrations</a> to alter your database schema.
+And your application will obviously connect to the database to manipulate the
+underlying data. A shared configuration file, the <code>azulfile</code> is used for both.
+We recommend having separate configurations for <em>production</em>, <em>development</em>,
+and <em>test</em>. The <code>NODE_ENV</code> environment variable can then be used to control the
+environment.</p>
+<pre><code class="hljs js"><span class="hljs-built_in">module</span>.exports = {
+  production: {
+    adapter: <span class="hljs-string">'pg'</span>,
+    connection: {
+      database: <span class="hljs-string">'database'</span>,
+      user: <span class="hljs-string">'root'</span>,
+      password: <span class="hljs-string">''</span>
+    }
+  },
+  development: {
+    adapter: <span class="hljs-string">'pg'</span>,
+    connection: {
+      database: <span class="hljs-string">'database_dev'</span>,
+      user: <span class="hljs-string">'root'</span>,
+      password: <span class="hljs-string">''</span>
+    }
+  },
+  test: {
+    adapter: <span class="hljs-string">'pg'</span>,
+    connection: {
+      database: <span class="hljs-string">'database_test'</span>
+      user: <span class="hljs-string">'root'</span>,
+      password: <span class="hljs-string">''</span>
+    }
+  }
+};</code></pre>
+
+<p>The <code>azulfile</code> can be either a <em>JSON</em> or <em>JavaScript</em> file that exports the
+configuration.</p>
+<h3 id="application">Application</h3>
+<p>With your configuration file in place, a simple application can be built using
+that configuration file.</p>
+<pre><code class="hljs js"><span class="hljs-comment">// get the database configuration for the current environment</span>
+<span class="hljs-keyword">var</span> env = process.env.NODE_ENV || <span class="hljs-string">'development'</span>;
+<span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./azulfile'</span>)[env];
+
+<span class="hljs-keyword">var</span> azul = <span class="hljs-built_in">require</span>(<span class="hljs-string">'azul'</span>);
+<span class="hljs-keyword">var</span> db = azul(config);
+
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  name: db.attr()
+});</code></pre>
+
+<p>Once your application is configured, you can proceed by setting up
+<a href="/guides/migrations.html">migrations</a> and <a href="/guides/models.html">models</a>.</p>
 
       </div>
     
