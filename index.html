@@ -54,15 +54,16 @@
         <h1>Azul.js</h1>
         <p>
           The most elegant object-relational mapping tool for Node.js.
-          Designed with ease of use in mind, Azul.js will allow you to write
+          Designed with ease of use in mind, Azul.js allows you to write
           simple, expressive statements to access your application's data.
         </p>
       </div>
     </div>
     <div class="container">
       <h1 id="simple-api">Simple API</h1>
-<p>Azul.js exposes a very API that borrows ideas from the top ORMs available in
-other languages. You&#39;ll feel right at home when working with Azul.js.</p>
+<p>Azul.js exposes a simple API that follows patterns found in popular tools
+available in other languages. You&#39;ll feel right at home when working with
+Azul.js.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
   title: db.attr(),
   author: db.belongsTo(<span class="hljs-string">'user'</span>)
@@ -76,8 +77,7 @@ other languages. You&#39;ll feel right at home when working with Azul.js.</p>
 
 Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<span class="hljs-string">'...'</span>);
 <span class="hljs-comment">// -&gt; select * from "articles";</span>
-<span class="hljs-comment">// -&gt; select * from "users" where "id" in (?, ?, ?)</span>
-<span class="hljs-comment">// -&gt; limit 3;</span>
+<span class="hljs-comment">// -&gt; select * from "users" where "id" in (?, ?, ?) limit 3;</span>
 <span class="hljs-comment">// !&gt; [3,5,8]</span></code></pre>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
