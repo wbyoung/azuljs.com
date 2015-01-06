@@ -50,12 +50,146 @@
       </div>
     </nav>
     
-      <div class="container">
-        <h1 id="models">Models</h1>
-<p>Content coming soon&hellip;</p>
 
-      </div>
-    
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc">
+
+
+  <ul class="list-unstyled">
+  
+    <li>
+      <a href="#defining-models">Defining Models</a>
+      <ul>
+        
+          <li>
+            <a href="#quick-example">Quick Example</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#field-types">Field Types</a>
+            <ul>
+              
+                <li>
+                  <a href="#-auto-">auto</a>
+                </li>
+              
+                <li>
+                  <a href="#-increments-">increments</a>
+                </li>
+              
+                <li>
+                  <a href="#-serial-">serial</a>
+                </li>
+              
+                <li>
+                  <a href="#-integer-">integer</a>
+                </li>
+              
+                <li>
+                  <a href="#-integer64-">integer64</a>
+                </li>
+              
+                <li>
+                  <a href="#-string-">string</a>
+                </li>
+              
+                <li>
+                  <a href="#-text-">text</a>
+                </li>
+              
+                <li>
+                  <a href="#-binary-">binary</a>
+                </li>
+              
+                <li>
+                  <a href="#-bool-">bool</a>
+                </li>
+              
+                <li>
+                  <a href="#-date-">date</a>
+                </li>
+              
+                <li>
+                  <a href="#-time-">time</a>
+                </li>
+              
+                <li>
+                  <a href="#-datetime-">dateTime</a>
+                </li>
+              
+                <li>
+                  <a href="#-float-">float</a>
+                </li>
+              
+                <li>
+                  <a href="#-decimal-">decimal</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#saving-models">Saving Models</a>
+      <ul>
+        
+          <li>
+            <a href="#insert-or-update-">Insert or Update?</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-9 col-sm-pull-3">
+
+
+<h1 id="models">Models</h1>
+<h2 id="defining-models">Defining Models</h2>
+<h3 id="quick-example">Quick Example</h3>
+<p>Models are easy to define with Azul.js. This example defines an Author who has
+a <code>firstName</code> and <code>lastName</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">'author'</span>, {
+  firstName: db.attr(),
+  lastName: db.attr()
+});</code></pre>
+
+<h3 id="field-types">Field Types</h3>
+<h4 id="-auto-"><code>auto</code></h4>
+<h4 id="-increments-"><code>increments</code></h4>
+<h4 id="-serial-"><code>serial</code></h4>
+<h4 id="-integer-"><code>integer</code></h4>
+<h4 id="-integer64-"><code>integer64</code></h4>
+<h4 id="-string-"><code>string</code></h4>
+<h4 id="-text-"><code>text</code></h4>
+<h4 id="-binary-"><code>binary</code></h4>
+<h4 id="-bool-"><code>bool</code></h4>
+<h4 id="-date-"><code>date</code></h4>
+<h4 id="-time-"><code>time</code></h4>
+<h4 id="-datetime-"><code>dateTime</code></h4>
+<h4 id="-float-"><code>float</code></h4>
+<h4 id="-decimal-"><code>decimal</code></h4>
+<h2 id="saving-models">Saving Models</h2>
+<h3 id="insert-or-update-">Insert or Update?</h3>
+
+
+</div>
+</div>
+</div>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>
