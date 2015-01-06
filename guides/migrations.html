@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Migrations</title>
+    <title>Azul.js &mdash; Migrations</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -41,6 +41,8 @@
                 <li><a href="/guides/relations.html">Relations</a></li>
                 <li><a href="/guides/migrations.html">Migrations</a></li>
                 <li class="divider"></li>
+                <li><a href="/guides/managers.html">Managers</a></li>
+                <li class="divider"></li>
                 <li><a href="/guides/core.html">Core</a></li>
               </ul>
             </li>
@@ -54,18 +56,138 @@
     
 
 
+<div class="jumbotron">
+  <div class="container">
+    <h1>Migrations</h1>
+  </div>
+</div>
+
 
 <div class="container">
 <div class="row">
 <div class="col-sm-3 col-sm-push-9 guide-toc well">
 
 
+  <ul class="list-unstyled">
+  
+    <li>
+      <a href="#creating-tables">Creating Tables</a>
+      <ul>
+        
+          <li>
+            <a href="#field-types">Field Types</a>
+            <ul>
+              
+                <li>
+                  <a href="#-auto-">auto</a>
+                </li>
+              
+                <li>
+                  <a href="#-increments-">increments</a>
+                </li>
+              
+                <li>
+                  <a href="#-serial-">serial</a>
+                </li>
+              
+                <li>
+                  <a href="#-integer-">integer</a>
+                </li>
+              
+                <li>
+                  <a href="#-integer64-">integer64</a>
+                </li>
+              
+                <li>
+                  <a href="#-string-">string</a>
+                </li>
+              
+                <li>
+                  <a href="#-text-">text</a>
+                </li>
+              
+                <li>
+                  <a href="#-binary-">binary</a>
+                </li>
+              
+                <li>
+                  <a href="#-bool-">bool</a>
+                </li>
+              
+                <li>
+                  <a href="#-date-">date</a>
+                </li>
+              
+                <li>
+                  <a href="#-time-">time</a>
+                </li>
+              
+                <li>
+                  <a href="#-datetime-">dateTime</a>
+                </li>
+              
+                <li>
+                  <a href="#-float-">float</a>
+                </li>
+              
+                <li>
+                  <a href="#-decimal-">decimal</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
 
 </div>
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="migrations">Migrations</h1>
+<h2 id="creating-tables">Creating Tables</h2>
 <p>Content coming soon&hellip;</p>
+<h3 id="field-types">Field Types</h3>
+<h4 id="-auto-"><code>auto</code></h4>
+<h4 id="-increments-"><code>increments</code></h4>
+<h4 id="-serial-"><code>serial</code></h4>
+<h4 id="-integer-"><code>integer</code></h4>
+<h4 id="-integer64-"><code>integer64</code></h4>
+<h4 id="-string-"><code>string</code></h4>
+<h4 id="-text-"><code>text</code></h4>
+<h4 id="-binary-"><code>binary</code></h4>
+<h4 id="-bool-"><code>bool</code></h4>
+<h4 id="-date-"><code>date</code></h4>
+<div class="panel panel-info">
+<div class="panel-heading"><span class="panel-title">SQLite3</span></div>
+<div class="panel-body">
+SQLite3 stores <code>date</code> as a number &amp; Azul.js does not
+currently support distinguishing this type in any way.
+</div>
+</div>
+
+<h4 id="-time-"><code>time</code></h4>
+<div class="panel panel-info">
+<div class="panel-heading"><span class="panel-title">SQLite3</span></div>
+<div class="panel-body">
+SQLite3 stores <code>time</code> as a number &amp; Azul.js does not
+currently support distinguishing this type in any way.
+</div>
+</div>
+
+<h4 id="-datetime-"><code>dateTime</code></h4>
+<div class="panel panel-info">
+<div class="panel-heading"><span class="panel-title">SQLite3</span></div>
+<div class="panel-body">
+SQLite3 stores <code>dateTime</code> as a number &amp; Azul.js does not
+currently support distinguishing this type in any way.
+</div>
+</div>
+
+<h4 id="-float-"><code>float</code></h4>
+<h4 id="-decimal-"><code>decimal</code></h4>
 
 
 </div>

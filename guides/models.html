@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Models</title>
+    <title>Azul.js &mdash; Models</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -40,6 +40,8 @@
                 <li><a href="/guides/queries.html">Queries</a></li>
                 <li><a href="/guides/relations.html">Relations</a></li>
                 <li><a href="/guides/migrations.html">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/guides/managers.html">Managers</a></li>
                 <li class="divider"></li>
                 <li><a href="/guides/core.html">Core</a></li>
               </ul>
@@ -80,64 +82,29 @@
           </li>
         
           <li>
-            <a href="#field-types">Field Types</a>
+            <a href="#conventions">Conventions</a>
             <ul>
               
-                <li>
-                  <a href="#-auto-">auto</a>
-                </li>
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#attributes">Attributes</a>
+            <ul>
               
-                <li>
-                  <a href="#-increments-">increments</a>
-                </li>
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#primary-key">Primary Key</a>
+            <ul>
               
-                <li>
-                  <a href="#-serial-">serial</a>
-                </li>
-              
-                <li>
-                  <a href="#-integer-">integer</a>
-                </li>
-              
-                <li>
-                  <a href="#-integer64-">integer64</a>
-                </li>
-              
-                <li>
-                  <a href="#-string-">string</a>
-                </li>
-              
-                <li>
-                  <a href="#-text-">text</a>
-                </li>
-              
-                <li>
-                  <a href="#-binary-">binary</a>
-                </li>
-              
-                <li>
-                  <a href="#-bool-">bool</a>
-                </li>
-              
-                <li>
-                  <a href="#-date-">date</a>
-                </li>
-              
-                <li>
-                  <a href="#-time-">time</a>
-                </li>
-              
-                <li>
-                  <a href="#-datetime-">dateTime</a>
-                </li>
-              
-                <li>
-                  <a href="#-float-">float</a>
-                </li>
-              
-                <li>
-                  <a href="#-decimal-">decimal</a>
-                </li>
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#table-name">Table Name</a>
+            <ul>
               
             </ul>
           </li>
@@ -146,11 +113,39 @@
     </li>
   
     <li>
-      <a href="#saving-models">Saving Models</a>
+      <a href="#manipulating-data">Manipulating Data</a>
       <ul>
         
           <li>
-            <a href="#insert-or-update-">Insert or Update?</a>
+            <a href="#create">Create</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#read">Read</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#update">Update</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#delete">Delete</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#create-update-or-delete-">Create, Update, or Delete?</a>
             <ul>
               
             </ul>
@@ -166,32 +161,173 @@
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="models">Models</h1>
+<p>Models are the basic unit of data within Azul.js. They allow you to manipulate
+data in the database while thinking in terms of objects rather than raw SQL
+queries.</p>
 <h2 id="defining-models">Defining Models</h2>
+<p>The following examples assume that you have completed the <a href="/getting-started.html">steps for getting
+started</a> and have access to an Azul.js database instance,
+<code>db</code>. If you have not completed those steps, you should return and complete
+them before attempting to use models.</p>
 <h3 id="quick-example">Quick Example</h3>
-<p>Models are easy to define with Azul.js. This example defines an Author who has
-a <code>firstName</code> and <code>lastName</code>:</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">'author'</span>, {
-  firstName: db.attr(),
-  lastName: db.attr()
+<p>Models are easy to define with Azul.js. This example defines an <em>Article</em> that
+has a <code>title</code> and <code>body</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  title: db.attr(),
+  body: db.attr()
 });</code></pre>
 
-<h3 id="field-types">Field Types</h3>
-<h4 id="-auto-"><code>auto</code></h4>
-<h4 id="-increments-"><code>increments</code></h4>
-<h4 id="-serial-"><code>serial</code></h4>
-<h4 id="-integer-"><code>integer</code></h4>
-<h4 id="-integer64-"><code>integer64</code></h4>
-<h4 id="-string-"><code>string</code></h4>
-<h4 id="-text-"><code>text</code></h4>
-<h4 id="-binary-"><code>binary</code></h4>
-<h4 id="-bool-"><code>bool</code></h4>
-<h4 id="-date-"><code>date</code></h4>
-<h4 id="-time-"><code>time</code></h4>
-<h4 id="-datetime-"><code>dateTime</code></h4>
-<h4 id="-float-"><code>float</code></h4>
-<h4 id="-decimal-"><code>decimal</code></h4>
-<h2 id="saving-models">Saving Models</h2>
-<h3 id="insert-or-update-">Insert or Update?</h3>
+<h3 id="conventions">Conventions</h3>
+<p>The above model would be associated with a database table <code>articles</code> having
+three columns, <code>id</code>, <code>title</code>, and <code>body</code>.</p>
+<p>Azul.js will default to a table name that is simply the pluralized version of
+the model name.</p>
+<p>All models will have a primary key column. The default name for this column is
+<em>id</em>. Usually you will want this to be a <em>serial</em> or <em>auto incrementing</em> column
+in your database.</p>
+<p>By default, Azul.js will determine database column names from attribute names.
+It assumes that database columns follow the standard convention of using
+underscore casing and will convert to underscore case. For instance, a
+<code>firstName</code> attribute would be mapped to a column name of <code>first_name</code>.</p>
+<h3 id="attributes">Attributes</h3>
+<p>Attributes defined on a model are readable and writable properties that you can
+use to update and save your model.</p>
+<p>To specify a column name for an attribute, simply pass it as an argument to
+<code>db.attr</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  title: db.attr(<span class="hljs-string">'headline'</span>),
+  body: db.attr(<span class="hljs-string">'content'</span>)
+});</code></pre>
+
+<p>Azul.js does not distinguish between different attribute types when defining
+models. The types will be cast when reading and writing from the database.
+See the <a href="/guides/migrations.html">migrations guide</a> for more details.</p>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Coming Soon&hellip;</span>
+</div>
+<div class="panel-body">
+Defining your attributes both in the migration and the model is currently
+required. We&#39;ll be addressing this shortly so it&#39;s a bit less tedious to create
+new models.
+</div>
+</div>
+
+<h3 id="primary-key">Primary Key</h3>
+<p>Each model in Azul.js requires a primary key. By default it will be <em>id</em>, but
+it can be overridden by defining the <code>pk</code> attribute:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {{
+  pk: attr(<span class="hljs-string">'custom_identifier'</span>)
+});</code></pre>
+
+<p>We recommend using a <em>serial</em> or <em>auto incrementing</em> column in your database
+for the primary key column. See the <a href="/guides/migrations.html">migrations guide</a> for
+more details.</p>
+<p>The primary is also accessible via the attribute alias <code>id</code> (even when <code>pk</code> is
+overridden).</p>
+<h3 id="table-name">Table Name</h3>
+<p>The table name can be customized by defining the class property, <code>tableName</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>);
+
+Article.reopenClass({
+  tableName: <span class="hljs-string">'publications'</span>,
+});</code></pre>
+
+<h2 id="manipulating-data">Manipulating Data</h2>
+<p>Manipulating data in the database is the most fundamental task for Azul.js. As
+with all data based systems, you&#39;ll have to create, read, update, and delete
+the data that&#39;s stored in your database.</p>
+<p>All database operations are asynchronous. Azul.js uses promises for
+asynchronous control flow. All uses of <code>then</code> in the methods below indicate
+that the method returns a promise.</p>
+<p>The following examples will assume the <code>Article</code> model from above has been
+defined.</p>
+<h3 id="create">Create</h3>
+<p>When you create instances of a model, it will be stored in memory until <code>save</code>
+has been called:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> article = Article.create({
+  title: <span class="hljs-string">'Azul.js'</span>,
+  body: <span class="hljs-string">'Azul.js has been launched!'</span>
+});
+
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has now been saved</span>
+});</code></pre>
+
+<p>Because the act of creating the object in the database is an asynchronous
+operation, the <code>save</code> method returns a promise that will resolve when the
+save has completed successfully.</p>
+<p>As you can see above, you can pass attributes to the <code>create</code> method that will
+be set on your model. Be sure that you trust your source of data when doing so
+as this can lead to a <a href="http://en.wikipedia.org/wiki/Mass_assignment_vulnerability">mass assignment vulnerability</a>.</p>
+<h3 id="read">Read</h3>
+<p>Objects can easily be read from the database through
+<a href="/guides/queries.html">query objects</a>.</p>
+<pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-comment">// all articles have been fetched &amp;</span>
+  <span class="hljs-comment">// articles contains an array of Article objects</span>
+});</code></pre>
+
+<p>If you&#39;re searching for just one object, you can also use the <code>find</code> method to
+search by primary key:</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  <span class="hljs-comment">// the article with primary key 1 has been found</span>
+});</code></pre>
+
+<p>Reading from the database is asynchronous, so <code>fetch</code> and <code>find</code> return
+promises that resolve with the results from the database.</p>
+<p>For more information on fetching objects from the database, see the <a href="/guides/queries.html">full
+query guide</a>.</p>
+<h3 id="update">Update</h3>
+<p>Updating objects is quite simple. Assuming you have an article that is already
+persisted to the database, you can simply update the properties of your object
+and save it:</p>
+<pre><code class="hljs js">article.title = <span class="hljs-string">'Azul.js 1.0 Release'</span>;
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has been updated in the database</span>
+});</code></pre>
+
+<p>As seen before when <a href="#create">creating and saving</a> an object, <code>save</code> returns a
+promise.</p>
+<h3 id="delete">Delete</h3>
+<p>Deleting an object can be accomplished by calling <code>delete</code>. Like the creation
+of an object, changes will not be persisted in the database until <code>save</code> has
+been called:</p>
+<pre><code class="hljs js">article.delete(); <span class="hljs-comment">// marked for deletion</span>
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has now been deleted</span>
+});</code></pre>
+
+<p>Again note that <code>save</code> returns a promise.</p>
+<h3 id="create-update-or-delete-">Create, Update, or Delete?</h3>
+<p>The <code>save</code> method is used for creating, updating, and deleting objects. Azul.js
+determines which action to take based on the following rules:</p>
+<ul>
+<li>Objects without a <em>primary key</em> set will be created (<code>INSERT</code>)</li>
+<li>Objects that have changes will be updated (<code>UPDATE</code>)</li>
+<li>Objects that are marked for deletion will be deleted (<code>DELETE</code>)</li>
+</ul>
+<p>There are situations where you may want to force an insert to occur with a
+specific primary key. To do so, pass the <code>method</code> option to <code>save</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> article = Article.create({ id: <span class="hljs-number">5</span>, title: <span class="hljs-string">'Title'</span>, body: <span class="hljs-string">'Body...'</span> });
+
+article.save({ method: <span class="hljs-string">'insert'</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// article inserted with specific primary key</span>
+});</code></pre>
+
+<p>You can also use the <code>method</code> option to force the update of an object that does
+not have any changes. Another way to accomplish the same thing would be to
+simply re-assign a property.</p>
+<pre><code class="hljs js">article.save({ method: <span class="hljs-string">'update'</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// update query executed even if the article was not changed</span>
+});
+
+<span class="hljs-comment">// alternative forced update:</span>
+article.id = article.id;
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// update query executed</span>
+});</code></pre>
+
 
 
 </div>
