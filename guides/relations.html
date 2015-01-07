@@ -70,6 +70,110 @@
 
   <ul class="list-unstyled">
   
+    <li>
+      <a href="#types-of-relationships">Types of Relationships</a>
+      <ul>
+        
+          <li>
+            <a href="#one-to-many">One-to-Many</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#many-to-many">Many-to-Many</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#one-to-one">One-to-One</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#through">Through</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods">Methods</a>
+      <ul>
+        
+          <li>
+            <a href="#-belongsto-">#belongsTo</a>
+            <ul>
+              
+                <li>
+                  <a href="#-association-">#association</a>
+                </li>
+              
+                <li>
+                  <a href="#-associationid-">#associationId</a>
+                </li>
+              
+                <li>
+                  <a href="#-createassociation-">#createAssociation</a>
+                </li>
+              
+                <li>
+                  <a href="#-fetchassociation-">#fetchAssociation</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-hasmany-">#hasMany</a>
+            <ul>
+              
+                <li>
+                  <a href="#-associations-">#associations</a>
+                </li>
+              
+                <li>
+                  <a href="#-associationobjects-">#associationObjects</a>
+                </li>
+              
+                <li>
+                  <a href="#-createassociation-">#createAssociation</a>
+                </li>
+              
+                <li>
+                  <a href="#-addassociation-">#addAssociation</a>
+                </li>
+              
+                <li>
+                  <a href="#-addassociations-">#addAssociations</a>
+                </li>
+              
+                <li>
+                  <a href="#-removeassociation-">#removeAssociation</a>
+                </li>
+              
+                <li>
+                  <a href="#-removeassociations-">#removeAssociations</a>
+                </li>
+              
+                <li>
+                  <a href="#-clearassociations-">#clearAssociations</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
   </ul>
 
 
@@ -77,7 +181,286 @@
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="relations">Relations</h1>
+<p>Relationships between different models in Azul.js are supported via
+<a href="#-belongsto-"><code>belongsTo</code></a> and <a href="#-hasmany-"><code>hasMany</code></a> attributes. These types
+of attributes build relationships between your models that allow you to easily
+access and manipulate related data in you database.</p>
+<h2 id="types-of-relationships">Types of Relationships</h2>
+<p>This section outlines how to set up the most common relationship types, the
+methods that are added to your model as a result of defining a relationship,
+and the associated migrations that should be created for each relationship
+type.</p>
+<h3 id="one-to-many">One-to-Many</h3>
+<p>In this example, we&#39;ll build a simple relationship between a <em>blog</em> and its
+<em>articles</em>.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Blog = db.model(<span class="hljs-string">'blog'</span>, {
+  title: db.attr(),
+  articles: db.hasMany()
+});
+
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  title: db.attr(),
+  body: db.attr(),
+  blog: db.belongsTo()
+});</code></pre>
+
+<p>Each instance of the <code>Blog</code> class will now be able to use the following
+methods and properties:</p>
+<ul>
+<li><a href="#-associations-"><code>Blog#articles</code></a></li>
+<li><a href="#-associationobjects-"><code>Blog#articleObjects</code></a></li>
+<li><a href="#-createassociation-"><code>Blog#createArticle()</code></a></li>
+<li><a href="#-addassociation-"><code>Blog#addArticle()</code></a></li>
+<li><a href="#-addassociations-"><code>Blog#addArticles()</code></a></li>
+<li><a href="#-removeassociation-"><code>Blog#removeArticle()</code></a></li>
+<li><a href="#-removeassociations-"><code>Blog#removeArticles()</code></a></li>
+<li><a href="#-clearassociations-"><code>Blog#clearArticles()</code></a></li>
+</ul>
+<p>And each instance of the <code>Article</code> class will now have:</p>
+<ul>
+<li><a href="#-association-"><code>Article#blog</code></a></li>
+<li><a href="#-associationid-"><code>Article#blogId</code></a></li>
+<li><a href="#-createassociation-"><code>Article#createBlog()</code></a></li>
+<li><a href="#-fetchassociation-"><code>Article#fetchBlog()</code></a></li>
+</ul>
+<p>A migration for this would look involve creating the foreign key when creating
+the <code>articles</code> table:</p>
+<pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">var</span> createBlogs = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'blogs'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+      table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+      table.string(<span class="hljs-string">'title'</span>);
+    });
+  };
+
+  <span class="hljs-keyword">var</span> createArticles = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'articles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+      table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+      table.string(<span class="hljs-string">'title'</span>);
+      table.text(<span class="hljs-string">'body'</span>);
+      table.integer(<span class="hljs-string">'blog_id'</span>).references(<span class="hljs-string">'blogs.id'</span>);
+    });
+  };
+
+  <span class="hljs-keyword">return</span> createBlogs().then(createArticles);
+};
+
+exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">var</span> dropBlogs = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'blogs'</span>); };
+  <span class="hljs-keyword">var</span> dropArticles = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'articles'</span>); };
+  <span class="hljs-keyword">return</span> dropArticles().then(dropBlogs);
+};</code></pre>
+
+<h3 id="many-to-many">Many-to-Many</h3>
+<p>Many to many relationships are supported via the use of a <a href="#through"><em>through</em></a>
+option on a <a href="#-hasmany-"><code>hasMany</code></a>.</p>
+<p>This example will build a relationship between <em>doctors</em> and <em>patients</em> through
+<em>appointments</em>. In this case, the <code>Appointment</code> model is a <em>join model</em> for our
+relationship.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Doctor = db.model(<span class="hljs-string">'doctor'</span>, {
+  name: db.attr(),
+  patients: db.hasMany({ through: <span class="hljs-string">'appointments'</span> })
+});
+
+<span class="hljs-keyword">var</span> Patient = db.model(<span class="hljs-string">'patient'</span>, {
+  name: db.attr(),
+  doctors: db.hasMany({ through: <span class="hljs-string">'appointments'</span> })
+});
+
+<span class="hljs-keyword">var</span> Appointment = db.model(<span class="hljs-string">'appointment'</span>, {
+  occursAt: db.attr(),
+  doctor: db.belongsTo(),
+  patient: db.belongsTo(),
+})</code></pre>
+
+<p>The following methods and properties will be added on the <code>Doctor</code> and
+<code>Patient</code>:</p>
+<ul>
+<li><a href="#-associations-"><code>Doctor#patients</code></a></li>
+<li><a href="#-associationobjects-"><code>Doctor#patientObjects</code></a></li>
+<li><a href="#-createassociation-"><code>Doctor#createPatient()</code></a></li>
+<li><a href="#-addassociation-"><code>Doctor#addPatient()</code></a></li>
+<li><a href="#-addassociations-"><code>Doctor#addPatients()</code></a></li>
+<li><a href="#-removeassociation-"><code>Doctor#removePatient()</code></a></li>
+<li><a href="#-removeassociations-"><code>Doctor#removePatients()</code></a></li>
+<li><a href="#-clearassociations-"><code>Doctor#clearPatients()</code></a></li>
+</ul>
+<ul>
+<li><a href="#-associations-"><code>Patient#doctors</code></a></li>
+<li><a href="#-associationobjects-"><code>Patient#doctorObjects</code></a></li>
+<li><a href="#-createassociation-"><code>Patient#createDoctor()</code></a></li>
+<li><a href="#-addassociation-"><code>Patient#addDoctor()</code></a></li>
+<li><a href="#-addassociations-"><code>Patient#addDoctors()</code></a></li>
+<li><a href="#-removeassociation-"><code>Patient#removeDoctor()</code></a></li>
+<li><a href="#-removeassociations-"><code>Patient#removeDoctors()</code></a></li>
+<li><a href="#-clearassociations-"><code>Patient#clearDoctors()</code></a></li>
+</ul>
+<p>When manipulating the many-to-many relationship through these methods, the join
+model, <code>Appointment</code> will not be used, so the date of the appointment,
+<code>occursAt</code>, will not be set. For instance:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Promise = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bluebird'</span>);
+
+Promise.all([
+  Doctor.objects.find(<span class="hljs-number">4</span>),
+  Patient.objects.find(<span class="hljs-number">9</span>),
+])
+.spread(doctor, patient) {
+  <span class="hljs-keyword">return</span> doctor.addPatient(patient);
+});
+<span class="hljs-comment">// -&gt; insert into appointments (doctor_id, course_id) values (?, ?)</span>
+<span class="hljs-comment">// !&gt; [4, 9]</span></code></pre>
+
+<p>If the date of the appointment needs to be set, you should use the
+<em>join model</em>, <code>Appointment</code> directly instead (see the next code example).</p>
+<p>The <code>Appointment</code> class will have the following methods added:</p>
+<ul>
+<li><a href="#-association-"><code>Appointment#doctor</code></a></li>
+<li><a href="#-associationid-"><code>Appointment#doctorId</code></a></li>
+<li><a href="#-createassociation-"><code>Appointment#createDoctor()</code></a></li>
+<li><a href="#-fetchassociation-"><code>Appointment#fetchDoctor()</code></a></li>
+</ul>
+<ul>
+<li><a href="#-association-"><code>Appointment#patient</code></a></li>
+<li><a href="#-associationid-"><code>Appointment#patientId</code></a></li>
+<li><a href="#-createassociation-"><code>Appointment#createPatient()</code></a></li>
+<li><a href="#-fetchassociation-"><code>Appointment#fetchPatient()</code></a></li>
+</ul>
+<p>And the same association of doctor and patient from above can be achieved via:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Promise = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bluebird'</span>);
+
+Promise.all([
+  Doctor.objects.find(<span class="hljs-number">4</span>),
+  Patient.objects.find(<span class="hljs-number">9</span>),
+])
+.spread(doctor, patient) {
+  <span class="hljs-keyword">var</span> appointment = Appointment.create();
+  appointment.occursAt = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2015</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>);
+  appointment.doctor = doctor;
+  appointment.patient = patient;
+  <span class="hljs-keyword">return</span> appointment.save();
+});
+<span class="hljs-comment">// -&gt; insert into appointments (occurs_at, doctor_id, course_id)</span>
+<span class="hljs-comment">// -&gt; values (?, ?, ?)</span>
+<span class="hljs-comment">// !&gt; [new Date(2015, 0, 12), 4, 9]</span></code></pre>
+
+
+<p>A migration for this would look involve creating the join table for the
+relationship:</p>
+<pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">var</span> createDoctors = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'doctors'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+      table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+      table.string(<span class="hljs-string">'name'</span>);
+    });
+  };
+
+  <span class="hljs-keyword">var</span> createPatients = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'patients'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+      table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+      table.string(<span class="hljs-string">'name'</span>);
+    });
+  };
+
+  <span class="hljs-keyword">var</span> createAppointments = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'appointments'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+      table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+      table.dateTime(<span class="hljs-string">'occursAt'</span>);
+      table.integer(<span class="hljs-string">'doctor_id'</span>).references(<span class="hljs-string">'doctors.id'</span>);
+      table.integer(<span class="hljs-string">'patient_id'</span>).references(<span class="hljs-string">'patients.id'</span>);
+    });
+  };
+
+  <span class="hljs-keyword">return</span> createDoctors().then(createPatients).then(dropAppointments);
+};
+
+exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">var</span> dropDoctors = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'doctors'</span>); };
+  <span class="hljs-keyword">var</span> dropPatients = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'patients'</span>); };
+  <span class="hljs-keyword">var</span> dropAppointments = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'appointments'</span>); };
+  <span class="hljs-keyword">return</span> dropAppointments().then(dropPatients).then(dropDoctors);
+};</code></pre>
+
+<p>It is not necessary to actually define the model through which the many-to-many
+relationship is built. For instance, if you built a relationship between
+<em>assemblies</em> and <em>parts</em>, you could just do:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Assembly = db.model(<span class="hljs-string">'assembly'</span>, {
+  name: db.attr(),
+  assmeblies: db.hasMany({ through: <span class="hljs-string">'assmeblies_parts'</span> })
+});
+
+<span class="hljs-keyword">var</span> Part = db.model(<span class="hljs-string">'part'</span>, {
+  partNumber: db.attr(),
+  parts: db.hasMany({ through: <span class="hljs-string">'assmeblies_parts'</span> })
+});</code></pre>
+
+<p>Note, though, that the <code>assmeblies_parts</code> join table must be created in a
+migration.</p>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Join Table Names</span>
+</div>
+<div class="panel-body">
+Unlike some ORM tools, Azul.js does not automatically generate join table names
+for you. You can follow the conventions of other ORM tools when the through
+relation is overly abstract (as the above example does).
+</div>
+</div>
+
+
+<h3 id="one-to-one">One-to-One</h3>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Coming Soon&hellip;</span>
+</div>
+<div class="panel-body">
+We&#39;ll be adding one-to-one relationships via <code>belongsTo</code> and
+<code>hasOne</code> shortly.
+</div>
+</div>
+
+<h2 id="through">Through</h2>
 <p>Content coming soon&hellip;</p>
+<h2 id="methods">Methods</h2>
+<h3 id="-belongsto-"><code>#belongsTo</code></h3>
+<p>A belongs-to relationship adds the following properties and methods:</p>
+<p><code>association</code> is a placeholder for the name of the belongs-to relation being
+defined. If the name of the relation was <code>author</code>, i.e.
+<code>Model.reopen({ author: db.belongsTo() })</code>, then <code>fetchAuthor</code> would be one of
+the methods added to <code>Model</code>.</p>
+<ul>
+<li><a href="#-association-"><code>association</code></a></li>
+<li><a href="#-associationid-"><code>associationId</code></a></li>
+<li><a href="#-createassociation-"><code>createAssociation()</code></a></li>
+<li><a href="#-fetchassociation-"><code>fetchAssociation()</code></a></li>
+</ul>
+<h4 id="-association-"><code>#association</code></h4>
+<h4 id="-associationid-"><code>#associationId</code></h4>
+<h4 id="-createassociation-"><code>#createAssociation</code></h4>
+<h4 id="-fetchassociation-"><code>#fetchAssociation</code></h4>
+<h3 id="-hasmany-"><code>#hasMany</code></h3>
+<p>A has-many relationship adds the following properties and methods:</p>
+<p><code>association</code> is a placeholder for the name of the has-many relation being
+defined. If the name of the relation was <code>articles</code>, i.e.
+<code>Model.reopen({ articles: db.hasMany() })</code>, then <code>clearArticles</code> would be one
+of the methods added to <code>Model</code>.</p>
+<ul>
+<li><a href="#-associations-"><code>associations</code></a></li>
+<li><a href="#-associationobjects-"><code>associationObjects</code></a></li>
+<li><a href="#-createassociation-"><code>createAssociation()</code></a></li>
+<li><a href="#-addassociation-"><code>addAssociation()</code></a></li>
+<li><a href="#-addassociations-"><code>addAssociations()</code></a></li>
+<li><a href="#-removeassociation-"><code>removeAssociation()</code></a></li>
+<li><a href="#-removeassociations-"><code>removeAssociations()</code></a></li>
+<li><a href="#-clearassociations-"><code>clearAssociations()</code></a></li>
+</ul>
+<h4 id="-associations-"><code>#associations</code></h4>
+<h4 id="-associationobjects-"><code>#associationObjects</code></h4>
+<h4 id="-createassociation-"><code>#createAssociation</code></h4>
+<h4 id="-addassociation-"><code>#addAssociation</code></h4>
+<h4 id="-addassociations-"><code>#addAssociations</code></h4>
+<h4 id="-removeassociation-"><code>#removeAssociation</code></h4>
+<h4 id="-removeassociations-"><code>#removeAssociations</code></h4>
+<h4 id="-clearassociations-"><code>#clearAssociations</code></h4>
 
 
 </div>
