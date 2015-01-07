@@ -154,6 +154,83 @@
       </ul>
     </li>
   
+    <li>
+      <a href="#methods">Methods</a>
+      <ul>
+        
+          <li>
+            <a href="#-save-">#save</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-delete-">#delete</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#properties">Properties</a>
+      <ul>
+        
+          <li>
+            <a href="#-attrs-">#attrs</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-newrecord-">#newRecord</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-persisted-">#persisted</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-deleted-">#deleted</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-dirty-">#dirty</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-objects-">.objects</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-tablename-">.tableName</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
   </ul>
 
 
@@ -202,6 +279,8 @@ use to update and save your model.</p>
 <p>Azul.js does not distinguish between different attribute types when defining
 models. The types will be cast when reading and writing from the database.
 See the <a href="/guides/migrations.html">migrations guide</a> for more details.</p>
+<p>The <code>attr</code> function is also available via the main <code>azul</code> export for
+convenience.</p>
 <div class="panel panel-info">
 <div class="panel-heading">
   <span class="panel-title">Coming Soon&hellip;</span>
@@ -274,8 +353,9 @@ search by primary key:</p>
   <span class="hljs-comment">// the article with primary key 1 has been found</span>
 });</code></pre>
 
-<p>Reading from the database is asynchronous, so <code>fetch</code> and <code>find</code> return
-promises that resolve with the results from the database.</p>
+<p>Reading from the database is asynchronous, so <a href="/guides/queries.html#-fetch-"><code>fetch</code></a> and
+<a href="/guides/queries.html#-find-"><code>find</code></a> return promises that resolve with the results from
+the database.</p>
 <p>For more information on fetching objects from the database, see the <a href="/guides/queries.html">full
 query guide</a>.</p>
 <h3 id="update">Update</h3>
@@ -328,6 +408,24 @@ article.save().then(<span class="hljs-function"><span class="hljs-keyword">funct
   <span class="hljs-comment">// update query executed</span>
 });</code></pre>
 
+<h2 id="methods">Methods</h2>
+<h3 id="-save-"><code>#save</code></h3>
+<h3 id="-delete-"><code>#delete</code></h3>
+<h2 id="properties">Properties</h2>
+<h3 id="-attrs-"><code>#attrs</code></h3>
+<p>Readonly.</p>
+<h3 id="-newrecord-"><code>#newRecord</code></h3>
+<p>Readonly.</p>
+<h3 id="-persisted-"><code>#persisted</code></h3>
+<p>Readonly.</p>
+<h3 id="-deleted-"><code>#deleted</code></h3>
+<p>Readonly.</p>
+<h3 id="-dirty-"><code>#dirty</code></h3>
+<p>Readonly.</p>
+<h3 id="-objects-"><code>.objects</code></h3>
+<p>Readonly.</p>
+<h3 id="-tablename-"><code>.tableName</code></h3>
+<p>Overridable.</p>
 
 
 </div>
