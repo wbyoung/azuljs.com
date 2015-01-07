@@ -70,6 +70,20 @@
 
   <ul class="list-unstyled">
   
+    <li>
+      <a href="#basic-example">Basic Example</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#overriding-the-default-manager">Overriding the Default Manager</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
   </ul>
 
 
@@ -77,7 +91,55 @@
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="managers">Managers</h1>
-<p>Content coming soon&hellip;</p>
+<p>Managers allow you to pre-configure queries for collections of objects that
+are frequently accessed. You can define new collections on your model and
+also have the ability to override the default <code>objects</code> collection.</p>
+<h2 id="basic-example">Basic Example</h2>
+<p>For example, setting up custom managers to allow quick access to
+<code>Person.men</code> and <code>Person.women</code> would be done like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Manager = azul.manager;
+
+<span class="hljs-keyword">var</span> FemaleManager = Manager.extend({
+  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ sex: <span class="hljs-string">'female'</span> });
+  }
+});
+
+<span class="hljs-keyword">var</span> MaleManager = Manager.extend({
+  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ sex: <span class="hljs-string">'male'</span> });
+  }
+});
+
+<span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">'person'</span>).reopenClass({
+  women: FemaleManager.create(),
+  men: MaleManager.create()
+});
+
+Person.men.where({ <span class="hljs-string">'age[lt]'</span>: <span class="hljs-number">12</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
+  <span class="hljs-comment">// people is all men under the age of 12</span>
+});
+
+Person.women.where({ <span class="hljs-string">'age[gt]'</span>: <span class="hljs-number">25</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
+  <span class="hljs-comment">// people is all women over the age of 25</span>
+});</code></pre>
+
+<h2 id="overriding-the-default-manager">Overriding the Default Manager</h2>
+<p>It is also possible to override the default <code>objects</code>. For instance, having an
+<code>Article</code> model default to all <code>published</code> articles would be done like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> PublishedManager = Manager.extend({
+  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ published: <span class="hljs-literal">true</span> });
+  }
+});
+
+Article.reopenClass({
+  objects: PublishedManager.create(),
+  allObjects: Manager.create()
+});</code></pre>
+
+<p>Note that <code>allObjects</code> has been added as a simple manager, so that it is still
+possible to access articles that have not been published.</p>
 
 
 </div>
