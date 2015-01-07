@@ -155,7 +155,7 @@
     </li>
   
     <li>
-      <a href="#methods">Methods</a>
+      <a href="#methods-properties">Methods &amp; Properties</a>
       <ul>
         
           <li>
@@ -171,13 +171,6 @@
               
             </ul>
           </li>
-        
-      </ul>
-    </li>
-  
-    <li>
-      <a href="#properties">Properties</a>
-      <ul>
         
           <li>
             <a href="#-attrs-">#attrs</a>
@@ -408,24 +401,79 @@ article.save().then(<span class="hljs-function"><span class="hljs-keyword">funct
   <span class="hljs-comment">// update query executed</span>
 });</code></pre>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods-properties">Methods &amp; Properties</h2>
 <h3 id="-save-"><code>#save</code></h3>
+<p>Saves the model if it hasn&#39;t already been saved. This method is used to persist
+in memory changes and must be called after creating, altering, or deleting a
+model in order for the changes to be saved to the database.</p>
+<p>The returned promise will resolve with the model instance when the save
+succeeds.</p>
+<pre><code class="hljs js">model.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> </span>{ <span class="hljs-comment">/* ... */</span> });</code></pre>
+
 <h3 id="-delete-"><code>#delete</code></h3>
-<h2 id="properties">Properties</h2>
+<p>Marks the model for deletion.</p>
+<p>When a model has been marked for deletion &amp; saved, it will still exist in
+memory. Re-saving an object in this state will have no effect.</p>
+<p>See examples in the <a href="#delete">deleting section</a>.</p>
 <h3 id="-attrs-"><code>#attrs</code></h3>
-<p>Readonly.</p>
+<p>The attributes, keyed by database field name, currently set on this object.
+That is, a <code>Person</code> defined like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">'person'</span>, {
+  firstName: db.attr(),
+  lastName: db.attr()
+});
+
+<span class="hljs-keyword">var</span> person = Person.create({ firstName: <span class="hljs-string">'Whitney'</span>, lastName: <span class="hljs-string">'Young'</span> });</code></pre>
+
+<p>Would have <code>attrs</code> of:</p>
+<pre><code class="hljs js">person.attrs; <span class="hljs-comment">// =&gt; { first_name: 'Whitney', last_name: 'Young' }</span></code></pre>
+
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-newrecord-"><code>#newRecord</code></h3>
-<p>Readonly.</p>
+<p>Determine if this is a new record. Model that do not have a <em>primary key</em> are
+considered new. New records will be inserted when a model is saved. To better
+understand this behavior, read about <a href="#create-update-or-delete-">how the save method is
+determined</a>.</p>
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-persisted-"><code>#persisted</code></h3>
-<p>Readonly.</p>
+<p>Determine if this model is persisted, that is, it is not deleted nor new.</p>
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-deleted-"><code>#deleted</code></h3>
-<p>Readonly.</p>
+<p>Determine if this model is deleted or has been marked for deletion.</p>
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-dirty-"><code>#dirty</code></h3>
-<p>Readonly.</p>
+<p>Determine if this model has changes that have not yet been persisted to the
+database.</p>
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-objects-"><code>.objects</code></h3>
-<p>Readonly.</p>
+<p>Access a <a href="/guides/queries.html">query object</a> that will allow you to fetch models of
+this type from the database. Note that this can be customized by creating your
+own <a href="/guides/managers.html#overriding-the-default-manager">custom manager</a>.</p>
+<ul>
+<li>readonly</li>
+</ul>
 <h3 id="-tablename-"><code>.tableName</code></h3>
-<p>Overridable.</p>
+<p>The name of the table in the database which contains the data.</p>
+<p>You can override this property like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>);
+
+Article.reopenClass({
+  tableName: <span class="hljs-string">'publications'</span>,
+});</code></pre>
+
+<ul>
+<li>readonly</li>
+</ul>
 
 
 </div>
