@@ -299,6 +299,13 @@
           </li>
         
           <li>
+            <a href="#-weekday-">weekday</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#-hour-">hour</a>
             <ul>
               
@@ -582,27 +589,56 @@ right hand side as a field and escapes it properly:</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'title[in]'</span>: [<span class="hljs-string">'Azul.js'</span>, <span class="hljs-string">'Azul'</span>] });</code></pre>
 
 <h3 id="-gt-"><code>gt</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Greater than.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[gt]'</span>: <span class="hljs-number">5</span> });</code></pre>
+
 <h3 id="-gte-"><code>gte</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Greater than or equal to.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[gte]'</span>: <span class="hljs-number">5</span> });</code></pre>
+
 <h3 id="-lt-"><code>lt</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Less than.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[lt]'</span>: <span class="hljs-number">5</span> });</code></pre>
+
 <h3 id="-lte-"><code>lte</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Less than or equal to.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[lte]'</span>: <span class="hljs-number">5</span> });</code></pre>
+
 <h3 id="-isnull-"><code>isNull</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for <code>NULL</code> or <code>NOT NULL</code>.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[isNull]'</span>: <span class="hljs-literal">true</span> });
+Article.objects.where({ <span class="hljs-string">'id[isNull]'</span>: <span class="hljs-literal">false</span> });</code></pre>
+
 <h3 id="-year-"><code>year</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific year.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[year]'</span>: <span class="hljs-number">2014</span> });</code></pre>
+
 <h3 id="-month-"><code>month</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific month. (1 - 12)</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[month]'</span>: <span class="hljs-number">10</span> });</code></pre>
+
 <h3 id="-day-"><code>day</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific day.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[day]'</span>: <span class="hljs-number">7</span> });</code></pre>
+
+<h3 id="-weekday-"><code>weekday</code></h3>
+<p>Test for a specific weekday.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[weekday]'</span>: <span class="hljs-number">1</span> });
+Article.objects.where({ <span class="hljs-string">'createdAt[weekday]'</span>: <span class="hljs-string">'mon'</span> });
+Article.objects.where({ <span class="hljs-string">'createdAt[weekday]'</span>: <span class="hljs-string">'monday'</span> });</code></pre>
+
 <h3 id="-hour-"><code>hour</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific hour.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[hour]'</span>: <span class="hljs-number">22</span> });</code></pre>
+
 <h3 id="-minute-"><code>minute</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific minute.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[minute]'</span>: <span class="hljs-number">10</span> });</code></pre>
+
 <h3 id="-second-"><code>second</code></h3>
-<p>Content coming soon&hellip;</p>
+<p>Test for a specific second.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'createdAt[second]'</span>: <span class="hljs-number">54</span> });</code></pre>
+
 <h2 id="executing">Executing</h2>
 <h3 id="-execute-"><code>#execute</code></h3>
 <p>Executes a query. Once executed, subsequent calls will use the result from the
