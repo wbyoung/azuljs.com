@@ -114,6 +114,10 @@
             <ul>
               
                 <li>
+                  <a href="#options">Options</a>
+                </li>
+              
+                <li>
                   <a href="#-association-">#association</a>
                 </li>
               
@@ -135,6 +139,10 @@
           <li>
             <a href="#-hasmany-">#hasMany</a>
             <ul>
+              
+                <li>
+                  <a href="#options">Options</a>
+                </li>
               
                 <li>
                   <a href="#-associations-">#associations</a>
@@ -433,10 +441,24 @@ the methods added to <code>Model</code>.</p>
 <li><a href="#-createassociation-"><code>createAssociation()</code></a></li>
 <li><a href="#-fetchassociation-"><code>fetchAssociation()</code></a></li>
 </ul>
+<h4 id="options">Options</h4>
+<p>If the property name does not match the name of the related model, pass the
+model name as the first argument. For instance to associate <code>Article</code> and
+<code>User</code> through the relation name <code>author</code>:</p>
+<pre><code class="hljs js">Article.reopen({
+  author: db.belongsTo(<span class="hljs-string">'user'</span>)
+})</code></pre>
+
+<p><code>belongsTo</code> accepts the following options:</p>
+<ul>
+<li><code>inverse</code> The name of the inverse relationship.</li>
+<li><code>primaryKey</code> The name of the primary key in the relationship.</li>
+<li><code>foreignKey</code> The name of the foreign key in the relationship.</li>
+</ul>
 <h4 id="-association-"><code>#association</code></h4>
 <p>Access the relation. This will throw an error if the relation has not yet been
 loaded. Load the association before accessing it using
-<a href="/guides/models.html#-with-"><code>with</code></a> or via <a href="#-fetchassociation-"><code>fetchAssociation</code></a>.</p>
+<a href="/guides/queries.html#-with-"><code>with</code></a> or via <a href="#-fetchassociation-"><code>fetchAssociation</code></a>.</p>
 <pre><code class="hljs js">Article.objects.with(<span class="hljs-string">'blog'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-built_in">console</span>.log(article.blog);
 });
@@ -444,6 +466,14 @@ loaded. Load the association before accessing it using
 <span class="hljs-comment">// this will throw an exception because the blog is not loaded with the query</span>
 Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   article.blog; <span class="hljs-comment">// throws!</span>
+});</code></pre>
+
+<p>This property is also a setter used to alter the relationship. The changes will
+remain in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+<pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
+.spread(article, blog) {
+  article.blog = blog;
+  <span class="hljs-keyword">return</span> article.save();
 });</code></pre>
 
 <h4 id="-associationid-"><code>#associationId</code></h4>
@@ -472,24 +502,22 @@ Article.objects.with(<span class="hljs-string">'author'</span>).find(<span class
 
 <h4 id="-fetchassociation-"><code>#fetchAssociation</code></h4>
 <p>Fetch the associated object.</p>
-<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result)</span> </span>{
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-keyword">return</span> article.fetchBlog();
 })
 .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
   <span class="hljs-built_in">console</span>.log(blog);
 });</code></pre>
 
-<p>Once fetched, the value will also be accessible
-via <a href="#-association-"><code>association</code></a>.</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> foundArticle;
-
-Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
-  foundArticle = result;
+<p>Once fetched, the value will also be accessible via the
+<a href="#-association-"><code>association</code></a> property.</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).tap(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-keyword">return</span> article.fetchBlog();
 })
 .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-built_in">console</span>.log(foundArticle.blog);
-});</code></pre>
+  <span class="hljs-built_in">console</span>.log(article.blog);
+});
+<span class="hljs-comment">// see bluebird.js for details on tap</span></code></pre>
 
 <h3 id="-hasmany-"><code>#hasMany</code></h3>
 <p>A has-many relationship adds the following properties and methods:</p>
@@ -507,14 +535,115 @@ of the methods added to <code>Model</code>.</p>
 <li><a href="#-removeassociations-"><code>removeAssociations()</code></a></li>
 <li><a href="#-clearassociations-"><code>clearAssociations()</code></a></li>
 </ul>
+<h4 id="options">Options</h4>
+<p>If the property name does not match the name of the related model, pass the
+pluralized model name as the first argument. For instance to associate <code>Author</code>
+and <code>Article</code> through the relation name <code>posts</code>:</p>
+<pre><code class="hljs js">Author.reopen({
+  posts: db.hasMany(<span class="hljs-string">'articles'</span>)
+})</code></pre>
+
+<p><code>hasMany</code> accepts the following options:</p>
+<ul>
+<li><code>inverse</code> The name of the inverse relationship.</li>
+<li><code>primaryKey</code> The name of the primary key in the relationship.</li>
+<li><code>foreignKey</code> The name of the foreign key in the relationship.</li>
+<li><code>through</code> Specify the name of a relationship through which this collection is
+accessed.</li>
+<li><code>source</code> When using <code>through</code> this is the name of the relationship on the
+destination model. The default value is the name of the attribute for the
+relationship.</li>
+</ul>
 <h4 id="-associations-"><code>#associations</code></h4>
+<p>Access the related items. This will throw an error if the relation has not yet
+been loaded. Load the association before accessing it using
+<a href="/guides/queries.html#-with-"><code>with</code></a> or via
+<a href="#-associationObjects-"><code>associationObjects.fetch</code></a>.</p>
+<pre><code class="hljs js">Blog.objects.with(<span class="hljs-string">'articles'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(blog.articles);
+});</code></pre>
+
 <h4 id="-associationobjects-"><code>#associationObjects</code></h4>
+<p>Access a query object that can be used to fetch the objects or a subset of the
+related objects.</p>
+<pre><code class="hljs js">Blog.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
+  <span class="hljs-keyword">return</span> blog.articleObjects.fetch();
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(articles);
+});</code></pre>
+
+<p>Once fetched, the related objects will also be accessible via the
+<a href="#-associations-"><code>associations</code></a> property.</p>
+<pre><code class="hljs js">Blog.objects.find(<span class="hljs-number">1</span>).tap(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
+  <span class="hljs-keyword">return</span> blog.articleObjects.fetch();
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">console</span>.log(blog.articles);
+});
+<span class="hljs-comment">// see bluebird.js for details on tap</span></code></pre>
+
+<p>You can also use this <a href="/guides/queries.html">query</a> to find a subset of the related
+objects. Note, though, that since a subset is being fetched, that this will not
+make the related objects available through the
+<a href="#-associations-"><code>associations</code></a> property.</p>
+<pre><code class="hljs js">Blog.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
+  <span class="hljs-keyword">return</span> blog.articleObjects.where({ <span class="hljs-string">'title[contains]'</span>: <span class="hljs-string">'Azul'</span> });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(articles);
+});</code></pre>
+
 <h4 id="-createassociation-"><code>#createAssociation</code></h4>
+<p>Create a new object of the relationship type. This will also set the foreign
+key on the created object.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> article = blog.createArticle({ title: <span class="hljs-string">'Azul'</span> });
+blog.id; <span class="hljs-comment">// =&gt; 7</span>
+article.blogId; <span class="hljs-comment">// =&gt; 7</span></code></pre>
+
 <h4 id="-addassociation-"><code>#addAssociation</code></h4>
+<p>This method is used to add objects to the relationship. The changes will remain
+in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+<pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
+.spread(article, blog) {
+  blog.addArticle(article);
+  <span class="hljs-keyword">return</span> blog.save();
+});</code></pre>
+
+<p>This method returns a <em>thenable</em> object that simply saves the object. The above
+code could be simplified like so:</p>
+<pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
+.spread(article, blog) {
+  <span class="hljs-keyword">return</span> blog.addArticle(article);
+});</code></pre>
+
 <h4 id="-addassociations-"><code>#addAssociations</code></h4>
+<p>Allows <a href="#-addassociations-">adding</a> of multiple associations. Pass an array or
+multiple arguments.</p>
+<pre><code class="hljs js">blog.addArticles([article1, article2]);
+blog.addArticles(article1, article2);</code></pre>
+
 <h4 id="-removeassociation-"><code>#removeAssociation</code></h4>
+<p>This method is used to remove objects to the relationship. The changes will
+remain in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+<pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
+.spread(article, blog) {
+  blog.removeArticle(article);
+  <span class="hljs-keyword">return</span> blog.save();
+});</code></pre>
+
+<p>Like <a href="#-addassociation-"><code>addAssociation()</code></a>, this method returns a <em>thenable</em>
+object that simply saves the object.</p>
 <h4 id="-removeassociations-"><code>#removeAssociations</code></h4>
+<p>Allows <a href="#-removeassociations-">removing</a> of multiple associations. Pass an
+array or multiple arguments.</p>
+<pre><code class="hljs js">blog.removeArticles([article1, article2]);
+blog.removeArticles(article1, article2);</code></pre>
+
 <h4 id="-clearassociations-"><code>#clearAssociations</code></h4>
+<p>Clear all related objects.</p>
+<pre><code class="hljs js">blog.clearArticles();</code></pre>
+
 
 
 </div>
