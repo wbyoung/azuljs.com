@@ -68,7 +68,7 @@
 <div class="col-sm-3 col-sm-push-9 guide-toc well">
 
 
-  <ul class="list-unstyled">
+  <ul>
   
     <li>
       <a href="#types-of-relationships">Types of Relationships</a>
@@ -434,9 +434,63 @@ the methods added to <code>Model</code>.</p>
 <li><a href="#-fetchassociation-"><code>fetchAssociation()</code></a></li>
 </ul>
 <h4 id="-association-"><code>#association</code></h4>
+<p>Access the relation. This will throw an error if the relation has not yet been
+loaded. Load the association before accessing it using
+<a href="/guides/models.html#-with-"><code>with</code></a> or via <a href="#-fetchassociation-"><code>fetchAssociation</code></a>.</p>
+<pre><code class="hljs js">Article.objects.with(<span class="hljs-string">'blog'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(article.blog);
+});
+
+<span class="hljs-comment">// this will throw an exception because the blog is not loaded with the query</span>
+Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  article.blog; <span class="hljs-comment">// throws!</span>
+});</code></pre>
+
 <h4 id="-associationid-"><code>#associationId</code></h4>
+<p>Access the foreign key value for this relationship.</p>
+<pre><code class="hljs js">Article.objects.with(<span class="hljs-string">'author'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  article.authorId; <span class="hljs-comment">// =&gt; 7</span>
+});
+<span class="hljs-comment">// assuming article 1 is written by person 7</span></code></pre>
+
+
+<p>This will actually be generated from the <code>foreignKey</code> option given to the
+<code>belongsTo</code>. For instance:</p>
+<pre><code class="hljs js">Article.reopen({
+  author: db.belongsTo({ foreignKey: <span class="hljs-string">'writer_id'</span> })
+});
+
+Article.objects.with(<span class="hljs-string">'author'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  article.author; <span class="hljs-comment">// =&gt; [Author { id: 7 }]</span>
+  article.writerId; <span class="hljs-comment">// =&gt; 7</span>
+});
+<span class="hljs-comment">// assuming article 1 is written by person 7</span></code></pre>
+
 <h4 id="-createassociation-"><code>#createAssociation</code></h4>
+<p>Create a new object of the relationship type.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> blog = article.createBlog({ title: <span class="hljs-string">'Blog'</span> });</code></pre>
+
 <h4 id="-fetchassociation-"><code>#fetchAssociation</code></h4>
+<p>Fetch the associated object.</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result)</span> </span>{
+  <span class="hljs-keyword">return</span> article.fetchBlog();
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(blog);
+});</code></pre>
+
+<p>Once fetched, the value will also be accessible
+via <a href="#-association-"><code>association</code></a>.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> foundArticle;
+
+Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  foundArticle = result;
+  <span class="hljs-keyword">return</span> article.fetchBlog();
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">console</span>.log(foundArticle.blog);
+});</code></pre>
+
 <h3 id="-hasmany-"><code>#hasMany</code></h3>
 <p>A has-many relationship adds the following properties and methods:</p>
 <p><code>association</code> is a placeholder for the name of the has-many relation being
