@@ -138,6 +138,20 @@
           </li>
         
           <li>
+            <a href="#-groupby-">#groupBy</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-unique-">#unique</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#-clone-">#clone</a>
             <ul>
               
@@ -553,6 +567,26 @@ Article.objects.order(<span class="hljs-string">'-title'</span>, <span class="hl
 <li>Can be used via the <code>orderBy</code> alias</li>
 <li><a href="#automatic-joining">Automatically joins</a> relationships</li>
 </ul>
+<h3 id="-groupby-"><code>#groupBy</code></h3>
+<p>Groups the results of a query.</p>
+<pre><code class="hljs js">Article.objects.groupBy(<span class="hljs-string">'title'</span>);</code></pre>
+
+<ul>
+<li><a href="#automatic-joining">Automatically joins</a> relationships</li>
+</ul>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Coming Soon&hellip;</span>
+</div>
+<div class="panel-body">
+More aggregation support is coming soon, which will make this method more
+useful.
+</div>
+</div>
+
+<h3 id="-unique-"><code>#unique</code></h3>
+<p>Performs a <a href="#-groupby-"><code>groupBy</code></a> with the primary key of the model. This
+is useful when <a href="#-join-">joining relations</a>.</p>
 <h3 id="-clone-"><code>#clone</code></h3>
 <p>Create a new query that has the exact same conditions as this query. This
 method can be used to ensure that executing a query will not use a
@@ -602,7 +636,7 @@ using an <em>exact</em> comparison on <code>id</code> would mean using a propert
 
 <h3 id="-contains-"><code>contains</code></h3>
 <p>A case-sensitive containment test.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'title[iExact]'</span>: <span class="hljs-string">'azul.js'</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'title[contains]'</span>: <span class="hljs-string">'Azul.js'</span> });</code></pre>
 
 <h3 id="-icontains-"><code>iContains</code></h3>
 <p>A case-insensitive containment test.</p>
@@ -616,10 +650,21 @@ using an <em>exact</em> comparison on <code>id</code> would mean using a propert
 <p>A case-insensitive ends-with.</p>
 <h3 id="-regex-"><code>regex</code></h3>
 <p>A case-sensitive regular expression test.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'title[regex]'</span>: <span class="hljs-regexp">/[Aa]zul\.?js/</span> });</code></pre>
+
+<p>Regular expression flags are currently ignored, so the following will still be
+case sensitive:</p>
+<pre><code class="hljs js"><span class="hljs-comment">// currently interpreted as case sensitive, but may change in the future</span>
+Article.objects.where({ <span class="hljs-string">'title[regex]'</span>: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
+
 <h3 id="-iregex-"><code>iRegex</code></h3>
 <p>A case-insensitive regular expression test.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'title[iRegex]'</span>: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
+
+<p>While regular expression flags are currently ignored, it is recommended that
+you use a case insensitive flag on your regex for clarity.</p>
 <h3 id="-between-"><code>between</code></h3>
-<p>A test for a value being between two values.</p>
+<p>A test for a value being between two values (inclusive).</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'id[between]'</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
 
 <p>This works for all types where <code>BETWEEN</code> works in your database.</p>
@@ -785,23 +830,42 @@ to execute a single query to fetch the required comments.</p>
 
 <h3 id="-join-"><code>#join</code></h3>
 <p>In certain cases, you may need to access data from two tables in order to form
-a query. This will usually be handled for you via <a href="#automatic-joining">automatic
-joining</a>, but you can also explicitly join a relationship
-into a query.</p>
-<p>For instance, finding all articles that have a comment marked as spam:</p>
+a query.</p>
+<p>For instance, finding articles that have a comment marked as spam. This query
+will return duplicate articles if there are multiple comments marked as spam
+for the article:</p>
 <pre><code class="hljs js">Article.objects.join(<span class="hljs-string">'comments'</span>).where({ spam: <span class="hljs-literal">true</span> });</code></pre>
+
+<p>To remove the duplicates from the results, either add <a href="#-unique-"><code>unique</code></a> or
+use <a href="#automatic-joining">automatic joining</a>.</p>
+<pre><code class="hljs js">Article.objects.join(<span class="hljs-string">'comments'</span>).where({ spam: <span class="hljs-literal">true</span> }).unique();</code></pre>
 
 <p>Azul.js will resolve names to the appropriate model when possible. In this
 case, it is able to determine that <code>spam</code> is an attribute that&#39;s defined on the
 <code>Comment</code> model and executes the appropriate database query. The properties
 <code>id</code> and <code>body</code> are ambiguous, though, and must be qualified as <code>comments.id</code>
 and <code>commens.body</code> if they refer to the joined association.</p>
+<hr>
+<p>In many simple cases, <a href="#automatic-joining">automatic joining</a> will be simpler
+and will also ensure the results are <a href="#-unique-"><code>unique</code></a>.</p>
 <p>In the above example, the <code>where</code> call could have automatically joined the
 <code>comments</code> relation by specifying <code>comments.spam</code> rather than just <code>spam</code> in
-the where condition, and the explicit join would not have been required.</p>
+the where condition, and the explicit join would not have been required. Read
+more about <a href="#automatic-joining">automatic joining</a> to understand how this
+works.</p>
+<p>The order of a manual vs automatic join will make a difference on whether or
+not uniqueness is added to your query:</p>
+<pre><code class="hljs js"><span class="hljs-comment">// manual joined first, results are not unique (since join is first)</span>
+Article.objects.join(<span class="hljs-string">'comments'</span>).where({ <span class="hljs-string">'comments.spam'</span>: <span class="hljs-literal">true</span> });
+
+<span class="hljs-comment">// automatic joined first, unique results (since where is first)</span>
+Article.objects.where({ <span class="hljs-string">'comments.spam'</span>: <span class="hljs-literal">true</span> }).join(<span class="hljs-string">'comments'</span>);</code></pre>
+
 <h3 id="automatic-joining">Automatic Joining</h3>
 <p>Most situations that require a <a href="#-join-"><code>join</code></a> to occur between relationships
-will be handled automatically.</p>
+will be handled automatically. Automatic joining also ensures uniqueness of
+results by automatically ensuring that <a href="#-unique-"><code>unique</code></a> has been added to
+the query.</p>
 <p>Methods that support automatic joining will use the attribute string to
 determine if a relationship exists that can be joined.</p>
 <p>The following queries would automatically add a join:</p>
@@ -812,6 +876,7 @@ Comment.objects.order(<span class="hljs-string">'article.title'</span>);</code><
 <ul>
 <li><a href="#-where-"><code>where</code></a></li>
 <li><a href="#-order-"><code>order</code></a></li>
+<li><a href="#-groupby-"><code>groupBy</code></a></li>
 </ul>
 <h2 id="raw-queries">Raw Queries</h2>
 <p>Sometimes you may need to execute raw SQL queries. While this is discouraged,
@@ -871,6 +936,8 @@ db.select(<span class="hljs-string">'people'</span>, [<span class="hljs-string">
 <li><code>join</code>  Joins are quite different as they require more information than
 simply a relationship name. Joins default to an <code>INNER</code> join. See more examples
 below.</li>
+<li><code>groupBy</code> Will not convert property names or join relationships. See
+<a href="#-groupby-"><code>#groupBy</code></a>.</li>
 <li><code>fetch</code> Executes the query and returns a promise that resolves with the
 <code>rows</code> from the result. See <a href="#-fetch-"><code>#fetch</code></a>.</li>
 <li><code>fetchOne</code> No differences. See <a href="#-fetchOne-"><code>#fetchOne</code></a>.</li>
