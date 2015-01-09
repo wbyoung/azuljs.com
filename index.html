@@ -67,10 +67,19 @@
 
 
       <div class="container">
-        <h1 id="simple-api">Simple API</h1>
+        <h1 id="start-quickly">Start Quickly</h1>
+<p>Azul is easy to <a href="/getting-started.html">install and start using</a>.</p>
+<pre><code class="hljs bash">$ npm install azul -g
+$ npm install azul
+$ azul init</code></pre>
+
+<p>Give it a try today!</p>
+<h1 id="work-efficiently">Work Efficiently</h1>
 <p>Azul.js exposes a simple API that follows patterns found in popular tools
 available in other languages. You&#39;ll feel right at home when working with
-Azul.js.</p>
+Azul.js. Even if you haven&#39;t worked with other ORMs, our
+<a href="/getting-started.html">documentation</a> is top notch, so you&#39;ll be building
+stellar apps in no time.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
   title: db.attr(),
   author: db.belongsTo(<span class="hljs-string">'user'</span>)
@@ -83,9 +92,24 @@ Azul.js.</p>
 });
 
 Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<span class="hljs-string">'...'</span>);
+
 <span class="hljs-comment">// -&gt; select * from "articles";</span>
 <span class="hljs-comment">// -&gt; select * from "users" where "id" in (?, ?, ?) limit 3;</span>
 <span class="hljs-comment">// !&gt; [3,5,8]</span></code></pre>
+
+<h1 id="express-yourself">Express Yourself</h1>
+<p>Azul.js was designed to be the most expressive ORM for Node.js. You&#39;ll write
+good code that others can easily understand. Want to find all articles that
+include a comment that is spam? Simple.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'comments.spam'</span>: <span class="hljs-literal">true</span> }).fetch().then(<span class="hljs-string">'...'</span>);
+
+<span class="hljs-comment">// -&gt; select "articles".* from "articles"</span>
+<span class="hljs-comment">// -&gt; inner join "comments" on "comments"."article_id" = "articles"."id"</span>
+<span class="hljs-comment">// -&gt; where "comments"."spam" = ?</span>
+<span class="hljs-comment">// -&gt; group by "articles"."id"</span>
+<span class="hljs-comment">// !&gt; [true]</span></code></pre>
+
+
       </div>
     
 
