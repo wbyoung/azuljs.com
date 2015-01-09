@@ -32,18 +32,18 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started.html">Getting Started</a></li>
+            <li ><a href="/getting-started/">Getting Started</a></li>
             <li class="active" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models.html">Models</a></li>
-                <li><a href="/guides/queries.html">Queries</a></li>
-                <li><a href="/guides/relations.html">Relations</a></li>
-                <li><a href="/guides/migrations.html">Migrations</a></li>
+                <li><a href="/guides/models/">Models</a></li>
+                <li><a href="/guides/queries/">Queries</a></li>
+                <li><a href="/guides/relations/">Relations</a></li>
+                <li><a href="/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers.html">Managers</a></li>
+                <li><a href="/guides/managers/">Managers</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/core.html">Core</a></li>
+                <li><a href="/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -458,7 +458,7 @@ model name as the first argument. For instance to associate <code>Article</code>
 <h4 id="-association-"><code>#association</code></h4>
 <p>Access the relation. This will throw an error if the relation has not yet been
 loaded. Load the association before accessing it using
-<a href="/guides/queries.html#-with-"><code>with</code></a> or via <a href="#-fetchassociation-"><code>fetchAssociation</code></a>.</p>
+<a href="/guides/queries/#-with-"><code>with</code></a> or via <a href="#-fetchassociation-"><code>fetchAssociation</code></a>.</p>
 <pre><code class="hljs js">Article.objects.with(<span class="hljs-string">'blog'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-built_in">console</span>.log(article.blog);
 });
@@ -469,7 +469,7 @@ Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-
 });</code></pre>
 
 <p>This property is also a setter used to alter the relationship. The changes will
-remain in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+remain in memory until <a href="/guides/models/#-save-">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   article.blog = blog;
@@ -557,7 +557,7 @@ relationship.</li>
 <h4 id="-associations-"><code>#associations</code></h4>
 <p>Access the related items. This will throw an error if the relation has not yet
 been loaded. Load the association before accessing it using
-<a href="/guides/queries.html#-with-"><code>with</code></a> or via
+<a href="/guides/queries/#-with-"><code>with</code></a> or via
 <a href="#-associationObjects-"><code>associationObjects.fetch</code></a>.</p>
 <pre><code class="hljs js">Blog.objects.with(<span class="hljs-string">'articles'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
   <span class="hljs-built_in">console</span>.log(blog.articles);
@@ -583,7 +583,7 @@ related objects.</p>
 });
 <span class="hljs-comment">// see bluebird.js for details on tap</span></code></pre>
 
-<p>You can also use this <a href="/guides/queries.html">query</a> to find a subset of the related
+<p>You can also use this <a href="/guides/queries/">query</a> to find a subset of the related
 objects. Note, though, that since a subset is being fetched, that this will not
 make the related objects available through the
 <a href="#-associations-"><code>associations</code></a> property.</p>
@@ -603,7 +603,7 @@ article.blogId; <span class="hljs-comment">// =&gt; 7</span></code></pre>
 
 <h4 id="-addassociation-"><code>#addAssociation</code></h4>
 <p>This method is used to add objects to the relationship. The changes will remain
-in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+in memory until <a href="/guides/models/#-save-">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   blog.addArticle(article);
@@ -625,7 +625,7 @@ blog.addArticles(article1, article2);</code></pre>
 
 <h4 id="-removeassociation-"><code>#removeAssociation</code></h4>
 <p>This method is used to remove objects to the relationship. The changes will
-remain in memory until <a href="/guides/models.html#-save-">saved</a>:</p>
+remain in memory until <a href="/guides/models/#-save-">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   blog.removeArticle(article);

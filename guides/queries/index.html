@@ -32,18 +32,18 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started.html">Getting Started</a></li>
+            <li ><a href="/getting-started/">Getting Started</a></li>
             <li class="active" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models.html">Models</a></li>
-                <li><a href="/guides/queries.html">Queries</a></li>
-                <li><a href="/guides/relations.html">Relations</a></li>
-                <li><a href="/guides/migrations.html">Migrations</a></li>
+                <li><a href="/guides/models/">Models</a></li>
+                <li><a href="/guides/queries/">Queries</a></li>
+                <li><a href="/guides/relations/">Relations</a></li>
+                <li><a href="/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers.html">Managers</a></li>
+                <li><a href="/guides/managers/">Managers</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/core.html">Core</a></li>
+                <li><a href="/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -527,9 +527,9 @@ a query to be re-executed. In that case, you can simply <a href="#-clone-">clone
 query</a>.</p>
 <h2 id="methods">Methods</h2>
 <p>The following methods are available on all queries for models. You can access
-a query that contains no conditions via the <a href="/guides/models.html#-objects-"><code>objects</code></a>
+a query that contains no conditions via the <a href="/guides/models/#-objects-"><code>objects</code></a>
 property of your model class. For more details and customization of this base
-query, read about <a href="/guides/managers.html">managers</a>.</p>
+query, read about <a href="/guides/managers/">managers</a>.</p>
 <h3 id="-where-"><code>#where</code></h3>
 <p>Narrowing the scope of objects returned form the database is accomplished by
 using the <code>where</code> method.</p>
@@ -782,7 +782,7 @@ queries inside of promise handlers is considered acceptable:</p>
 });</code></pre>
 
 <h2 id="relationships">Relationships</h2>
-<p>The discussion of query methods for <a href="/guides/relations.html">relationships</a> assumes the
+<p>The discussion of query methods for <a href="/guides/relations/">relationships</a> assumes the
 following models have been defined:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
   title: db.attr(),
@@ -798,7 +798,7 @@ following models have been defined:</p>
 });</code></pre>
 
 <h3 id="-with-"><code>#with</code></h3>
-<p>Pre-fetch <a href="/guides/relations.html">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
+<p>Pre-fetch <a href="/guides/relations/">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
 <p>A poor implementation of fetching all articles and each of the article&#39;s
 comments may look something like:</p>
 <pre><code class="hljs js"><span class="hljs-comment">// note: do not use this code</span>
