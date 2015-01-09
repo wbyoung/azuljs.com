@@ -71,8 +71,30 @@
   <ul>
   
     <li>
-      <a href="#creating-tables">Creating Tables</a>
+      <a href="#command-line">Command Line</a>
       <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#migration-basics">Migration Basics</a>
+      <ul>
+        
+          <li>
+            <a href="#methods">Methods</a>
+            <ul>
+              
+                <li>
+                  <a href="#-createtable-">#createTable</a>
+                </li>
+              
+                <li>
+                  <a href="#-droptable-">#dropTable</a>
+                </li>
+              
+            </ul>
+          </li>
         
           <li>
             <a href="#field-types">Field Types</a>
@@ -147,7 +169,54 @@
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="migrations">Migrations</h1>
-<h2 id="creating-tables">Creating Tables</h2>
+<h2 id="command-line">Command Line</h2>
+<p>The <code>azul</code> command line tool can be used both to quickly create migrations as
+well as to run the migrations.</p>
+<p>To create a new migration:</p>
+<pre><code class="hljs bash">$ azul make-migration create-articles</code></pre>
+
+<p>The migration file will be empty. You&#39;ll fill it in with schema changes that
+you want to make in this migration. Once completed, you can run your migrations
+with the command line tool, and roll them back as needed.</p>
+<pre><code class="hljs bash">$ azul migrate
+$ azul rollback</code></pre>
+
+<h2 id="migration-basics">Migration Basics</h2>
+<p>Migrations are sequences of changes that are made to your database schema over
+time. They allow a team of developers to work together more fluidly. Each
+migration is applied in the order in which it was created. It is assumed that
+once created and applied, that migrations do not change. That is, once you
+commit a migration and push it, you should not change it. You should instead
+create a new migration.</p>
+<p>Azul.js migrations are simply modules that export two functions, an <code>up</code>
+function and a <code>down</code> function. When you migrate your database schema forward,
+you&#39;ll run <code>azul migrate</code> and the <code>up</code> will be run. When you migrate your
+schema backward, you&#39;ll run <code>azul rollback</code> and the <code>down</code> function will be
+run. It is expected that your <code>down</code> function reverse the changes that your up
+function makes.</p>
+<p>An example migration looks like this:</p>
+<pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">'articles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+    table.serial(<span class="hljs-string">'id'</span>).primaryKey();
+    table.string(<span class="hljs-string">'title'</span>);
+    table.text(<span class="hljs-string">'body'</span>);
+  });
+};
+
+exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">'articles'</span>);
+};</code></pre>
+
+<p>Migrations are run inside of a transaction, so if any of the migrations in a
+sequence of migrations fails, the entire group will be rolled back. This is
+only true if your database supports transactions.</p>
+<p>The <code>up</code> and <code>down</code> functions are provided with a second argument. A
+<a href="/guides/queries.html#data-queries">basic query</a> object that you can use if you need to
+execute raw SQL or perform schema changes that are not supported by Azul.js.</p>
+<h3 id="methods">Methods</h3>
+<h4 id="-createtable-"><code>#createTable</code></h4>
+<p>Content coming soon&hellip;</p>
+<h4 id="-droptable-"><code>#dropTable</code></h4>
 <p>Content coming soon&hellip;</p>
 <h3 id="field-types">Field Types</h3>
 <h4 id="-auto-"><code>auto</code></h4>
