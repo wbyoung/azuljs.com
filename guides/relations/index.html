@@ -102,6 +102,20 @@
       <a href="#through">Through</a>
       <ul>
         
+          <li>
+            <a href="#nesting">Nesting</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#limitations">Limitations</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
       </ul>
     </li>
   
@@ -427,7 +441,90 @@ We&#39;ll be adding one-to-one relationships via <code>belongsTo</code> and
 </div>
 
 <h2 id="through">Through</h2>
-<p>Content coming soon&hellip;</p>
+<p>Through associations allow you to access and build more complex relationships
+easily. One way that they can be used is to build <a href="#many-to-many">many-to-many</a>
+relationships.</p>
+<p>Another way that they can be used is to build shortcut relationships. Take, for
+example, a blog with articles and comments. You could build the following
+relationships:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Blog = db.model(<span class="hljs-string">'blog'</span>, {
+  title: db.attr(),
+  articles: db.hasMany(),
+});
+
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  title: db.attr(),
+  blog: db.belongsTo(),
+  comments: db.hasMany(),
+});
+
+<span class="hljs-keyword">var</span> Comment = db.model(<span class="hljs-string">'comment'</span>, {
+  body: db.attr(),
+  article: db.belongsTo(),
+});</code></pre>
+
+<p>You may find yourself needing to access all of the comments for a blog. To do
+so, you can add a through relationship shortcut:</p>
+<pre><code class="hljs js">Blog.reopen({
+  comments: hasMany({ through: <span class="hljs-string">'articles'</span> })
+});</code></pre>
+
+<h3 id="nesting">Nesting</h3>
+<p>Through relationships can be nested to create deep shortcuts.</p>
+<p>This example omits any attributes for brevity, but the <code>Site</code> object is able
+to access <code>commenters</code> through <code>authors</code> then <code>posts</code> then <code>comments</code> until it
+finally gets to the <code>commenters</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Site = db.model(<span class="hljs-string">'site'</span>, {
+  authors: db.hasMany(),
+  commenters: db.hasMany({ through: <span class="hljs-string">'authors'</span> }),
+});
+<span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">'author'</span>, {
+  site: db.belongsTo()
+  posts: db.hasMany(),
+  commenters: db.hasMany({ through: <span class="hljs-string">'posts'</span> }),
+});
+<span class="hljs-keyword">var</span> Post = db.model(<span class="hljs-string">'post'</span>, {
+  author: db.belongsTo(),
+  comments: db.hasMany(),
+  commenters: db.hasMany({ through: <span class="hljs-string">'comments'</span> })
+});
+<span class="hljs-keyword">var</span> Comment = db.model(<span class="hljs-string">'comment'</span>, {
+  post: db.belongsTo(),
+  commenter: db.belongsTo()
+});
+<span class="hljs-keyword">var</span> Commenter = db.model(<span class="hljs-string">'commenter'</span>, {
+  comments: db.hasMany()
+});</code></pre>
+
+<p>The same basic configuration could also be achieved by putting most of the
+through relations on the <code>Site</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Site = db.model(<span class="hljs-string">'site'</span>, {
+  authors: db.hasMany(),
+  posts: db.hasMany({ through: <span class="hljs-string">'authors'</span> }),
+  comments: db.hasMany({ through: <span class="hljs-string">'posts'</span> }),
+  commenters: db.hasMany({ through: <span class="hljs-string">'comments'</span> }),
+});
+<span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">'author'</span>, {
+  site: db.belongsTo()
+  posts: db.hasMany(),
+});
+<span class="hljs-keyword">var</span> Post = db.model(<span class="hljs-string">'post'</span>, {
+  author: db.belongsTo(),
+  comments: db.hasMany(),
+});
+<span class="hljs-keyword">var</span> Comment = db.model(<span class="hljs-string">'comment'</span>, {
+  post: db.belongsTo(),
+  commenter: db.belongsTo(),
+});
+<span class="hljs-keyword">var</span> Commenter = db.model(<span class="hljs-string">'commenter'</span>, {
+  comments: db.hasMany()
+});</code></pre>
+
+
+<h3 id="limitations">Limitations</h3>
+<p>Through relationships only support create, add, remove, and clear methods when
+they are used for <a href="#many-to-many">many-to-many</a> relationships. For shortcuts
+like the example shown above, those methods will not be available.</p>
 <h2 id="methods">Methods</h2>
 <h3 id="-belongsto-"><code>#belongsTo</code></h3>
 <p>A belongs-to relationship adds the following properties and methods:</p>
