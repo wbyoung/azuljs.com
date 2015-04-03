@@ -90,6 +90,10 @@
                 </li>
               
                 <li>
+                  <a href="#-altertable-">#alterTable</a>
+                </li>
+              
+                <li>
                   <a href="#-droptable-">#dropTable</a>
                 </li>
               
@@ -240,6 +244,22 @@ behavior. Please open <a href="https://github.com/wbyoung/azul/issues">an
 issue</a> or pull request to see this happen sooner.
 </div>
 </div>
+
+<h4 id="-altertable-"><code>#alterTable</code></h4>
+<p>Alter existing tables. Pass the name of the table you want to alter and a callback
+that will receive a table object with which you will be able to create columns
+of different <a href="#field-types">field types</a> as well as drop existing columns.</p>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">'articles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.string(<span class="hljs-string">'title'</span>); <span class="hljs-comment">// add a title column</span>
+  table.drop(<span class="hljs-string">'body'</span>); <span class="hljs-comment">// drop the body column</span>
+});</code></pre>
+
+<ul>
+<li><code>drop</code> Drops a table column (<strong>not yet supported in SQLite3</strong>)</li>
+</ul>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">'articles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.drop(<span class="hljs-string">'title'</span>); <span class="hljs-comment">// drop the title column</span>
+});</code></pre>
 
 
 <h4 id="-droptable-"><code>#dropTable</code></h4>
