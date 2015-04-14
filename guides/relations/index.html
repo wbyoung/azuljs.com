@@ -402,21 +402,23 @@ exports.down = <span class="hljs-function"><span class="hljs-keyword">function</
   <span class="hljs-keyword">return</span> dropAppointments().then(dropPatients).then(dropDoctors);
 };</code></pre>
 
-<p>It is not necessary to actually define the model through which the many-to-many
-relationship is built. For instance, if you built a relationship between
-<em>assemblies</em> and <em>parts</em>, you could just do:</p>
+<p>In some cases, it may not be not necessary to define the model through which
+the many-to-many relationship is built. In this case, you can use the <code>join</code>
+option which will set up the required join model for you. For instance, if you
+built a relationship between <em>assemblies</em> and <em>parts</em>, you could just do:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Assembly = db.model(<span class="hljs-string">'assembly'</span>, {
   name: db.attr(),
-  assmeblies: db.hasMany({ through: <span class="hljs-string">'assmeblies_parts'</span> })
+  assmeblies: db.hasMany({ join: <span class="hljs-string">'assmeblies_parts'</span> })
 });
 
 <span class="hljs-keyword">var</span> Part = db.model(<span class="hljs-string">'part'</span>, {
   partNumber: db.attr(),
-  parts: db.hasMany({ through: <span class="hljs-string">'assmeblies_parts'</span> })
+  parts: db.hasMany({ join: <span class="hljs-string">'assmeblies_parts'</span> })
 });</code></pre>
 
 <p>Note, though, that the <code>assmeblies_parts</code> join table must be created in a
-migration.</p>
+migration. Also, Azul will actually create an <code>AssemblyPart</code> model for you and
+add the necessary <code>belongsTo</code> attributes.</p>
 <div class="panel panel-info">
 <div class="panel-heading">
   <span class="panel-title">Join Table Names</span>
