@@ -376,6 +376,13 @@
           </li>
         
           <li>
+            <a href="#-findorcreate-">#findOrCreate</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#-then-">#then</a>
             <ul>
               
@@ -759,6 +766,26 @@ defined on it:</p>
 <p>Find is a shortcut method to find a single result by primary key:</p>
 <pre><code class="hljs js">query.find(<span class="hljs-number">3</span>);
 query.where({ pk: <span class="hljs-number">3</span> }).limit(<span class="hljs-number">1</span>).fetchOne(); <span class="hljs-comment">// the same</span></code></pre>
+
+<h3 id="-findorcreate-"><code>#findOrCreate</code></h3>
+<p>Find or create is a shortcut method to use with models to find a single result
+or create one if it does not exist:</p>
+<pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">'Azul.js 1.0'</span> });</code></pre>
+
+<p>This is roughly the same as recovering from a failure if the object was not
+found:</p>
+<pre><code class="hljs js">Article.objects.where({ title: <span class="hljs-string">'Azul.js 1.0'</span> }).limit(<span class="hljs-number">1</span>).fetchOne()
+.catch(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+  <span class="hljs-keyword">if</span> (e.code === <span class="hljs-string">'NO_RESULTS_FOUND'</span>) {
+    <span class="hljs-keyword">return</span> Article.create({ title: <span class="hljs-string">'Azul.js 1.0'</span> });
+  }
+  <span class="hljs-keyword">else</span> { <span class="hljs-keyword">throw</span> e; }
+});</code></pre>
+
+<p>You may also pass a second argument to this method, <em>defaults</em> that will be
+used if the object is created. For instance:</p>
+<pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">'Azul.js 1.0'</span> }, { author: <span class="hljs-string">'Whitney'</span> });</code></pre>
+
 
 <h3 id="-then-"><code>#then</code></h3>
 <p>Query objects are <em>thenable</em> objects, meaning that you can return them inside
