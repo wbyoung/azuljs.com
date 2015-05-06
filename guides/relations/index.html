@@ -586,7 +586,7 @@ remain in memory until <a href="/guides/models/#-save-">saved</a>:</p>
 <p>This will actually be generated from the <code>foreignKey</code> option given to the
 <code>belongsTo</code>. For instance:</p>
 <pre><code class="hljs js">Article.reopen({
-  author: db.belongsTo({ foreignKey: <span class="hljs-string">'writer_id'</span> })
+  author: db.belongsTo({ foreignKey: <span class="hljs-string">'writerId'</span> })
 });
 
 Article.objects.with(<span class="hljs-string">'author'</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
@@ -594,6 +594,13 @@ Article.objects.with(<span class="hljs-string">'author'</span>).find(<span class
   article.writerId; <span class="hljs-comment">// =&gt; 7</span>
 });
 <span class="hljs-comment">// assuming article 1 is written by person 7</span></code></pre>
+
+<p>To change the name of the foreign key field that&#39;s used in the database, simply
+specify this attribute yourself when you setup the relationship:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+  author: db.belongsTo(),
+  authorId: db.attr(<span class="hljs-string">'author_dbid'</span>),
+});</code></pre>
 
 <h4 id="-createassociation-"><code>#createAssociation</code></h4>
 <p>Create a new object of the relationship type.</p>
