@@ -162,48 +162,6 @@
     </li>
   
     <li>
-      <a href="#generic-queries">Generic Queries</a>
-      <ul>
-        
-          <li>
-            <a href="#-all-">#all</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-          <li>
-            <a href="#-select-">#select</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-          <li>
-            <a href="#-insert-">#insert</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-          <li>
-            <a href="#-update-">#update</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-          <li>
-            <a href="#-delete-">#delete</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-      </ul>
-    </li>
-  
-    <li>
       <a href="#complex-conditions">Complex Conditions</a>
       <ul>
         
@@ -463,8 +421,50 @@
     </li>
   
     <li>
-      <a href="#raw-queries">Raw Queries</a>
+      <a href="#generic-queries">Generic Queries</a>
       <ul>
+        
+          <li>
+            <a href="#-all-">#all</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-select-">#select</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-insert-">#insert</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-update-">#update</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-delete-">#delete</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-raw-">#raw</a>
+            <ul>
+              
+            </ul>
+          </li>
         
       </ul>
     </li>
@@ -640,57 +640,6 @@ is useful when <a href="#-join-">joining relations</a>.</p>
 <p>Create a new query that has the exact same conditions as this query. This
 method can be used to ensure that executing a query will not use a
 <a href="#caching">cached result</a>.</p>
-<h2 id="generic-queries">Generic Queries</h2>
-<p><a href="#data-queries">Data queries</a> can actually be used via models very easily as
-well. This allows for more specific queries to be built conveniently using the
-models that you&#39;ve already defined.</p>
-<p>There are a few main differences between these and
-<a href="#data-queries">standard data queries</a>:</p>
-<ol>
-<li>These queries are aware of the model class &amp; will provide model query features like <a href="#automatic-joining">automatic joining</a>.</li>
-<li>You are not required to provide a table name.</li>
-<li>The resulting data will always be an array.</li>
-<li>The resulting data will be model objects for <code>all</code> and <code>raw</code> queries.</li>
-</ol>
-<h3 id="-all-"><code>#all</code></h3>
-<p>Create a <a href="#select">select</a> query bound to this model that will transform the
-resulting data into model objects. The resulting query is synonymous with the
-original, but can be used for style and clarity:</p>
-<pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });
-Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });</code></pre>
-
-<h3 id="-select-"><code>#select</code></h3>
-<p>Create a <a href="#select">select</a> query bound to this model that <em>does not</em> convert
-the resulting data into model objects (unlike <a href="#-all-"><code>all</code></a>).</p>
-<pre><code class="hljs js">Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
-  <span class="hljs-built_in">console</span>.log(rows);
-});
-<span class="hljs-comment">// ~&gt; [ { id: 4, title: 'Breaking News' } ]</span></code></pre>
-
-<h3 id="-insert-"><code>#insert</code></h3>
-<p>Create an <a href="#insert">insert</a> query bound to this model.</p>
-<pre><code class="hljs js">Article.objects.insert({ title: <span class="hljs-string">'News'</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
-  <span class="hljs-built_in">console</span>.log(rows);
-});
-<span class="hljs-comment">// -&gt; insert into "articles" ("title") values (?) returning "id"</span>
-<span class="hljs-comment">// !&gt; ['News']</span>
-<span class="hljs-comment">// ~&gt; [ { id: 9 } ]</span></code></pre>
-
-<h3 id="-update-"><code>#update</code></h3>
-<p>Create an <a href="#update">update</a> query bound to this model.</p>
-<p>For instance, you could update a single attribute of a specific object in the
-database:</p>
-<pre><code class="hljs js">Article.objects.where({ pk: article.pk }).update({ title: <span class="hljs-string">'Breaking News'</span> });
-<span class="hljs-comment">// -&gt; update "articles" set "title" = ? where "id" = ?</span>
-<span class="hljs-comment">// !&gt; ['Breaking News', 1]</span></code></pre>
-
-<h3 id="-delete-"><code>#delete</code></h3>
-<p>Create an <a href="#delete">delete</a> query bound to this model.</p>
-<p>To delete multiple records in the database via one query:</p>
-<pre><code class="hljs js">Comment.objects.where({ spam: <span class="hljs-literal">true</span> }).delete();
-<span class="hljs-comment">// -&gt; delete from "comments" where "spam" = ?</span>
-<span class="hljs-comment">// !&gt; [true]</span></code></pre>
-
 <h2 id="complex-conditions">Complex Conditions</h2>
 <p>Complex conditions can be created using <code>azul.w</code>. For instance, you would use
 <code>w</code> to create an <em>OR</em>:</p>
@@ -998,11 +947,64 @@ Comment.objects.order(<span class="hljs-string">'article.title'</span>);</code><
 <li><a href="#-order-"><code>order</code></a></li>
 <li><a href="#-groupby-"><code>groupBy</code></a></li>
 </ul>
-<h2 id="raw-queries">Raw Queries</h2>
+<h2 id="generic-queries">Generic Queries</h2>
+<p>More generic queries, similar to <a href="#data-queries">data queries</a>, can actually be
+used via models very easily as well. This allows for more specific queries to
+be built conveniently using the models that you&#39;ve already defined.</p>
+<p>There are a few main differences between these and
+<a href="#data-queries">standard data queries</a>:</p>
+<ol>
+<li>These queries are aware of the model class &amp; will provide model query features like <a href="#automatic-joining">automatic joining</a>.</li>
+<li>The resulting data will always be an array.</li>
+<li>The resulting data will be model objects for <code>all</code> and <code>raw</code> queries.</li>
+<li>You do not provide a table name.</li>
+</ol>
+<h3 id="-all-"><code>#all</code></h3>
+<p>Create a <a href="#select">select query</a> bound to this model that will transform the
+resulting data into model objects. The resulting query is synonymous with the
+original, but can be used for style and clarity:</p>
+<pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });
+Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });</code></pre>
+
+<h3 id="-select-"><code>#select</code></h3>
+<p>Create a <a href="#select">select query</a> bound to this model that <em>does not</em> convert
+the resulting data into model objects.</p>
+<pre><code class="hljs js">Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(rows);
+});
+<span class="hljs-comment">// ~&gt; [ { id: 4, title: 'Breaking News' } ]</span></code></pre>
+
+<h3 id="-insert-"><code>#insert</code></h3>
+<p>Create an <a href="#insert">insert query</a> bound to this model.</p>
+<pre><code class="hljs js">Article.objects.insert({ title: <span class="hljs-string">'News'</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(rows);
+});
+<span class="hljs-comment">// -&gt; insert into "articles" ("title") values (?) returning "id"</span>
+<span class="hljs-comment">// !&gt; ['News']</span>
+<span class="hljs-comment">// ~&gt; [ { id: 9 } ]</span></code></pre>
+
+<h3 id="-update-"><code>#update</code></h3>
+<p>Create an <a href="#update">update query</a> bound to this model.</p>
+<p>For instance, you could update a single attribute of a specific object in the
+database:</p>
+<pre><code class="hljs js">Article.objects.where({ pk: article.pk }).update({ title: <span class="hljs-string">'Breaking News'</span> });
+<span class="hljs-comment">// -&gt; update "articles" set "title" = ? where "id" = ?</span>
+<span class="hljs-comment">// !&gt; ['Breaking News', 1]</span></code></pre>
+
+<h3 id="-delete-"><code>#delete</code></h3>
+<p>Create an <a href="#delete">delete query</a> bound to this model.</p>
+<p>To delete multiple records in the database via one query:</p>
+<pre><code class="hljs js">Comment.objects.where({ spam: <span class="hljs-literal">true</span> }).delete();
+<span class="hljs-comment">// -&gt; delete from "comments" where "spam" = ?</span>
+<span class="hljs-comment">// !&gt; [true]</span></code></pre>
+
+<h3 id="-raw-"><code>#raw</code></h3>
+<p>Create a <a href="#raw">raw query</a> bound to this model that will transform the
+resulting data into model objects.</p>
+<p>Be very cautious of <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> when using raw queries.</p>
 <p>Sometimes you may need to execute raw SQL queries. While this is discouraged,
 it can still be done. Raw queries on models are expected to be <code>SELECT</code>
-queries. For other types of SQL queries, see <a href="#non-model-queries-results">non-model queries &amp;
-results</a>.</p>
+queries. For other types of SQL queries, use <a href="#data-queries">data queries</a>.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects
   .raw(<span class="hljs-string">'SELECT * FROM "articles" WHERE "id" = ?'</span>, [<span class="hljs-number">1</span>]);
 
@@ -1010,7 +1012,6 @@ query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">functi
   <span class="hljs-comment">// articles is still an array of article objects</span>
 });</code></pre>
 
-<p>Be very cautious of <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> when using raw queries.</p>
 <h2 id="data-queries">Data Queries</h2>
 <p>At times, it may be useful to execute more basic queries. Azul.js provides
 <em>data queries</em> that return simple data rather than model objects.</p>
