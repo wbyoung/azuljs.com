@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Azul.js &mdash; Managers</title>
+    <title>Azul.js &mdash; Backends</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -33,7 +33,7 @@
           <ul class="nav navbar-nav">
             <li ><a href="/#overview">Overview</a></li>
             <li ><a href="/getting-started/">Getting Started</a></li>
-            <li class="active" class="dropdown">
+            <li  class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/guides/models/">Models</a></li>
@@ -60,7 +60,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Managers</h1>
+    <h1>Backends</h1>
   </div>
 </div>
 
@@ -73,15 +73,43 @@
   <ul>
   
     <li>
-      <a href="#basic-example">Basic Example</a>
+      <a href="#postgresql">PostgreSQL</a>
       <ul>
         
       </ul>
     </li>
   
     <li>
-      <a href="#overriding-the-default-manager">Overriding the Default Manager</a>
+      <a href="#mysql">MySQL</a>
       <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#sqlite3">SQLite3</a>
+      <ul>
+        
+          <li>
+            <a href="#sqlite3--schema-altertable-">Schema#alterTable</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3--time-">time</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3--datetime-">dateTime</a>
+            <ul>
+              
+            </ul>
+          </li>
         
       </ul>
     </li>
@@ -92,56 +120,43 @@
 </div>
 <div class="col-sm-8 col-sm-pull-3">
 
-<h1 id="managers">Managers</h1>
-<p>Managers allow you to pre-configure queries for collections of objects that
-are frequently accessed. You can define new collections on your model and
-also have the ability to override the default <code>objects</code> collection.</p>
-<h2 id="basic-example">Basic Example</h2>
-<p>For example, setting up custom managers to allow quick access to
-<code>Person.men</code> and <code>Person.women</code> would be done like so:</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> Manager = azul.manager;
+<h1 id="backends">Backends</h1>
+<h2 id="postgresql">PostgreSQL</h2>
+<p>All features are known to work with PostgreSQL.</p>
+<h2 id="mysql">MySQL</h2>
+<p>All features are known to work with MySQL.</p>
+<h2 id="sqlite3">SQLite3</h2>
+<p>There are a few features that are currently not supported in SQLite3. If you&apos;d
+like to see these improved, please open <a href="https://github.com/wbyoung/azul/issues">an issue</a> or send over a
+<a href="https://github.com/wbyoung/azul/pulls">pull request</a> with support.</p>
+<h3 id="sqlite3--schema-altertable-"><code>Schema#alterTable</code></h3>
+<p>SQLite3 does not have native support for altering tables. We should be able to
+work around this <a href="https://github.com/wbyoung/azul/issues/15">and make it work</a>. Please feel
+free to <a href="https://github.com/wbyoung/azul/pulls">contribute</a>.</p>
+<h3 id="sqlite3--time-"><code>time</code></h3>
+<p>SQLite3 stores <code>time</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value.</p>
+<p>One way around this is to use <a href="/guides/core/#objects-extending-classes-properties">properties</a> to convert
+the value as it comes back from the database:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> property = azul.Core.property;
 
-<span class="hljs-keyword">var</span> FemaleManager = Manager.extend({
-  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ sex: <span class="hljs-string">&apos;female&apos;</span> });
-  }
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  publishedValue: db.attr(<span class="hljs-string">&apos;published&apos;</span>),
+  published: property(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">this</span>.publishedValue);
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+    <span class="hljs-keyword">this</span>.publishedValue = value.getTime();
+  })
 });
 
-<span class="hljs-keyword">var</span> MaleManager = Manager.extend({
-  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ sex: <span class="hljs-string">&apos;male&apos;</span> });
-  }
-});
+<span class="hljs-keyword">var</span> article = Article.create({ published: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() });</code></pre>
 
-<span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">&apos;person&apos;</span>).reopenClass({
-  women: FemaleManager.create(),
-  men: MaleManager.create()
-});
-
-Person.men.where({ <span class="hljs-string">&apos;age[lt]&apos;</span>: <span class="hljs-number">12</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
-  <span class="hljs-comment">// people is all men under the age of 12</span>
-});
-
-Person.women.where({ <span class="hljs-string">&apos;age[gt]&apos;</span>: <span class="hljs-number">25</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
-  <span class="hljs-comment">// people is all women over the age of 25</span>
-});</code></pre>
-
-<h2 id="overriding-the-default-manager">Overriding the Default Manager</h2>
-<p>It is also possible to override the default <code>objects</code>. For instance, having an
-<code>Article</code> model default to all <code>published</code> articles would be done like so:</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> PublishedManager = Manager.extend({
-  query: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super().where({ published: <span class="hljs-literal">true</span> });
-  }
-});
-
-Article.reopenClass({
-  objects: PublishedManager.create(),
-  allObjects: Manager.create()
-});</code></pre>
-
-<p>Note that <code>allObjects</code> has been added as a simple manager, so that it is still
-possible to access articles that have not been published.</p>
+<h3 id="sqlite3--datetime-"><code>dateTime</code></h3>
+<p>SQLite3 stores <code>dateTime</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value. See the example in the
+<a href="#sqlite3--time-">section above</a>.</p>
 
 
 </div>

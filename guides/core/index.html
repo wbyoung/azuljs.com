@@ -42,7 +42,9 @@
                 <li><a href="/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
                 <li><a href="/guides/managers/">Managers</a></li>
+                <li><a href="/guides/managers/">Transactions</a></li>
                 <li class="divider"></li>
+                <li><a href="/guides/backends/">Backends</a></li>
                 <li><a href="/guides/core/">Core</a></li>
               </ul>
             </li>
@@ -75,34 +77,34 @@
       <ul>
         
           <li>
-            <a href="#creating-instances">Creating Instances</a>
+            <a href="#objects-creating-instances">Creating Instances</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#extending-classes">Extending Classes</a>
+            <a href="#objects-extending-classes">Extending Classes</a>
             <ul>
               
                 <li>
-                  <a href="#instance-methods">Instance Methods</a>
+                  <a href="#objects-extending-classes-instance-methods">Instance Methods</a>
                 </li>
               
                 <li>
-                  <a href="#class-methods">Class Methods</a>
+                  <a href="#objects-extending-classes-class-methods">Class Methods</a>
                 </li>
               
                 <li>
-                  <a href="#calling-_super-">Calling _super</a>
+                  <a href="#objects-extending-classes-calling-_super-">Calling _super</a>
                 </li>
               
                 <li>
-                  <a href="#mixins">Mixins</a>
+                  <a href="#objects-extending-classes-mixins">Mixins</a>
                 </li>
               
                 <li>
-                  <a href="#properties">Properties</a>
+                  <a href="#objects-extending-classes-properties">Properties</a>
                 </li>
               
             </ul>
@@ -124,33 +126,33 @@ is relevant for developers using the library.</p>
 <p>Azul.js provides methods for creating an object-oriented class hierarchy that
 is similar to other JavaScript libraries. It is heavily influenced by
 <a href="http://emberjs.com/guides/object-model/classes-and-instances/"><code>Ember.Object</code></a>.</p>
-<h3 id="creating-instances">Creating Instances</h3>
+<h3 id="objects-creating-instances">Creating Instances</h3>
 <p>Instances can be instantiated via the <code>create</code> class method and will cause the
 <code>init</code> method to be called with the same arguments. For instance:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = Class.extend({
   init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(firstName, lastName)</span> </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'creating the person %s %s'</span>, firstName, lastName);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;creating the person %s %s&apos;</span>, firstName, lastName);
   }
 });
 
-<span class="hljs-keyword">var</span> person = Person.create(<span class="hljs-string">'Whitney'</span>, <span class="hljs-string">'Young'</span>);</code></pre>
+<span class="hljs-keyword">var</span> person = Person.create(<span class="hljs-string">&apos;Whitney&apos;</span>, <span class="hljs-string">&apos;Young&apos;</span>);</code></pre>
 
-<h3 id="extending-classes">Extending Classes</h3>
+<h3 id="objects-extending-classes">Extending Classes</h3>
 <p>The base class object, <code>Class</code> is accessible for you to extend. For instance:</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> azul = <span class="hljs-built_in">require</span>(<span class="hljs-string">'azul'</span>),
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> azul = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul&apos;</span>),
     Class = azul.core.Class;
 
 <span class="hljs-keyword">var</span> Person = Class.extend({
   speak: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hello world'</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;hello world&apos;</span>);
   }
 });</code></pre>
 
-<h4 id="instance-methods">Instance Methods</h4>
+<h4 id="objects-extending-classes-instance-methods">Instance Methods</h4>
 <p>Instance methods can be added via <code>reopen</code>:</p>
 <pre><code class="hljs js">Person.reopen({
   walk: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'The person is walking'</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;The person is walking&apos;</span>);
   }
 });
 
@@ -158,25 +160,25 @@ is similar to other JavaScript libraries. It is heavily influenced by
 person.walk();</code></pre>
 
 <p>Instance methods can also be added via the first argument to <code>Class.extend</code> as
-shown above in <a href="#creating-instances">Creating Instances</a>.</p>
-<h4 id="class-methods">Class Methods</h4>
+shown above in <a href="#objects-creating-instances">Creating Instances</a>.</p>
+<h4 id="objects-extending-classes-class-methods">Class Methods</h4>
 <p>Class methods, or static methods, can be added to a class via <code>reopenClass</code>:</p>
 <pre><code class="hljs js">Person.reopenClass({
   createWoman: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Person.create({ gender: <span class="hljs-string">'female'</span> });
+    <span class="hljs-keyword">return</span> Person.create({ gender: <span class="hljs-string">&apos;female&apos;</span> });
   },
   createMan: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Person.create({ gender: <span class="hljs-string">'male'</span> });
+    <span class="hljs-keyword">return</span> Person.create({ gender: <span class="hljs-string">&apos;male&apos;</span> });
   }
 });</code></pre>
 
 <p>Class methods can also be added via the second argument to <code>Class.extend</code>.</p>
-<h4 id="calling-_super-">Calling <code>_super</code></h4>
+<h4 id="objects-extending-classes-calling-_super-">Calling <code>_super</code></h4>
 <p>All methods can call <code>_super</code> to call the method that was previously defined on
 the class or parent class.</p>
-<h4 id="mixins">Mixins</h4>
+<h4 id="objects-extending-classes-mixins">Mixins</h4>
 <p>When calling <code>_super</code>, most object-oriented systems will attempt to call the
-method from the parent class. Azul&#39;s <code>_super</code> will call the method that it
+method from the parent class. Azul&apos;s <code>_super</code> will call the method that it
 <em>overrides</em>. That method could actually be on the <em>same class</em> rather than the
 parent class. This allows you to easily program with a mixin style:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Mixin = azul.core.Mixin;
@@ -184,13 +186,13 @@ parent class. This allows you to easily program with a mixin style:</p>
 <span class="hljs-keyword">var</span> ValidationMixin = Mixin.create({
   save: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.validateForSave()) {
-      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Validation failed!'</span>);
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;Validation failed!&apos;</span>);
     }
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._super();
   }
 });
 
-<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">'article'</span>, {
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
   updatedAt: db.attr(),
 
   save: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
@@ -207,7 +209,7 @@ Article.reopen(ValidationMixin);</code></pre>
 <li><code>Article#save</code> (overridden by <code>ValidationMixin</code>)</li>
 <li><code>Model#save</code> (overridden by <code>Article</code> class)</li>
 </ol>
-<h4 id="properties">Properties</h4>
+<h4 id="objects-extending-classes-properties">Properties</h4>
 <p>Properties can easily be added to objects as well. Imagine a person who has a
 given first and last names that cannot change throughout their lifetime, but
 also has a nickname that can change:</p>
@@ -234,7 +236,7 @@ also has a nickname that can change:</p>
   fullName: property(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">// getter only (readonly)</span>
     <span class="hljs-keyword">var</span> first = <span class="hljs-keyword">this</span>.nickname || <span class="hljs-keyword">this</span>.firstName;
     <span class="hljs-keyword">var</span> last = <span class="hljs-keyword">this</span>.lastName;
-    <span class="hljs-keyword">return</span> first + <span class="hljs-string">' '</span> + last;
+    <span class="hljs-keyword">return</span> first + <span class="hljs-string">&apos; &apos;</span> + last;
   })
 });</code></pre>
 
