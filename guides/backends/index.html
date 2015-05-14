@@ -132,6 +132,13 @@
             </ul>
           </li>
         
+          <li>
+            <a href="#sqlite3-lookups">Lookups</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
       </ul>
     </li>
   
@@ -189,6 +196,20 @@ the value as it comes back from the database:</p>
 distinguishing this type in any way. Data will always be read from the database
 as numbers even if a date was used to store the value. See the example in the
 <a href="#sqlite3--time-">section above</a>.</p>
+<h3 id="sqlite3-lookups">Lookups</h3>
+<p>The following lookups are unsupported without
+<a href="https://github.com/mapbox/node-sqlite3/wiki/Extensions">an extension</a> that adds a
+<a href="https://www.sqlite.org/c3ref/create_function.html">SQL function</a>:</p>
+<ul>
+<li><code>regex</code> and <code>iregex</code> require a <code>REGEXP(pattern, value)</code> function</li>
+<li><code>year</code>requires a <code>YEAR(date)</code> function</li>
+<li><code>month</code>requires a <code>MONTH(date)</code> function</li>
+<li><code>day</code>requires a <code>DAY(date)</code> function</li>
+<li><code>weekday</code>requires a <code>WEEKDAY(date)</code> function</li>
+<li><code>hour</code>requires a <code>HOUR(date)</code> function</li>
+<li><code>minute</code>requires a <code>MINUTE(date)</code> function</li>
+<li><code>second</code>requires a <code>SECOND(date)</code> function</li>
+</ul>
 
 
 </div>
