@@ -72,6 +72,62 @@
 
   <ul>
   
+    <li>
+      <a href="#basics">Basics</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods">Methods</a>
+      <ul>
+        
+          <li>
+            <a href="#methods--begin-">begin</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods--commit-">commit</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods--rollback-">rollback</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods--transaction-">transaction</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#with-models">With Models</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#nested-transactions">Nested Transactions</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
   </ul>
 
 
@@ -79,7 +135,63 @@
 <div class="col-sm-8 col-sm-pull-3">
 
 <h1 id="transactions">Transactions</h1>
-<p>Coming soon...</p>
+<h2 id="basics">Basics</h2>
+<p>Transactions are straightforward to use in Azul.js. You simply create a new
+transaction query with <a href="#methods--begin-"><code>begin</code></a>, and execute that. Any
+additional queries you want to be run in the same transaction simply require
+a call to <a href="#methods--transaction-"><code>transaction</code></a>. When you are finished with
+the transaction, you must either <a href="#methods--commit-"><code>commit</code></a> or
+<a href="#methods--rollback-"><code>rollback</code></a>. Here&apos;s a quick example:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> begin = db.query.begin();
+<span class="hljs-keyword">var</span> transaction = begin;
+
+begin.execute()
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> User.objects
+    .transaction(transaction) <span class="hljs-comment">// associate with transaction</span>
+    .update({ username: <span class="hljs-string">&apos;azul&apos;</span> }).where({ pk: <span class="hljs-number">25</span> });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> profile.save({ transaction: transaction });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.commit(); })
+.catch(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.rollback(); });</code></pre>
+
+<h2 id="methods">Methods</h2>
+<h3 id="methods--begin-"><code>begin</code></h3>
+<p>Create a new transaction object &amp; begin query. Make sure you execute this query
+before any queries within the transaction.</p>
+<h3 id="methods--commit-"><code>commit</code></h3>
+<p>Create a new commit query. This must be done on a query associated with a
+transaction.</p>
+<h3 id="methods--rollback-"><code>rollback</code></h3>
+<p>Create a new rollback query. This must be done on a query associated with a
+transaction.</p>
+<h3 id="methods--transaction-"><code>transaction</code></h3>
+<p>When called with no arguments, this gets the transaction associated with the
+current query.</p>
+<p>When called with an argument, it creates a new query that uses the given
+transaction (or that query&apos;s transaction).</p>
+<h2 id="with-models">With Models</h2>
+<p>As shown in the initial example, you can pass <code>transaction</code> as an option when
+you <a href="/guides/models/#methods-properties--save-"><code>save</code></a> a model.</p>
+<h2 id="nested-transactions">Nested Transactions</h2>
+<p>Azul.js supports nested transactions as well. Simply execute additional begins:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> begin = db.query.begin();
+<span class="hljs-keyword">var</span> transaction = begin.transaction();
+
+<span class="hljs-keyword">var</span> begin = db.query.begin();
+<span class="hljs-keyword">var</span> transaction = begin;
+
+begin.execute()
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* something else */</span> })
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.begin(); })
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* something else */</span> })
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* something else */</span> })
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.commit(); })
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.commit(); })
+.catch(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.rollback(); });</code></pre>
+
 
 
 </div>
