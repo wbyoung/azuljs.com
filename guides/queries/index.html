@@ -708,12 +708,14 @@ case sensitive:</p>
 <pre><code class="hljs js"><span class="hljs-comment">// currently interpreted as case sensitive, but may change in the future</span>
 Article.objects.where({ <span class="hljs-string">&apos;title[regex]&apos;</span>: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--iregex-"><code>iRegex</code></h3>
 <p>A case-insensitive regular expression test.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[iRegex]&apos;</span>: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
 
 <p>While regular expression flags are currently ignored, it is recommended that
 you use a case insensitive flag on your regex for clarity.</p>
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--between-"><code>between</code></h3>
 <p>A test for a value being between two values (inclusive).</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[between]&apos;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
@@ -748,32 +750,39 @@ Article.objects.where({ <span class="hljs-string">&apos;id[isNull]&apos;</span>:
 <p>Test for a specific year.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[year]&apos;</span>: <span class="hljs-number">2014</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--month-"><code>month</code></h3>
 <p>Test for a specific month. (1 - 12)</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[month]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--day-"><code>day</code></h3>
 <p>Test for a specific day.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[day]&apos;</span>: <span class="hljs-number">7</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--weekday-"><code>weekday</code></h3>
 <p>Test for a specific weekday.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-number">1</span> });
 Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;mon&apos;</span> });
 Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;monday&apos;</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--hour-"><code>hour</code></h3>
 <p>Test for a specific hour.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[hour]&apos;</span>: <span class="hljs-number">22</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--minute-"><code>minute</code></h3>
 <p>Test for a specific minute.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[minute]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--second-"><code>second</code></h3>
 <p>Test for a specific second.</p>
 <pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[second]&apos;</span>: <span class="hljs-number">54</span> });</code></pre>
 
+<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h2 id="executing">Executing</h2>
 <h3 id="executing--execute-"><code>#execute</code></h3>
 <p>Executes a query. Once executed, subsequent calls will use the result from the
