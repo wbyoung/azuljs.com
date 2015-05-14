@@ -157,6 +157,37 @@
             </ul>
           </li>
         
+          <li>
+            <a href="#migration-basics-field-options">Field Options</a>
+            <ul>
+              
+                <li>
+                  <a href="#migration-basics-field-options--primarykey-">primaryKey</a>
+                </li>
+              
+                <li>
+                  <a href="#migration-basics-field-options--pk-">pk</a>
+                </li>
+              
+                <li>
+                  <a href="#migration-basics-field-options--notnull-">notNull</a>
+                </li>
+              
+                <li>
+                  <a href="#migration-basics-field-options--unique-">unique</a>
+                </li>
+              
+                <li>
+                  <a href="#migration-basics-field-options--default-">default</a>
+                </li>
+              
+                <li>
+                  <a href="#migration-basics-field-options--references-">references</a>
+                </li>
+              
+            </ul>
+          </li>
+        
       </ul>
     </li>
   
@@ -324,6 +355,29 @@ both the date and time components of a date.</p>
 <p>If using options, you must specify at least the precision. Different adapters
 will handle options slightly differently. It is recommended to either omit both
 the <code>precision</code> and the <code>scale</code> or provide both for most consistent results.</p>
+<h3 id="migration-basics-field-options">Field Options</h3>
+<p>Options are enabled by chaining any of the following methods onto the end of
+the field definition as shown in
+<a href="#migration-basics-methods--createtable-">the create table example</a>.</p>
+<h4 id="migration-basics-field-options--primarykey-"><code>primaryKey</code></h4>
+<p>Mark this column as being a primary key column.</p>
+<h4 id="migration-basics-field-options--pk-"><code>pk</code></h4>
+<p>Alias of <a href="#migration-basics-field-options--primarykey-"><code>primaryKey</code></a>.</p>
+<h4 id="migration-basics-field-options--notnull-"><code>notNull</code></h4>
+<p>Mark this column as not accepting null values.</p>
+<h4 id="migration-basics-field-options--unique-"><code>unique</code></h4>
+<p>Mark this column as containing unique values.</p>
+<h4 id="migration-basics-field-options--default-"><code>default</code></h4>
+<p>Set the default value for this column.</p>
+<pre><code class="hljs js">table.string(<span class="hljs-string">&apos;name&apos;</span>).default(<span class="hljs-string">&apos;Anonymous&apos;</span>)</code></pre>
+
+<p><em>Security Note:</em> This method accepts only number and strings. Azul.js will
+escape the value that&apos;s sent to it to prevent security vulnerabilities, but we
+still recommend against sending user-input to this method.</p>
+<h4 id="migration-basics-field-options--references-"><code>references</code></h4>
+<p>Set the column that this column references.</p>
+<pre><code class="hljs js">table.integer(<span class="hljs-string">&apos;article_id&apos;</span>).references(<span class="hljs-string">&apos;articles.id&apos;</span>)</code></pre>
+
 
 
 </div>
