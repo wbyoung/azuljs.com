@@ -472,6 +472,20 @@
     </li>
   
     <li>
+      <a href="#transactions">Transactions</a>
+      <ul>
+        
+          <li>
+            <a href="#transactions--transaction-">#transaction</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
       <a href="#data-queries">Data Queries</a>
       <ul>
         
@@ -1026,6 +1040,15 @@ query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">functi
   <span class="hljs-comment">// articles is still an array of article objects</span>
 });</code></pre>
 
+<h2 id="transactions">Transactions</h2>
+<p>Transaction objects can be created via <code>db.transaction()</code> or
+<code>db.query.transaction()</code>.</p>
+<p>For more details <a href="/guides/transactions/">see the transactions guide</a>.</p>
+<h3 id="transactions--transaction-"><code>#transaction</code></h3>
+<p>When called with no arguments, this gets the transaction associated with the
+current query.</p>
+<p>When called with an argument, it creates a new query that uses the given
+transaction (or that query&apos;s transaction).</p>
 <h2 id="data-queries">Data Queries</h2>
 <p>At times, it may be useful to execute more basic queries. Azul.js provides
 <em>data queries</em> that return simple data rather than model objects.</p>
