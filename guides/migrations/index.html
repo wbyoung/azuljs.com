@@ -295,7 +295,7 @@ well as drop existing columns.</p>
   table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
 });</code></pre>
 
-<p><em>Not supported in [SQLite3][].</em></p>
+<p><em>Not supported in <a href="/guides/backends/#sqlite3--schema-altertable-">SQLite3</a>.</em></p>
 <h4 id="migration-basics-methods--droptable-"><code>#dropTable</code></h4>
 <p>Drop existing tables.</p>
 <pre><code class="hljs js">schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);</code></pre>
@@ -330,14 +330,7 @@ columns.</p>
 <p>Boolean.</p>
 <h4 id="migration-basics-field-types--date-"><code>date</code></h4>
 <p>A date type that does not include a time.</p>
-<div class="panel panel-info">
-<div class="panel-heading"><span class="panel-title">SQLite3</span></div>
-<div class="panel-body">
-SQLite3 stores <code>date</code> as a number &amp; Azul.js does not
-currently support distinguishing this type in any way.
-</div>
-</div>
-
+<p><em>Quirks in <a href="/guides/backends/#sqlite3--date-">SQLite3</a>.</em></p>
 <h4 id="migration-basics-field-types--time-"><code>time</code></h4>
 <p>A time type that does not include a date.</p>
 <p><em>Quirks in <a href="/guides/backends/#sqlite3--time-">SQLite3</a>.</em></p>

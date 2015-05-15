@@ -126,6 +126,13 @@
           </li>
         
           <li>
+            <a href="#sqlite3--date-">date</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#sqlite3--time-">time</a>
             <ul>
               
@@ -186,8 +193,8 @@ free to <a href="https://github.com/wbyoung/azul/pulls">contribute</a>.</p>
 <li><code>minute</code>requires a <code>MINUTE(date)</code> function</li>
 <li><code>second</code>requires a <code>SECOND(date)</code> function</li>
 </ul>
-<h3 id="sqlite3--time-"><code>time</code></h3>
-<p>SQLite3 stores <code>time</code> as a number &amp; Azul.js does not currently support
+<h3 id="sqlite3--date-"><code>date</code></h3>
+<p>SQLite3 stores <code>date</code> as a number &amp; Azul.js does not currently support
 distinguishing this type in any way. Data will always be read from the database
 as numbers even if a date was used to store the value.</p>
 <p>One way around this is to use <a href="/guides/core/#objects-extending-classes-properties">properties</a> to convert
@@ -205,11 +212,16 @@ the value as it comes back from the database:</p>
 
 <span class="hljs-keyword">var</span> article = Article.create({ published: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() });</code></pre>
 
+<h3 id="sqlite3--time-"><code>time</code></h3>
+<p>SQLite3 stores <code>time</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value. See the example in the
+<a href="#sqlite3--date-">section above</a>.</p>
 <h3 id="sqlite3--datetime-"><code>dateTime</code></h3>
 <p>SQLite3 stores <code>dateTime</code> as a number &amp; Azul.js does not currently support
 distinguishing this type in any way. Data will always be read from the database
 as numbers even if a date was used to store the value. See the example in the
-<a href="#sqlite3--time-">section above</a>.</p>
+<a href="#sqlite3--date-">section above</a>.</p>
 
 
 </div>
