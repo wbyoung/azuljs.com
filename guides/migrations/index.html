@@ -225,7 +225,7 @@ run. It is expected that your <code>down</code> function reverse the changes tha
 function makes.</p>
 <p>An example migration looks like this:</p>
 <pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
-  <span class="hljs-keyword">return</span> schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
     table.serial(<span class="hljs-string">&apos;id&apos;</span>).primaryKey();
     table.string(<span class="hljs-string">&apos;title&apos;</span>);
     table.text(<span class="hljs-string">&apos;body&apos;</span>);
@@ -233,7 +233,7 @@ function makes.</p>
 };
 
 exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
-  <span class="hljs-keyword">return</span> schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);
+  schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);
 };</code></pre>
 
 <p>For examples of running multiple actions in a single migration, see the example
@@ -245,6 +245,13 @@ only true if your database supports transactions.</p>
 <p>The <code>up</code> and <code>down</code> functions are provided with a second argument. A
 <a href="/guides/queries/#data-queries">basic query</a> object that you can use if you need to
 execute raw SQL or perform schema changes that are not supported by Azul.js.</p>
+<p>Migrations support two modes of execution, <em>sequential</em> and <em>manual</em>. The
+examples given above are sequential. Each schema change will be executed
+in the order they are written. In this mode, you cannot write asynchronous code
+(no callbacks or promises). You therefore cannot obtain the results of any
+queries. If you need full control, <em>manual</em> mode can be enabled by simply
+returning a promise or <em>thenable</em> from the from the <code>up</code> or <code>down</code> function. In
+manual mode, you are responsible for executing all queries in your migration.</p>
 <h3 id="migration-basics-methods">Methods</h3>
 <h4 id="migration-basics-methods--createtable-"><code>#createTable</code></h4>
 <p>Create new tables. Pass the name of the table you want to create and a callback
