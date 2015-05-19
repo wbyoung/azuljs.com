@@ -302,6 +302,16 @@ well as drop existing columns.</p>
   table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
 });</code></pre>
 
+<ul>
+<li><code>rename</code> Renames a table column</li>
+</ul>
+<p>While not intuitive, a third argument, <code>type</code>, is required for a rename. This
+is because certain backends need this value in order to perform a rename. The
+value of the type <em>must match</em> the type used to create the column.</p>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.rename(<span class="hljs-string">&apos;title&apos;</span>, <span class="hljs-string">&apos;headline&apos;</span>, <span class="hljs-string">&apos;string&apos;</span>); <span class="hljs-comment">// rename the title column</span>
+});</code></pre>
+
 
 <h4 id="migration-basics-methods--droptable-"><code>#dropTable</code></h4>
 <p>Drop existing tables.</p>
