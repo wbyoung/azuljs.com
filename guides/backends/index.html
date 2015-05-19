@@ -112,13 +112,6 @@
           </li>
         
           <li>
-            <a href="#sqlite3--schema-altertable-">Schema#alterTable</a>
-            <ul>
-              
-            </ul>
-          </li>
-        
-          <li>
             <a href="#sqlite3-lookups">Lookups</a>
             <ul>
               
@@ -175,10 +168,6 @@ like to see these improved, please open <a href="https://github.com/wbyoung/azul
 <p>Using SQLite3, the only value that can be returned is the primary key if it is
 aliased to the <a href="https://www.sqlite.org/autoinc.html"><code>ROWID</code></a>. Requesting any other value will
 result in undefined behavior.</p>
-<h3 id="sqlite3--schema-altertable-"><code>Schema#alterTable</code></h3>
-<p>SQLite3 does not have native support for altering tables. We should be able to
-work around this <a href="https://github.com/wbyoung/azul/issues/15">and make it work</a>. Please feel
-free to <a href="https://github.com/wbyoung/azul/pulls">contribute</a>.</p>
 <h3 id="sqlite3-lookups">Lookups</h3>
 <p>The following lookups are unsupported without
 <a href="https://github.com/mapbox/node-sqlite3/wiki/Extensions">an extension</a> that adds a
