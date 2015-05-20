@@ -541,7 +541,7 @@ database.</p>
 and cache the execution result.</p>
 <p>To discuss each of these concepts, let&apos;s first take a look at a simple query:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects
-  .where({ <span class="hljs-string">&apos;title[contains]&apos;</span>: <span class="hljs-string">&apos;Azul&apos;</span> })
+  .where({ title$contains: <span class="hljs-string">&apos;Azul&apos;</span> })
   .order(<span class="hljs-string">&apos;-title&apos;</span>)
   .limit(<span class="hljs-number">5</span>);
 
@@ -693,15 +693,15 @@ using an <em>exact</em> comparison on <code>id</code> would mean using a propert
 <code>id[exact]</code>. See the examples below for more detail.</p>
 <h3 id="lookups--exact-"><code>exact</code></h3>
 <p>An exact comparison. This is assumed if no lookup is specified.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[exact]&apos;</span>: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$exact: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
 
 <h3 id="lookups--iexact-"><code>iExact</code></h3>
 <p>A case insensitive exact comparison.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[iExact]&apos;</span>: <span class="hljs-string">&apos;azul.js&apos;</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$iExact: <span class="hljs-string">&apos;azul.js&apos;</span> });</code></pre>
 
 <h3 id="lookups--contains-"><code>contains</code></h3>
 <p>A case-sensitive containment test.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[contains]&apos;</span>: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$contains: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
 
 <h3 id="lookups--icontains-"><code>iContains</code></h3>
 <p>A case-insensitive containment test.</p>
@@ -715,86 +715,86 @@ using an <em>exact</em> comparison on <code>id</code> would mean using a propert
 <p>A case-insensitive ends-with.</p>
 <h3 id="lookups--regex-"><code>regex</code></h3>
 <p>A case-sensitive regular expression test.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[regex]&apos;</span>: <span class="hljs-regexp">/[Aa]zul\.?js/</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$regex: <span class="hljs-regexp">/[Aa]zul\.?js/</span> });</code></pre>
 
 <p>Regular expression flags are currently ignored, so the following will still be
 case sensitive:</p>
 <pre><code class="hljs js"><span class="hljs-comment">// currently interpreted as case sensitive, but may change in the future</span>
-Article.objects.where({ <span class="hljs-string">&apos;title[regex]&apos;</span>: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
+Article.objects.where({ title$regex: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--iregex-"><code>iRegex</code></h3>
 <p>A case-insensitive regular expression test.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[iRegex]&apos;</span>: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$iRegex: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
 
 <p>While regular expression flags are currently ignored, it is recommended that
 you use a case insensitive flag on your regex for clarity.</p>
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--between-"><code>between</code></h3>
 <p>A test for a value being between two values (inclusive).</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[between]&apos;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$between: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
 
 <p>This works for all types where <code>BETWEEN</code> works in your database.</p>
 <h3 id="lookups--in-"><code>in</code></h3>
 <p>A test for a value being in an array of values.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[in]&apos;</span>: [<span class="hljs-string">&apos;Azul.js&apos;</span>, <span class="hljs-string">&apos;Azul&apos;</span>] });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title$<span class="hljs-keyword">in</span>: [<span class="hljs-string">&apos;Azul.js&apos;</span>, <span class="hljs-string">&apos;Azul&apos;</span>] });</code></pre>
 
 <h3 id="lookups--gt-"><code>gt</code></h3>
 <p>Greater than.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[gt]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$gt: <span class="hljs-number">5</span> });</code></pre>
 
 <h3 id="lookups--gte-"><code>gte</code></h3>
 <p>Greater than or equal to.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[gte]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$gte: <span class="hljs-number">5</span> });</code></pre>
 
 <h3 id="lookups--lt-"><code>lt</code></h3>
 <p>Less than.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[lt]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$lt: <span class="hljs-number">5</span> });</code></pre>
 
 <h3 id="lookups--lte-"><code>lte</code></h3>
 <p>Less than or equal to.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[lte]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$lte: <span class="hljs-number">5</span> });</code></pre>
 
 <h3 id="lookups--isnull-"><code>isNull</code></h3>
 <p>Test for <code>NULL</code> or <code>NOT NULL</code>.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[isNull]&apos;</span>: <span class="hljs-literal">true</span> });
-Article.objects.where({ <span class="hljs-string">&apos;id[isNull]&apos;</span>: <span class="hljs-literal">false</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ id$isNull: <span class="hljs-literal">true</span> });
+Article.objects.where({ id$isNull: <span class="hljs-literal">false</span> });</code></pre>
 
 <h3 id="lookups--year-"><code>year</code></h3>
 <p>Test for a specific year.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[year]&apos;</span>: <span class="hljs-number">2014</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$year: <span class="hljs-number">2014</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--month-"><code>month</code></h3>
 <p>Test for a specific month. (1 - 12)</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[month]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$month: <span class="hljs-number">10</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--day-"><code>day</code></h3>
 <p>Test for a specific day.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[day]&apos;</span>: <span class="hljs-number">7</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$day: <span class="hljs-number">7</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--weekday-"><code>weekday</code></h3>
 <p>Test for a specific weekday.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-number">1</span> });
-Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;mon&apos;</span> });
-Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;monday&apos;</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$weekday: <span class="hljs-number">1</span> });
+Article.objects.where({ createdAt$weekday: <span class="hljs-string">&apos;mon&apos;</span> });
+Article.objects.where({ createdAt$weekday: <span class="hljs-string">&apos;monday&apos;</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--hour-"><code>hour</code></h3>
 <p>Test for a specific hour.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[hour]&apos;</span>: <span class="hljs-number">22</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$hour: <span class="hljs-number">22</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--minute-"><code>minute</code></h3>
 <p>Test for a specific minute.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[minute]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$minute: <span class="hljs-number">10</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups--second-"><code>second</code></h3>
 <p>Test for a specific second.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[second]&apos;</span>: <span class="hljs-number">54</span> });</code></pre>
+<pre><code class="hljs js">Article.objects.where({ createdAt$second: <span class="hljs-number">54</span> });</code></pre>
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h2 id="executing">Executing</h2>
@@ -858,7 +858,7 @@ used if the object is created. For instance:</p>
 <p>Query objects are <em>thenable</em> objects, meaning that you can return them inside
 of a promise &amp; they will be executed before the next promise handler.</p>
 <pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
-  <span class="hljs-keyword">return</span> Comment.objects.where({ <span class="hljs-string">&apos;body[contains]&apos;</span>: article.title });
+  <span class="hljs-keyword">return</span> Comment.objects.where({ body$contains: article.title });
 })
 .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(comments)</span> </span>{
   <span class="hljs-comment">// all comments will have been found</span>
@@ -870,7 +870,7 @@ non-promise handlers. For readability, this is strongly discouraged. And
 returning explicitly executed queries inside of promise handlers is considered
 acceptable:</p>
 <pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
-  <span class="hljs-keyword">return</span> Comment.objects.where({ <span class="hljs-string">&apos;body[contains]&apos;</span>: article.title }).fetch();
+  <span class="hljs-keyword">return</span> Comment.objects.where({ body$contains: article.title }).fetch();
 })
 .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(comments)</span> </span>{
   <span class="hljs-comment">// all comments will have been found</span>
@@ -1108,7 +1108,7 @@ below.</li>
 
 db.select(<span class="hljs-string">&apos;cities&apos;</span>)
   .join(<span class="hljs-string">&apos;countries&apos;</span>, <span class="hljs-string">&apos;left&apos;</span>, { <span class="hljs-string">&apos;cities.country_id&apos;</span>: f(<span class="hljs-string">&apos;countries.id&apos;</span>) })
-  .where({ <span class="hljs-string">&apos;cities.name[icontains]&apos;</span>: <span class="hljs-string">&apos;city&apos;</span> })
+  .where({ <span class="hljs-string">&apos;cities.name$icontains&apos;</span>: <span class="hljs-string">&apos;city&apos;</span> })
 <span class="hljs-comment">// -&gt; select * from cities</span>
 <span class="hljs-comment">// -&gt; left join countries on cities.country_id = countries.id</span>
 <span class="hljs-comment">// -&gt; where cities.name ilike ?</span>

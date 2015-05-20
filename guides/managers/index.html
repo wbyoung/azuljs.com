@@ -118,11 +118,11 @@ also have the ability to override the default <code>objects</code> collection.</
   men: MaleManager.create()
 });
 
-Person.men.where({ <span class="hljs-string">&apos;age[lt]&apos;</span>: <span class="hljs-number">12</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
+Person.men.where({ age$lt: <span class="hljs-number">12</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
   <span class="hljs-comment">// people is all men under the age of 12</span>
 });
 
-Person.women.where({ <span class="hljs-string">&apos;age[gt]&apos;</span>: <span class="hljs-number">25</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
+Person.women.where({ age$gt: <span class="hljs-number">25</span> }).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(people)</span> </span>{
   <span class="hljs-comment">// people is all women over the age of 25</span>
 });</code></pre>
 
