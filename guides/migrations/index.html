@@ -226,7 +226,6 @@ function makes.</p>
 <p>An example migration looks like this:</p>
 <pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
   schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
-    table.serial(<span class="hljs-string">&apos;id&apos;</span>).primaryKey();
     table.string(<span class="hljs-string">&apos;title&apos;</span>);
     table.text(<span class="hljs-string">&apos;body&apos;</span>);
   });
@@ -258,7 +257,6 @@ manual mode, you are responsible for executing all queries in your migration.</p
 that will receive a table object with which you will be able to create columns
 of different <a href="#migration-basics-field-types">field types</a>.</p>
 <pre><code class="hljs js">schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
-  table.serial(<span class="hljs-string">&apos;id&apos;</span>).primaryKey();
   table.string(<span class="hljs-string">&apos;title&apos;</span>);
   table.text(<span class="hljs-string">&apos;body&apos;</span>);
 });</code></pre>
@@ -266,24 +264,25 @@ of different <a href="#migration-basics-field-types">field types</a>.</p>
 <p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
 <ul>
-<li><code>unlessExists</code> Will not create the table if it already exists.</li>
+<li><p><code>primaryKey</code> Defines the primary key of the table. The default is <code>id</code>. Pass
+<code>null</code> to create a table without a primary key. You can configure the primary
+key&apos;s type or options within your table definition callback. See below for an
+example.</p>
+</li>
+<li><p><code>pk</code> Alias of <code>primaryKey</code>.</p>
+</li>
+<li><p><code>unlessExists</code> Will not create the table if it already exists.</p>
+</li>
+<li><p><code>with</code> Allows delayed definition of the table columns &amp; indexes.</p>
+</li>
 </ul>
-<pre><code class="hljs js">schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
-   <span class="hljs-comment">/* ... */</span>
-}).unlessExists();</code></pre>
-
-<div class="panel panel-info">
-<div class="panel-heading">
-  <span class="panel-title"><code>id</code> Column</span>
-</div>
-<div class="panel-body">
-Currently every table you create will need to specify an <code>id</code>
-column. We&apos;ll be adding a feature soon to make it part of the table by
-default and a chainable method <code>withoutId</code> to stop the automatic
-behavior. Please open <a href="https://github.com/wbyoung/azul/issues">an
-issue</a> or pull request to see this happen sooner.
-</div>
-</div>
+<pre><code class="hljs js">schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>)
+.pk(<span class="hljs-string">&apos;identifier&apos;</span>)
+.unlessExists()
+.with(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+   table.serial(<span class="hljs-string">&apos;identifier&apos;</span>).notNull(); <span class="hljs-comment">// pk</span>
+   table.string(<span class="hljs-string">&apos;title&apos;</span>);
+});</code></pre>
 
 <h4 id="migration-basics-methods--altertable-"><code>#alterTable</code></h4>
 <p>Alter existing tables. Pass the name of the table you want to alter and a
