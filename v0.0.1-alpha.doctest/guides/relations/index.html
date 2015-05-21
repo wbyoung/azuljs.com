@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Azul.js &mdash; Relations</title>
+    <title>Azul.js &#x2014; Relations</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="generic dev" data-spy="scroll" data-target=".navbar">
+  <body class="generic v0.0.1-alpha.doctest" data-spy="scroll" data-target=".navbar">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,22 +32,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             
-            <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started/">Getting Started</a></li>
-            
-            <li class="active" class="dropdown">
+            <li class="active">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models/">Models</a></li>
-                <li><a href="/guides/queries/">Queries</a></li>
-                <li><a href="/guides/relations/">Relations</a></li>
-                <li><a href="/guides/migrations/">Migrations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers/">Managers</a></li>
-                <li><a href="/guides/transactions/">Transactions</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/transactions/">Transactions</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/backends/">Backends</a></li>
-                <li><a href="/guides/core/">Core</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -62,7 +59,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Relations <a href="/releases/" class="release">dev</a></h1>
+    <h1>Relations <a href="/releases/" class="release">v0.0.1-alpha.doctest</a></h1>
   </div>
 </div>
 
@@ -540,7 +537,7 @@ model name as the first argument. For instance to associate <code>Article</code>
 <h4 id="methods-belongsto-association"><code>#association</code></h4>
 <p>Access the relation. This will throw an error if the relation has not yet been
 loaded. Load the association before accessing it using
-<a href="/guides/queries/#relationships-with"><code>with</code></a> or via
+<a href="/v0.0.1-alpha.doctest/guides/queries/#relationships-with"><code>with</code></a> or via
 <a href="#methods-belongsto-fetchassociation"><code>fetchAssociation</code></a>.</p>
 <pre><code class="hljs js">Article.objects.with(<span class="hljs-string">&apos;blog&apos;</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-built_in">console</span>.log(article.blog);
@@ -552,7 +549,7 @@ Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-
 });</code></pre>
 
 <p>This property is also a setter used to alter the relationship. The changes will
-remain in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
+remain in memory until <a href="/v0.0.1-alpha.doctest/guides/models/#methods-properties-save">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   article.blog = blog;
@@ -647,7 +644,7 @@ relationship.</li>
 <h4 id="methods-hasmany-associations"><code>#associations</code></h4>
 <p>Access the related items. This will throw an error if the relation has not yet
 been loaded. Load the association before accessing it using
-<a href="/guides/queries/#relationships-with"><code>with</code></a> or via
+<a href="/v0.0.1-alpha.doctest/guides/queries/#relationships-with"><code>with</code></a> or via
 <a href="#methods-hasmany-associationobjects"><code>associationObjects.fetch</code></a>.</p>
 <pre><code class="hljs js">Blog.objects.with(<span class="hljs-string">&apos;articles&apos;</span>).find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(blog)</span> </span>{
   <span class="hljs-built_in">console</span>.log(blog.articles);
@@ -673,7 +670,7 @@ related objects.</p>
 });
 <span class="hljs-comment">// see bluebird.js for details on tap</span></code></pre>
 
-<p>You can also use this <a href="/guides/queries/">query</a> to find a subset of the related
+<p>You can also use this <a href="/v0.0.1-alpha.doctest/guides/queries/">query</a> to find a subset of the related
 objects. Note, though, that since a subset is being fetched, that this will not
 make the related objects available through the
 <a href="#methods-hasmany-associations"><code>associations</code></a> property.</p>
@@ -693,7 +690,7 @@ article.blogId; <span class="hljs-comment">// =&gt; 7</span></code></pre>
 
 <h4 id="methods-hasmany-addassociation"><code>#addAssociation</code></h4>
 <p>This method is used to add objects to the relationship. The changes will remain
-in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
+in memory until <a href="/v0.0.1-alpha.doctest/guides/models/#methods-properties-save">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   blog.addArticle(article);
@@ -715,7 +712,7 @@ blog.addArticles(article1, article2);</code></pre>
 
 <h4 id="methods-hasmany-removeassociation"><code>#removeAssociation</code></h4>
 <p>This method is used to remove objects to the relationship. The changes will
-remain in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
+remain in memory until <a href="/v0.0.1-alpha.doctest/guides/models/#methods-properties-save">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
 .spread(article, blog) {
   blog.removeArticle(article);

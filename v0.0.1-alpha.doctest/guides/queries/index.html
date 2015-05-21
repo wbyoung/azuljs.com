@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Azul.js &mdash; Queries</title>
+    <title>Azul.js &#x2014; Queries</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="generic dev" data-spy="scroll" data-target=".navbar">
+  <body class="generic v0.0.1-alpha.doctest" data-spy="scroll" data-target=".navbar">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,22 +32,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             
-            <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started/">Getting Started</a></li>
-            
-            <li class="active" class="dropdown">
+            <li class="active">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models/">Models</a></li>
-                <li><a href="/guides/queries/">Queries</a></li>
-                <li><a href="/guides/relations/">Relations</a></li>
-                <li><a href="/guides/migrations/">Migrations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers/">Managers</a></li>
-                <li><a href="/guides/transactions/">Transactions</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/transactions/">Transactions</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/backends/">Backends</a></li>
-                <li><a href="/guides/core/">Core</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -62,7 +59,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Queries <a href="/releases/" class="release">dev</a></h1>
+    <h1>Queries <a href="/releases/" class="release">v0.0.1-alpha.doctest</a></h1>
   </div>
 </div>
 
@@ -593,9 +590,9 @@ a query to be re-executed. In that case, you can simply <a href="#methods-clone"
 query</a>.</p>
 <h2 id="methods">Methods</h2>
 <p>The following methods are available on all queries for models. You can access
-a query that contains no conditions via the <a href="/guides/models/#methods-properties-objects"><code>objects</code></a>
+a query that contains no conditions via the <a href="/v0.0.1-alpha.doctest/guides/models/#methods-properties-objects"><code>objects</code></a>
 property of your model class. For more details and customization of this base
-query, read about <a href="/guides/managers/">managers</a>.</p>
+query, read about <a href="/v0.0.1-alpha.doctest/guides/managers/">managers</a>.</p>
 <h3 id="methods-where"><code>#where</code></h3>
 <p>Narrowing the scope of objects returned form the database is accomplished by
 using the <code>where</code> method.</p>
@@ -723,14 +720,14 @@ case sensitive:</p>
 <pre><code class="hljs js"><span class="hljs-comment">// currently interpreted as case sensitive, but may change in the future</span>
 Article.objects.where({ title$regex: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-iregex"><code>iRegex</code></h3>
 <p>A case-insensitive regular expression test.</p>
 <pre><code class="hljs js">Article.objects.where({ title$iRegex: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
 
 <p>While regular expression flags are currently ignored, it is recommended that
 you use a case insensitive flag on your regex for clarity.</p>
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-between"><code>between</code></h3>
 <p>A test for a value being between two values (inclusive).</p>
 <pre><code class="hljs js">Article.objects.where({ id$between: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
@@ -765,39 +762,39 @@ Article.objects.where({ id$isNull: <span class="hljs-literal">false</span> });</
 <p>Test for a specific year.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$year: <span class="hljs-number">2014</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-month"><code>month</code></h3>
 <p>Test for a specific month. (1 - 12)</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$month: <span class="hljs-number">10</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-day"><code>day</code></h3>
 <p>Test for a specific day.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$day: <span class="hljs-number">7</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-weekday"><code>weekday</code></h3>
 <p>Test for a specific weekday.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$weekday: <span class="hljs-number">1</span> });
 Article.objects.where({ createdAt$weekday: <span class="hljs-string">&apos;mon&apos;</span> });
 Article.objects.where({ createdAt$weekday: <span class="hljs-string">&apos;monday&apos;</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-hour"><code>hour</code></h3>
 <p>Test for a specific hour.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$hour: <span class="hljs-number">22</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-minute"><code>minute</code></h3>
 <p>Test for a specific minute.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$minute: <span class="hljs-number">10</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h3 id="lookups-second"><code>second</code></h3>
 <p>Test for a specific second.</p>
 <pre><code class="hljs js">Article.objects.where({ createdAt$second: <span class="hljs-number">54</span> });</code></pre>
 
-<p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
+<p><em>Requires extension in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h2 id="executing">Executing</h2>
 <h3 id="executing-execute"><code>#execute</code></h3>
 <p>Executes a query. Once executed, subsequent calls will use the result from the
@@ -878,7 +875,7 @@ acceptable:</p>
 });</code></pre>
 
 <h2 id="relationships">Relationships</h2>
-<p>The discussion of query methods for <a href="/guides/relations/">relationships</a> assumes the
+<p>The discussion of query methods for <a href="/v0.0.1-alpha.doctest/guides/relations/">relationships</a> assumes the
 following models have been defined:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
   title: db.attr(),
@@ -894,7 +891,7 @@ following models have been defined:</p>
 });</code></pre>
 
 <h3 id="relationships-with"><code>#with</code></h3>
-<p>Pre-fetch <a href="/guides/relations/">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
+<p>Pre-fetch <a href="/v0.0.1-alpha.doctest/guides/relations/">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
 <p>A poor implementation of fetching all articles and each of the article&apos;s
 comments may look something like:</p>
 <pre><code class="hljs js"><span class="hljs-comment">// note: do not use this code</span>
@@ -1044,7 +1041,7 @@ query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">functi
 <h2 id="transactions">Transactions</h2>
 <p>Transaction objects can be created via <code>db.transaction()</code> or
 <code>db.query.transaction()</code>.</p>
-<p>For more details <a href="/guides/transactions/">see the transactions guide</a>.</p>
+<p>For more details <a href="/v0.0.1-alpha.doctest/guides/transactions/">see the transactions guide</a>.</p>
 <h3 id="transactions-transaction"><code>#transaction</code></h3>
 <p>When called with no arguments, this gets the transaction associated with the
 current query.</p>

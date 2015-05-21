@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Azul.js &mdash; Migrations</title>
+    <title>Azul.js &#x2014; Migrations</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="generic dev" data-spy="scroll" data-target=".navbar">
+  <body class="generic v0.0.1-alpha.doctest" data-spy="scroll" data-target=".navbar">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,22 +32,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             
-            <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started/">Getting Started</a></li>
-            
-            <li class="active" class="dropdown">
+            <li class="active">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models/">Models</a></li>
-                <li><a href="/guides/queries/">Queries</a></li>
-                <li><a href="/guides/relations/">Relations</a></li>
-                <li><a href="/guides/migrations/">Migrations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers/">Managers</a></li>
-                <li><a href="/guides/transactions/">Transactions</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/transactions/">Transactions</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/backends/">Backends</a></li>
-                <li><a href="/guides/core/">Core</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -62,7 +59,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Migrations <a href="/releases/" class="release">dev</a></h1>
+    <h1>Migrations <a href="/releases/" class="release">v0.0.1-alpha.doctest</a></h1>
   </div>
 </div>
 
@@ -274,13 +271,13 @@ exports.down = <span class="hljs-function"><span class="hljs-keyword">function</
 };</code></pre>
 
 <p>For examples of running multiple actions in a single migration, see the example
-migrations discussed in the <a href="/guides/relations/#types-of-relationships-one-to-many">relations
+migrations discussed in the <a href="/v0.0.1-alpha.doctest/guides/relations/#types-of-relationships-one-to-many">relations
 documentation</a>.</p>
 <p>Migrations are run inside of a transaction, so if any of the migrations in a
 sequence of migrations fails, the entire group will be rolled back. This is
 only true if your database supports transactions.</p>
 <p>The <code>up</code> and <code>down</code> functions are provided with a second argument. A
-<a href="/guides/queries/#data-queries">basic query</a> object that you can use if you need to
+<a href="/v0.0.1-alpha.doctest/guides/queries/#data-queries">basic query</a> object that you can use if you need to
 execute raw SQL or perform schema changes that are not supported by Azul.js.</p>
 <p>Migrations support two modes of execution, <em>sequential</em> and <em>manual</em>. The
 examples given above are sequential. Each schema change will be executed
@@ -299,7 +296,7 @@ of different <a href="#methods-field-types">field types</a>.</p>
   table.text(<span class="hljs-string">&apos;body&apos;</span>);
 });</code></pre>
 
-<p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
+<p>Returns a <em>thenable</em> <a href="/v0.0.1-alpha.doctest/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
 <h4 id="methods-createtable-primarykey"><code>#primaryKey</code> or <code>#pk</code></h4>
 <p>Defines the primary key of the table. The default is <code>id</code>. Pass
@@ -356,7 +353,7 @@ value of the type <em>must match</em> the type used to create the column.</p>
 <p>Drop existing tables.</p>
 <pre><code class="hljs js">schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);</code></pre>
 
-<p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
+<p>Returns a <em>thenable</em> <a href="/v0.0.1-alpha.doctest/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
 <h4 id="methods-droptable-ifexists"><code>#ifExists</code></h4>
 <p>Will only drop the table if it exists.</p>
@@ -385,15 +382,15 @@ columns.</p>
 <p>Boolean.</p>
 <h4 id="methods-field-types-date"><code>date</code></h4>
 <p>A date type that does not include a time.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3-date">SQLite3</a>.</em></p>
+<p><em>Quirks in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-date">SQLite3</a>.</em></p>
 <h4 id="methods-field-types-time"><code>time</code></h4>
 <p>A time type that does not include a date.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3-time">SQLite3</a>.</em></p>
+<p><em>Quirks in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-time">SQLite3</a>.</em></p>
 <h4 id="methods-field-types-datetime"><code>dateTime</code></h4>
 <p>A date and type type. Sometimes also known as a <em>timestamp</em>, this may or may
 not use a <em>timestamp</em> type depending on the database back-end, but will contain
 both the date and time components of a date.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3-datetime">SQLite3</a>.</em></p>
+<p><em>Quirks in <a href="/v0.0.1-alpha.doctest/guides/backends/#sqlite3-datetime">SQLite3</a>.</em></p>
 <h4 id="methods-field-types-float"><code>float</code></h4>
 <p>A floating point number.</p>
 <h4 id="methods-field-types-decimal"><code>decimal</code></h4>

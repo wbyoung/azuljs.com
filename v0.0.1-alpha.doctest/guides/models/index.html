@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Azul.js &mdash; Models</title>
+    <title>Azul.js &#x2014; Models</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="generic dev" data-spy="scroll" data-target=".navbar">
+  <body class="generic v0.0.1-alpha.doctest" data-spy="scroll" data-target=".navbar">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,22 +32,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             
-            <li ><a href="/#overview">Overview</a></li>
-            <li ><a href="/getting-started/">Getting Started</a></li>
-            
-            <li class="active" class="dropdown">
+            <li class="active">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/guides/models/">Models</a></li>
-                <li><a href="/guides/queries/">Queries</a></li>
-                <li><a href="/guides/relations/">Relations</a></li>
-                <li><a href="/guides/migrations/">Migrations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/migrations/">Migrations</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/managers/">Managers</a></li>
-                <li><a href="/guides/transactions/">Transactions</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/transactions/">Transactions</a></li>
                 <li class="divider"></li>
-                <li><a href="/guides/backends/">Backends</a></li>
-                <li><a href="/guides/core/">Core</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.doctest/guides/core/">Core</a></li>
               </ul>
             </li>
           </ul>
@@ -62,7 +59,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Models <a href="/releases/" class="release">dev</a></h1>
+    <h1>Models <a href="/releases/" class="release">v0.0.1-alpha.doctest</a></h1>
   </div>
 </div>
 
@@ -274,7 +271,7 @@ use to update and save your model.</p>
 
 <p>Azul.js does not distinguish between different attribute types when defining
 models. The types will be cast when reading and writing from the database.
-See the <a href="/guides/migrations/">migrations guide</a> for more details.</p>
+See the <a href="/v0.0.1-alpha.doctest/guides/migrations/">migrations guide</a> for more details.</p>
 <p>The <code>attr</code> function is also available via the main <code>azul</code> export for
 convenience.</p>
 <div class="panel panel-info">
@@ -296,7 +293,7 @@ it can be overridden by defining the <code>pk</code> attribute:</p>
 });</code></pre>
 
 <p>We recommend using a <em>serial</em> or <em>auto incrementing</em> column in your database
-for the primary key column. See the <a href="/guides/migrations/">migrations guide</a> for
+for the primary key column. See the <a href="/v0.0.1-alpha.doctest/guides/migrations/">migrations guide</a> for
 more details.</p>
 <p>The primary is also accessible via the attribute alias <code>id</code> (even when <code>pk</code> is
 overridden).</p>
@@ -337,7 +334,7 @@ be set on your model. Be sure that you trust your source of data when doing so
 as this can lead to a <a href="http://en.wikipedia.org/wiki/Mass_assignment_vulnerability">mass assignment vulnerability</a>.</p>
 <h3 id="manipulating-data-read">Read</h3>
 <p>Objects can easily be read from the database through
-<a href="/guides/queries/">query objects</a>.</p>
+<a href="/v0.0.1-alpha.doctest/guides/queries/">query objects</a>.</p>
 <pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
   <span class="hljs-comment">// all articles have been fetched &amp;</span>
   <span class="hljs-comment">// articles contains an array of Article objects</span>
@@ -349,10 +346,10 @@ search by primary key:</p>
   <span class="hljs-comment">// the article with primary key 1 has been found</span>
 });</code></pre>
 
-<p>Reading from the database is asynchronous, so <a href="/guides/queries/#executing-fetch"><code>fetch</code></a> and
-<a href="/guides/queries/#executing-find"><code>find</code></a> return promises that resolve with the results from
+<p>Reading from the database is asynchronous, so <a href="/v0.0.1-alpha.doctest/guides/queries/#executing-fetch"><code>fetch</code></a> and
+<a href="/v0.0.1-alpha.doctest/guides/queries/#executing-find"><code>find</code></a> return promises that resolve with the results from
 the database.</p>
-<p>For more information on fetching objects from the database, see the <a href="/guides/queries/">full
+<p>For more information on fetching objects from the database, see the <a href="/v0.0.1-alpha.doctest/guides/queries/">full
 query guide</a>.</p>
 <h3 id="manipulating-data-update">Update</h3>
 <p>Updating objects is quite simple. Assuming you have an article that is already
@@ -459,9 +456,9 @@ database.</p>
 <li>readonly</li>
 </ul>
 <h3 id="methods-properties-objects"><code>.objects</code></h3>
-<p>Access a <a href="/guides/queries/">query object</a> that will allow you to fetch models of
+<p>Access a <a href="/v0.0.1-alpha.doctest/guides/queries/">query object</a> that will allow you to fetch models of
 this type from the database. Note that this can be customized by creating your
-own <a href="/guides/managers/#overriding-the-default-manager">custom manager</a>.</p>
+own <a href="/v0.0.1-alpha.doctest/guides/managers/#overriding-the-default-manager">custom manager</a>.</p>
 <ul>
 <li>readonly</li>
 </ul>
