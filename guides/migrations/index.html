@@ -317,8 +317,12 @@ example.</p>
    table.string(<span class="hljs-string">&apos;title&apos;</span>);
 });</code></pre>
 
-<h4 id="methods-createtable-table-index"><code>table#index</code></h4>
+<h4 id="methods-createtable-table-index"><code>table#index(columns, [options])</code></h4>
 <p>Add an index to the table.</p>
+<pre><code class="hljs js">table.index(<span class="hljs-string">&apos;boss_id&apos;</span>); <span class="hljs-comment">// name automatically set to boss_id_idx</span>
+table.index([<span class="hljs-string">&apos;first_name&apos;</span>, <span class="hljs-string">&apos;last_name&apos;</span>], { name: <span class="hljs-string">&apos;full_name_index&apos;</span> });</code></pre>
+
+
 <h3 id="methods-altertable"><code>#alterTable</code></h3>
 <p>Alter existing tables. Pass the name of the table you want to alter and a
 callback that will receive a table object with which you will be able to
@@ -329,8 +333,9 @@ well as drop existing columns.</p>
   table.drop(<span class="hljs-string">&apos;body&apos;</span>); <span class="hljs-comment">// drop the body column</span>
 });</code></pre>
 
-<h4 id="methods-altertable-table-index"><code>table#index</code></h4>
-<p>Add an index to the table.</p>
+<h4 id="methods-altertable-table-index"><code>table#index(columns, [options])</code></h4>
+<p>Add an index to the table. See
+<a href="#methods-createtable-table-index">create table examples</a>.</p>
 <h4 id="methods-altertable-table-rename"><code>table#rename</code></h4>
 <p>Renames a table column.</p>
 <p>While not intuitive, a third argument, <code>type</code>, is required for a rename. This
