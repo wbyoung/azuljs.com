@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Azul.js &#x2014; Queries</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="generic v0.0.1-alpha.10" data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Azul.js</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <li class="active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/v0.0.1-alpha.10/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.10/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.10/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.10/guides/migrations/">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.10/guides/managers/">Managers</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.10/guides/core/">Core</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/wbyoung/azul">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Queries <a href="/releases/" class="release">v0.0.1-alpha.10</a></h1>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc well">
+
+
+  <ul>
+  
+    <li>
+      <a href="#basics">Basics</a>
+      <ul>
+        
+          <li>
+            <a href="#chainability">Chainability</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#immutability">Immutability</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#laziness">Laziness</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#caching">Caching</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods">Methods</a>
+      <ul>
+        
+          <li>
+            <a href="#-where-">#where</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-limit-">#limit</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-offset-">#offset</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-order-">#order</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-groupby-">#groupBy</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-unique-">#unique</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-clone-">#clone</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#complex-conditions">Complex Conditions</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#lookups">Lookups</a>
+      <ul>
+        
+          <li>
+            <a href="#-exact-">exact</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-iexact-">iExact</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-contains-">contains</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-icontains-">iContains</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-startswith-">startsWith</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-istartswith-">iStartsWith</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-endswith-">endsWith</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-iendswith-">iEndsWith</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-regex-">regex</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-iregex-">iRegex</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-between-">between</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-in-">in</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-gt-">gt</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-gte-">gte</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-lt-">lt</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-lte-">lte</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-isnull-">isNull</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-year-">year</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-month-">month</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-day-">day</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-weekday-">weekday</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-hour-">hour</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-minute-">minute</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-second-">second</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#executing">Executing</a>
+      <ul>
+        
+          <li>
+            <a href="#-execute-">#execute</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-fetch-">#fetch</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-fetchone-">#fetchOne</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-find-">#find</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-findorcreate-">#findOrCreate</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-then-">#then</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#relationships">Relationships</a>
+      <ul>
+        
+          <li>
+            <a href="#-with-">#with</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#-join-">#join</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#automatic-joining">Automatic Joining</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#raw-queries">Raw Queries</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#data-queries">Data Queries</a>
+      <ul>
+        
+          <li>
+            <a href="#select">Select</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#insert">Insert</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#update">Update</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#delete">Delete</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#raw">Raw</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-8 col-sm-pull-3">
+
+<h1 id="queries">Queries</h1>
+<p>Queries in Azul.js allow you to filter and fetch specific data from the
+database.</p>
+<h2 id="basics">Basics</h2>
+<p>Queries are chainable, immutable, lazily evaluated objects that can be executed
+and cache the execution result.</p>
+<p>To discuss each of these concepts, let&apos;s first take a look at a simple query:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects
+  .where({ <span class="hljs-string">&apos;title[contains]&apos;</span>: <span class="hljs-string">&apos;Azul&apos;</span> })
+  .order(<span class="hljs-string">&apos;-title&apos;</span>)
+  .limit(<span class="hljs-number">5</span>);
+
+query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-comment">// query has been executed in the database</span>
+});</code></pre>
+
+<h3 id="chainability">Chainability</h3>
+<p>Each method that is called on a query object will return a query object
+allowing you to chain together the components of your query. In the example
+above, <code>Article.objects</code> is a query object. Calling <a href="#-where-"><code>where</code></a> returns
+a query object as well, allowing you to then call <a href="#-order-"><code>order</code></a>. Each
+subsequent call builds on the previous query.</p>
+<h3 id="immutability">Immutability</h3>
+<p>All query methods will return a <em>new</em> query object that includes the conditions
+of the query object on which it was called plus the conditions dictated by the
+call.</p>
+<p>For instance, given the following code:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects;
+
+query.where({ id: <span class="hljs-number">5</span> });
+query.where({ title: <span class="hljs-string">&apos;Azul&apos;</span> });</code></pre>
+
+<p>Each <a href="#-where-"><code>where</code></a> builds off of the original query object. The first call
+only specifies to fetch articles where the <code>id</code> is <code>5</code>. The second only
+specifies to fetch where the <code>title</code> is <code>Azul</code>. Neither call mutated the
+<code>query</code> object. They created new objects.</p>
+<p>If you need to build queries by altering a variable, you can re-assign that
+variable:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects;
+
+query = query.where({ id: <span class="hljs-number">5</span> });
+query = query.where({ title: <span class="hljs-string">&apos;Azul&apos;</span> });</code></pre>
+
+<h3 id="laziness">Laziness</h3>
+<p>Queries are not executed until execution is requested. To execute a query, you
+must call <a href="#-execute-"><code>execute</code></a>, <a href="#-fetch-"><code>fetch</code></a>, <a href="#-find-"><code>find</code></a>, or
+<a href="#-then-"><code>then</code></a> on the object.</p>
+<p>Lazy evaluation allows queries to be passed around to different parts of your
+application without actually being executed until some condition is met.
+Queries can be built and discarded with very little performance overhead.</p>
+<h3 id="caching">Caching</h3>
+<p>When a query is executed, the result will be cached so it can be re-used if
+execution is requested again. This usually results in a desired performance
+gain as your application will not need to re-request data from the database
+when the result is already known. In some cases, however, you may need to force
+a query to be re-executed. In that case, you can simply <a href="#-clone-">clone the
+query</a>.</p>
+<h2 id="methods">Methods</h2>
+<p>The following methods are available on all queries for models. You can access
+a query that contains no conditions via the <a href="/v0.0.1-alpha.10/guides/models/#-objects-"><code>objects</code></a>
+property of your model class. For more details and customization of this base
+query, read about <a href="/v0.0.1-alpha.10/guides/managers/">managers</a>.</p>
+<h3 id="-where-"><code>#where</code></h3>
+<p>Narrowing the scope of objects returned form the database is accomplished by
+using the <code>where</code> method.</p>
+<p>Simple queries can be achieved by simply passing an object with the conditions
+that must be met:</p>
+<pre><code class="hljs js">Article.objects.where({ title: <span class="hljs-string">&apos;Azul.js&apos;</span>, body: <span class="hljs-string">&apos;1.0 Released&apos;</span> });</code></pre>
+
+<p>This query will find all article objects where the title is <em>exactly</em> equal to
+<code>Azul.js</code> <strong>and</strong> the body is <em>exactly</em> equal to <code>1.0 Released</code>.</p>
+<p>Chaining where queries would produce the same result:</p>
+<pre><code class="hljs js">Article.objects.where({ title: <span class="hljs-string">&apos;Azul.js&apos;</span> }).where({ body: <span class="hljs-string">&apos;1.0 Released&apos;</span> });</code></pre>
+
+<p>Azul.js allows for the creation of complex queries, though, through
+<a href="#lookups">lookups</a> and <a href="#complex-conditions">complex conditions</a>.</p>
+<ul>
+<li><a href="#automatic-joining">Automatically joins</a> relationships</li>
+</ul>
+<h3 id="-limit-"><code>#limit</code></h3>
+<p>Limit the number of results for a query.</p>
+<pre><code class="hljs js">Article.objects.limit(<span class="hljs-number">8</span>); <span class="hljs-comment">// a maximum of 8 results will be returned</span></code></pre>
+
+<h3 id="-offset-"><code>#offset</code></h3>
+<p>Set the offset for a query.</p>
+<pre><code class="hljs js">Article.objects.offset(<span class="hljs-number">2</span>); <span class="hljs-comment">// skip the first 2 results</span></code></pre>
+
+<h3 id="-order-"><code>#order</code></h3>
+<p>Order the results of a query.</p>
+<pre><code class="hljs js"><span class="hljs-comment">// sort by title descending</span>
+Article.objects.order(<span class="hljs-string">&apos;-title&apos;</span>);
+
+<span class="hljs-comment">// sort by title descending, then body ascending</span>
+Article.objects.order(<span class="hljs-string">&apos;-title&apos;</span>, <span class="hljs-string">&apos;body&apos;</span>);</code></pre>
+
+<ul>
+<li>Can be used via the <code>orderBy</code> alias</li>
+<li><a href="#automatic-joining">Automatically joins</a> relationships</li>
+</ul>
+<h3 id="-groupby-"><code>#groupBy</code></h3>
+<p>Groups the results of a query.</p>
+<pre><code class="hljs js">Article.objects.groupBy(<span class="hljs-string">&apos;title&apos;</span>);</code></pre>
+
+<ul>
+<li><a href="#automatic-joining">Automatically joins</a> relationships</li>
+</ul>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Coming Soon&#x2026;</span>
+</div>
+<div class="panel-body">
+More aggregation support is coming soon, which will make this method more
+useful.
+</div>
+</div>
+
+<h3 id="-unique-"><code>#unique</code></h3>
+<p>Performs a <a href="#-groupby-"><code>groupBy</code></a> with the primary key of the model. This
+is useful when <a href="#-join-">joining relations</a>.</p>
+<h3 id="-clone-"><code>#clone</code></h3>
+<p>Create a new query that has the exact same conditions as this query. This
+method can be used to ensure that executing a query will not use a
+<a href="#caching">cached result</a>.</p>
+<h2 id="complex-conditions">Complex Conditions</h2>
+<p>Complex conditions can be created using <code>azul.w</code>. For instance, you would use
+<code>w</code> to create an <em>OR</em>:</p>
+<pre><code class="hljs js">Article.objects.where(w({ title: <span class="hljs-string">&apos;Azul&apos;</span> }, w.or, { title: <span class="hljs-string">&apos;Azul.js&apos;</span> }));</code></pre>
+
+<p>A few more examples should make the use of <code>w</code> objects clear. There is support
+for <em>OR</em>, <em>NOT</em>, and <em>AND</em> operators. When no operator is specified, an <em>AND</em>
+is assumed.</p>
+<pre><code class="hljs js">w({ id: <span class="hljs-number">5</span> }, { title: <span class="hljs-string">&apos;Azul.js&apos;</span> }); <span class="hljs-comment">// defaults to AND</span>
+w(w.not, { title: <span class="hljs-string">&apos;Azul&apos;</span> }); <span class="hljs-comment">// a NOT condition</span>
+
+<span class="hljs-comment">// a complex condition representing</span>
+<span class="hljs-comment">// (first = &quot;Whitney&quot; OR first = &quot;Whit&quot;) AND last = &quot;Young&quot;</span>
+<span class="hljs-keyword">var</span> firstName = w({ first: <span class="hljs-string">&apos;Whitney&apos;</span> }, w.or, { first: <span class="hljs-string">&apos;Whit&apos;</span> });
+<span class="hljs-keyword">var</span> lastName = { last: <span class="hljs-string">&apos;Young&apos;</span> };
+<span class="hljs-keyword">var</span> fullCondition = w(firstName, w.and, lastName);</code></pre>
+
+<p>Conditions default to treating the left hand side as a field (column) name and
+the right hand side as a value. If you need to write a query that uses a field
+on the right hand side, you can use <code>azul.f</code> to ensure the database treats the
+right hand side as a field and escapes it properly:</p>
+<pre><code class="hljs js">w({ first: f(<span class="hljs-string">&apos;last&apos;</span>) });</code></pre>
+
+<p>Similarlly, if you need to use a literal in the condition, you can do so with
+<code>azul.l</code>:</p>
+<pre><code class="hljs js">w({ first: l(<span class="hljs-string">&apos;CONCAT(&quot;last&quot;, &quot;suffix&quot;)&apos;</span>) });</code></pre>
+
+<p>The standard <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> warning applies when using <code>f</code> and
+<code>l</code> to mark the right hand side of your query as a non-value.</p>
+<h2 id="lookups">Lookups</h2>
+<p>Lookups allow an different types of operations to be performed in the database
+while evaluating a condition. Each is specified after the property name within
+square brackets (meaning you&apos;ll have to quote the property name). For instance,
+using an <em>exact</em> comparison on <code>id</code> would mean using a property name of
+<code>id[exact]</code>. See the examples below for more detail.</p>
+<h3 id="-exact-"><code>exact</code></h3>
+<p>An exact comparison. This is assumed if no lookup is specified.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[exact]&apos;</span>: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
+
+<h3 id="-iexact-"><code>iExact</code></h3>
+<p>A case insensitive exact comparison.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[iExact]&apos;</span>: <span class="hljs-string">&apos;azul.js&apos;</span> });</code></pre>
+
+<h3 id="-contains-"><code>contains</code></h3>
+<p>A case-sensitive containment test.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[contains]&apos;</span>: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
+
+<h3 id="-icontains-"><code>iContains</code></h3>
+<p>A case-insensitive containment test.</p>
+<h3 id="-startswith-"><code>startsWith</code></h3>
+<p>A case-sensitive starts-with.</p>
+<h3 id="-istartswith-"><code>iStartsWith</code></h3>
+<p>A case-insensitive starts-with.</p>
+<h3 id="-endswith-"><code>endsWith</code></h3>
+<p>A case-sensitive ends-with.</p>
+<h3 id="-iendswith-"><code>iEndsWith</code></h3>
+<p>A case-insensitive ends-with.</p>
+<h3 id="-regex-"><code>regex</code></h3>
+<p>A case-sensitive regular expression test.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[regex]&apos;</span>: <span class="hljs-regexp">/[Aa]zul\.?js/</span> });</code></pre>
+
+<p>Regular expression flags are currently ignored, so the following will still be
+case sensitive:</p>
+<pre><code class="hljs js"><span class="hljs-comment">// currently interpreted as case sensitive, but may change in the future</span>
+Article.objects.where({ <span class="hljs-string">&apos;title[regex]&apos;</span>: <span class="hljs-regexp">/[Aa]zul\.?js/i</span> });</code></pre>
+
+<h3 id="-iregex-"><code>iRegex</code></h3>
+<p>A case-insensitive regular expression test.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[iRegex]&apos;</span>: <span class="hljs-regexp">/azul\.?js/i</span> });</code></pre>
+
+<p>While regular expression flags are currently ignored, it is recommended that
+you use a case insensitive flag on your regex for clarity.</p>
+<h3 id="-between-"><code>between</code></h3>
+<p>A test for a value being between two values (inclusive).</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[between]&apos;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>] });</code></pre>
+
+<p>This works for all types where <code>BETWEEN</code> works in your database.</p>
+<h3 id="-in-"><code>in</code></h3>
+<p>A test for a value being in an array of values.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;title[in]&apos;</span>: [<span class="hljs-string">&apos;Azul.js&apos;</span>, <span class="hljs-string">&apos;Azul&apos;</span>] });</code></pre>
+
+<h3 id="-gt-"><code>gt</code></h3>
+<p>Greater than.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[gt]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+
+<h3 id="-gte-"><code>gte</code></h3>
+<p>Greater than or equal to.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[gte]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+
+<h3 id="-lt-"><code>lt</code></h3>
+<p>Less than.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[lt]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+
+<h3 id="-lte-"><code>lte</code></h3>
+<p>Less than or equal to.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[lte]&apos;</span>: <span class="hljs-number">5</span> });</code></pre>
+
+<h3 id="-isnull-"><code>isNull</code></h3>
+<p>Test for <code>NULL</code> or <code>NOT NULL</code>.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;id[isNull]&apos;</span>: <span class="hljs-literal">true</span> });
+Article.objects.where({ <span class="hljs-string">&apos;id[isNull]&apos;</span>: <span class="hljs-literal">false</span> });</code></pre>
+
+<h3 id="-year-"><code>year</code></h3>
+<p>Test for a specific year.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[year]&apos;</span>: <span class="hljs-number">2014</span> });</code></pre>
+
+<h3 id="-month-"><code>month</code></h3>
+<p>Test for a specific month. (1 - 12)</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[month]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
+
+<h3 id="-day-"><code>day</code></h3>
+<p>Test for a specific day.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[day]&apos;</span>: <span class="hljs-number">7</span> });</code></pre>
+
+<h3 id="-weekday-"><code>weekday</code></h3>
+<p>Test for a specific weekday.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-number">1</span> });
+Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;mon&apos;</span> });
+Article.objects.where({ <span class="hljs-string">&apos;createdAt[weekday]&apos;</span>: <span class="hljs-string">&apos;monday&apos;</span> });</code></pre>
+
+<h3 id="-hour-"><code>hour</code></h3>
+<p>Test for a specific hour.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[hour]&apos;</span>: <span class="hljs-number">22</span> });</code></pre>
+
+<h3 id="-minute-"><code>minute</code></h3>
+<p>Test for a specific minute.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[minute]&apos;</span>: <span class="hljs-number">10</span> });</code></pre>
+
+<h3 id="-second-"><code>second</code></h3>
+<p>Test for a specific second.</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;createdAt[second]&apos;</span>: <span class="hljs-number">54</span> });</code></pre>
+
+<h2 id="executing">Executing</h2>
+<h3 id="-execute-"><code>#execute</code></h3>
+<p>Executes a query. Once executed, subsequent calls will use the result from the
+first execution. <a href="#caching">Read the details in caching</a>.</p>
+<pre><code class="hljs js">query.execute(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(results)</span> </span>{
+  <span class="hljs-comment">// execution complete</span>
+});</code></pre>
+
+<h3 id="-fetch-"><code>#fetch</code></h3>
+<p>Essentially an alias for <a href="#-execute-"><code>execute</code></a>, this method is preferred in
+most cases for readability when reading data from the database.</p>
+<pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* ... */</span> }); <span class="hljs-comment">// reads better</span>
+Article.objects.execute().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* ... */</span> });</code></pre>
+
+<p><strong>Advanced:</strong> For <a href="#non-model-queries-results">non-model queries &amp; results</a>, this method
+actually ensures that the resolved object is transformed to an array rather
+than a standard result object.</p>
+<h3 id="-fetchone-"><code>#fetchOne</code></h3>
+<p>This method fetches a single result. Like <code>fetch</code>, this method executes the
+query. It will reject the promise with one of the following codes if a single
+result is not found.</p>
+<ul>
+<li><code>NO_RESULTS_FOUND</code></li>
+<li><code>MULTIPLE_RESULTS_FOUND</code></li>
+</ul>
+<p>To aid in debugging, the error object will also have the following properties
+defined on it:</p>
+<ul>
+<li><code>query</code> the query being executed</li>
+<li><code>sql</code> the SQL of the query</li>
+<li><code>args</code> the arguments bound to the SQL statement</li>
+</ul>
+<h3 id="-find-"><code>#find</code></h3>
+<p>Find is a shortcut method to find a single result by primary key:</p>
+<pre><code class="hljs js">query.find(<span class="hljs-number">3</span>);
+query.where({ pk: <span class="hljs-number">3</span> }).limit(<span class="hljs-number">1</span>).fetchOne(); <span class="hljs-comment">// the same</span></code></pre>
+
+<h3 id="-findorcreate-"><code>#findOrCreate</code></h3>
+<p>Find or create is a shortcut method to use with models to find a single result
+or create one if it does not exist:</p>
+<pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> });</code></pre>
+
+<p>This is roughly the same as recovering from a failure if the object was not
+found:</p>
+<pre><code class="hljs js">Article.objects.where({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> }).limit(<span class="hljs-number">1</span>).fetchOne()
+.catch(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+  <span class="hljs-keyword">if</span> (e.code === <span class="hljs-string">&apos;NO_RESULTS_FOUND&apos;</span>) {
+    <span class="hljs-keyword">return</span> Article.create({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> });
+  }
+  <span class="hljs-keyword">else</span> { <span class="hljs-keyword">throw</span> e; }
+});</code></pre>
+
+<p>You may also pass a second argument to this method, <em>defaults</em> that will be
+used if the object is created. For instance:</p>
+<pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> }, { author: <span class="hljs-string">&apos;Whitney&apos;</span> });</code></pre>
+
+
+<h3 id="-then-"><code>#then</code></h3>
+<p>Query objects are <em>thenable</em> objects, meaning that you can return them inside
+of a promise &amp; they will be executed before the next promise handler.</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  <span class="hljs-keyword">return</span> Comment.objects.where({ <span class="hljs-string">&apos;body[contains]&apos;</span>: article.title });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(comments)</span> </span>{
+  <span class="hljs-comment">// all comments will have been found</span>
+});</code></pre>
+
+<p>The fact that queries are <em>thenable</em> could be abused by omitting calls to
+<a href="#-fetch-"><code>fetch</code></a> or <a href="#-execute-"><code>execute</code></a> in non-promise handlers. For
+readability, this is strongly discouraged. And returning explicitly executed
+queries inside of promise handlers is considered acceptable:</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  <span class="hljs-keyword">return</span> Comment.objects.where({ <span class="hljs-string">&apos;body[contains]&apos;</span>: article.title }).fetch();
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(comments)</span> </span>{
+  <span class="hljs-comment">// all comments will have been found</span>
+});</code></pre>
+
+<h2 id="relationships">Relationships</h2>
+<p>The discussion of query methods for <a href="/v0.0.1-alpha.10/guides/relations/">relationships</a> assumes the
+following models have been defined:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  title: db.attr(),
+  body: db.attr(),
+  comments: db.hasMany()
+});
+
+<span class="hljs-keyword">var</span> Comment = db.model(<span class="hljs-string">&apos;comment&apos;</span>, {
+  name: db.attr(),
+  spam: db.attr(),
+  body: db.attr(),
+  article: db.belongsTo()
+});</code></pre>
+
+<h3 id="-with-"><code>#with</code></h3>
+<p>Pre-fetch <a href="/v0.0.1-alpha.10/guides/relations/">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
+<p>A poor implementation of fetching all articles and each of the article&apos;s
+comments may look something like:</p>
+<pre><code class="hljs js"><span class="hljs-comment">// note: do not use this code</span>
+
+<span class="hljs-keyword">var</span> processArticle = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  article.commentObjects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(comments)</span> </span>{
+    <span class="hljs-comment">// do something with this article&apos;s comments</span>
+  });
+};
+
+Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-keyword">return</span> Promise.map(articles, processArticle); <span class="hljs-comment">// bluebird promises</span>
+});</code></pre>
+
+<p>While this code is a bit more complicated than code you&apos;d write with other ORM
+tools, it&apos;s still valuable to understand that at a certain level of
+abstraction, these types of <em>N + 1</em> queries may still pop up and surprise you.</p>
+<p>What happens when executing these queries is that a <code>SELECT</code> statement is done
+for all articles. If <em>N</em> articles are returned, then we actually do <em>N</em>
+additional <code>SELECT</code> queries for fetching comments. This can easily be optimized
+to execute a single query to fetch the required comments.</p>
+<p>Using <code>with</code> this bit of code becomes much simpler:</p>
+<pre><code class="hljs js">Article.objects.with(<span class="hljs-string">&apos;comments&apos;</span>).fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  articles.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+    <span class="hljs-comment">// comments are accessible since they have been pre-fetched</span>
+    article.comments;
+  });
+});</code></pre>
+
+<h3 id="-join-"><code>#join</code></h3>
+<p>In certain cases, you may need to access data from two tables in order to form
+a query.</p>
+<p>For instance, finding articles that have a comment marked as spam. This query
+will return duplicate articles if there are multiple comments marked as spam
+for the article:</p>
+<pre><code class="hljs js">Article.objects.join(<span class="hljs-string">&apos;comments&apos;</span>).where({ spam: <span class="hljs-literal">true</span> });</code></pre>
+
+<p>To remove the duplicates from the results, either add <a href="#-unique-"><code>unique</code></a> or
+use <a href="#automatic-joining">automatic joining</a>.</p>
+<pre><code class="hljs js">Article.objects.join(<span class="hljs-string">&apos;comments&apos;</span>).where({ spam: <span class="hljs-literal">true</span> }).unique();</code></pre>
+
+<p>Azul.js will resolve names to the appropriate model when possible. In this
+case, it is able to determine that <code>spam</code> is an attribute that&apos;s defined on the
+<code>Comment</code> model and executes the appropriate database query. The properties
+<code>id</code> and <code>body</code> are ambiguous, though, and must be qualified as <code>comments.id</code>
+and <code>commens.body</code> if they refer to the joined association.</p>
+<hr>
+<p>In many simple cases, <a href="#automatic-joining">automatic joining</a> will be simpler
+and will also ensure the results are <a href="#-unique-"><code>unique</code></a>.</p>
+<p>In the above example, the <code>where</code> call could have automatically joined the
+<code>comments</code> relation by specifying <code>comments.spam</code> rather than just <code>spam</code> in
+the where condition, and the explicit join would not have been required. Read
+more about <a href="#automatic-joining">automatic joining</a> to understand how this
+works.</p>
+<p>The order of a manual vs automatic join will make a difference on whether or
+not uniqueness is added to your query:</p>
+<pre><code class="hljs js"><span class="hljs-comment">// manual joined first, results are not unique (since join is first)</span>
+Article.objects.join(<span class="hljs-string">&apos;comments&apos;</span>).where({ <span class="hljs-string">&apos;comments.spam&apos;</span>: <span class="hljs-literal">true</span> });
+
+<span class="hljs-comment">// automatic joined first, unique results (since where is first)</span>
+Article.objects.where({ <span class="hljs-string">&apos;comments.spam&apos;</span>: <span class="hljs-literal">true</span> }).join(<span class="hljs-string">&apos;comments&apos;</span>);</code></pre>
+
+<h3 id="automatic-joining">Automatic Joining</h3>
+<p>Most situations that require a <a href="#-join-"><code>join</code></a> to occur between relationships
+will be handled automatically. Automatic joining also ensures uniqueness of
+results by automatically ensuring that <a href="#-unique-"><code>unique</code></a> has been added to
+the query.</p>
+<p>Methods that support automatic joining will use the attribute string to
+determine if a relationship exists that can be joined.</p>
+<p>The following queries would automatically add a join:</p>
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">&apos;comments.spam&apos;</span>: <span class="hljs-literal">true</span> });
+Comment.objects.order(<span class="hljs-string">&apos;article.title&apos;</span>);</code></pre>
+
+<p>The following methods support automatic joining:</p>
+<ul>
+<li><a href="#-where-"><code>where</code></a></li>
+<li><a href="#-order-"><code>order</code></a></li>
+<li><a href="#-groupby-"><code>groupBy</code></a></li>
+</ul>
+<h2 id="raw-queries">Raw Queries</h2>
+<p>Sometimes you may need to execute raw SQL queries. While this is discouraged,
+it can still be done. Raw queries on models are expected to be <code>SELECT</code>
+queries. For other types of SQL queries, see <a href="#non-model-queries-results">non-model queries &amp;
+results</a>.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> query = Article.objects
+  .raw(<span class="hljs-string">&apos;SELECT * FROM &quot;articles&quot; WHERE &quot;id&quot; = ?&apos;</span>, [<span class="hljs-number">1</span>]);
+
+query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-comment">// articles is still an array of article objects</span>
+});</code></pre>
+
+<p>Be very cautious of <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> when using raw queries.</p>
+<h2 id="data-queries">Data Queries</h2>
+<p>At times, it may be useful to execute more basic queries. Azul.js provides
+<em>data queries</em> that return simple data rather than model objects.</p>
+<p>Most of the methods available on these queries work the same way they do when
+used through a model class.</p>
+<p>All queries require a call to <a href="#-execute-"><code>execute</code></a> and are <em>thenable</em>
+objects. When executed, the resulting promise will resolve with an object that
+will contain at the very least a <code>rows</code> key. The value of this key will be an
+array of objects that have been read from the database. Additional data may be
+available depending on the database back-end.</p>
+<pre><code class="hljs js">db.select(<span class="hljs-string">&apos;people&apos;</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(data.rows);
+});</code></pre>
+
+<p>Data queries are not aware of models and will not convert camel case property
+names into underscore case. They will not automatically join relationships.</p>
+<div class="panel panel-info">
+<div class="panel-heading"><span class="panel-title">SQL</span></div>
+<div class="panel-body">
+The example queries below show how to use these basic queries as well as the
+approximate SQL that each query will produce. The exact SQL will vary by
+database back-end.
+</div>
+</div>
+
+
+<h3 id="select">Select</h3>
+<p>Select queries can be executed via <code>db.select</code> or <code>db.query.select</code>.</p>
+<pre><code class="hljs js">db.select(<span class="hljs-string">&apos;people&apos;</span>)
+<span class="hljs-comment">// -&gt; select * from people</span>
+
+db.select(<span class="hljs-string">&apos;people&apos;</span>, [<span class="hljs-string">&apos;firstName&apos;</span>, <span class="hljs-string">&apos;lastName&apos;</span>])
+<span class="hljs-comment">// -&gt; select firstName, lastName from people</span></code></pre>
+
+<p>Chainable methods include:</p>
+<ul>
+<li><code>where</code> Will not convert property names or join relationships. See
+<a href="#-where-"><code>#where</code></a>.</li>
+<li><code>order</code> Will not convert property names or join relationships. See
+<a href="#-order-"><code>#order</code></a>.</li>
+<li><code>limit</code> No differences. See <a href="#-limit-"><code>#limit</code></a>.</li>
+<li><code>offset</code> No differences. See <a href="#-offset-"><code>#offset</code></a>.</li>
+<li><code>join</code>  Joins are quite different as they require more information than
+simply a relationship name. Joins default to an <code>INNER</code> join. See more examples
+below.</li>
+<li><code>groupBy</code> Will not convert property names or join relationships. See
+<a href="#-groupby-"><code>#groupBy</code></a>.</li>
+<li><code>fetch</code> Executes the query and returns a promise that resolves with the
+<code>rows</code> from the result. See <a href="#-fetch-"><code>#fetch</code></a>.</li>
+<li><code>fetchOne</code> No differences. See <a href="#-fetchOne-"><code>#fetchOne</code></a>.</li>
+</ul>
+<p><strong>Joins</strong></p>
+<pre><code class="hljs js">db.select(<span class="hljs-string">&apos;cities&apos;</span>, [<span class="hljs-string">&apos;cities.name&apos;</span>, <span class="hljs-string">&apos;countries.name&apos;</span>])
+  .join(<span class="hljs-string">&apos;countries&apos;</span>, <span class="hljs-string">&apos;cities.country_id=countries.id&apos;</span>);
+<span class="hljs-comment">// -&gt; select cities.name, countries.name from cities</span>
+<span class="hljs-comment">// -&gt; inner join countries on cities.country_id = countries.id</span>
+
+db.select(<span class="hljs-string">&apos;cities&apos;</span>)
+  .join(<span class="hljs-string">&apos;countries&apos;</span>, <span class="hljs-string">&apos;left&apos;</span>, { <span class="hljs-string">&apos;cities.country_id&apos;</span>: f(<span class="hljs-string">&apos;countries.id&apos;</span>) })
+  .where({ <span class="hljs-string">&apos;cities.name[icontains]&apos;</span>: <span class="hljs-string">&apos;city&apos;</span> })
+<span class="hljs-comment">// -&gt; select * from cities</span>
+<span class="hljs-comment">// -&gt; left join countries on cities.country_id = countries.id</span>
+<span class="hljs-comment">// -&gt; where cities.name ilike ?</span>
+<span class="hljs-comment">// !&gt; [&apos;%city%&apos;]</span></code></pre>
+
+<h3 id="insert">Insert</h3>
+<p>Insert queries can be executed via <code>db.insert</code> or <code>db.query.insert</code>.</p>
+<pre><code class="hljs js">db.insert(<span class="hljs-string">&apos;users&apos;</span>).values({ name: <span class="hljs-string">&apos;Whitney&apos;</span> })
+<span class="hljs-comment">// -&gt; insert into &quot;users&quot; (&quot;name&quot;) values (?)</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;]</span>
+
+db.insert(<span class="hljs-string">&apos;users&apos;</span>).values({ name: <span class="hljs-string">&apos;Whitney&apos;</span> }, { name: <span class="hljs-string">&apos;Sara&apos;</span> })
+<span class="hljs-comment">// -&gt; insert into &quot;users&quot; (&quot;name&quot;) values (?), (?)</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;, &apos;Sara&apos;]</span>
+
+db.insert(<span class="hljs-string">&apos;users&apos;</span>).values([{ name: <span class="hljs-string">&apos;Whitney&apos;</span> }, { name: <span class="hljs-string">&apos;Sara&apos;</span> }])
+<span class="hljs-comment">// -&gt; insert into &quot;users&quot; (&quot;name&quot;) values (?), (?)</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;, &apos;Sara&apos;]</span>
+
+db.insert(<span class="hljs-string">&apos;users&apos;</span>).values({ name: <span class="hljs-string">&apos;Whitney&apos;</span> }).values({ name: <span class="hljs-string">&apos;Sara&apos;</span> })
+<span class="hljs-comment">// -&gt; insert into &quot;users&quot; (&quot;name&quot;) values (?), (?)</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;, &apos;Sara&apos;]</span>
+
+db.insert(<span class="hljs-string">&apos;users&apos;</span>, { name: <span class="hljs-string">&apos;Whitney&apos;</span> })
+<span class="hljs-comment">// -&gt; insert into &quot;users&quot; (&quot;name&quot;) values (?)</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;]</span></code></pre>
+
+<p>Chainable methods include:</p>
+<ul>
+<li><code>values</code> Add more sets of values to insert. See examples above.</li>
+</ul>
+<h3 id="update">Update</h3>
+<p>Update queries can be executed via <code>db.update</code> or <code>db.query.update</code>.</p>
+<pre><code class="hljs js">db.update(<span class="hljs-string">&apos;users&apos;</span>).set({ name: <span class="hljs-string">&apos;Whitney&apos;</span> }).where({ id: <span class="hljs-number">5</span> })
+<span class="hljs-comment">// -&gt; update &quot;users&quot; set &quot;name&quot; = ? where &quot;id&quot; = ?</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;, 5]</span>
+
+db.update(<span class="hljs-string">&apos;users&apos;</span>)
+  .set({ first: <span class="hljs-string">&apos;Whitney&apos;</span> })
+  .set({ last: <span class="hljs-string">&apos;Young&apos;</span> })
+<span class="hljs-comment">// -&gt; update &quot;users&quot; set &quot;first&quot; = ?, &quot;last&quot; = ?</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;, &apos;Young&apos;]</span>
+
+db.update(<span class="hljs-string">&apos;users&apos;</span>, { name: <span class="hljs-string">&apos;Whitney&apos;</span> })
+<span class="hljs-comment">// -&gt; update &quot;users&quot; set &quot;name&quot; = ?</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;]</span></code></pre>
+
+<p>Chainable methods include:</p>
+<ul>
+<li><code>set</code> Add values to set. See examples above.</li>
+<li><code>where</code> Will not convert property names or join relationships. See
+<a href="#-where-"><code>#where</code></a>.</li>
+</ul>
+<h3 id="delete">Delete</h3>
+<p>Delete queries can be executed via <code>db.delete</code> or <code>db.query.delete</code>.</p>
+<pre><code class="hljs js">db.delete(<span class="hljs-string">&apos;users&apos;</span>).where({ name: <span class="hljs-string">&apos;Whitney&apos;</span> })
+<span class="hljs-comment">// -&gt; delete from &quot;users&quot; where &quot;name&quot; = ?</span>
+<span class="hljs-comment">// !&gt; [&apos;Whitney&apos;]</span></code></pre>
+
+<p>Chainable methods include:</p>
+<ul>
+<li><code>where</code> Will not convert property names or join relationships. See
+<a href="#-where-"><code>#where</code></a>.</li>
+</ul>
+<h3 id="raw">Raw</h3>
+<p>Update queries can be executed via <code>db.query.raw</code>.</p>
+<pre><code class="hljs js">db.query.raw(<span class="hljs-string">&apos;select * from &quot;users&quot; where &quot;id&quot; = ?&apos;</span>, [<span class="hljs-number">1</span>])
+<span class="hljs-comment">// -&gt; select * from &quot;users&quot; where &quot;id&quot; = ?</span>
+<span class="hljs-comment">// !&gt; [1]</span></code></pre>
+
+<p>Raw queries have no chainable methods. Be very cautious of
+<a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> when using raw queries.</p>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
