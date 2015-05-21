@@ -97,7 +97,7 @@ you&#39;ll be building stellar apps in no time.</p>
   articles: db.hasMany(<span class="hljs-string">'article'</span>, { inverse: <span class="hljs-string">'author'</span> })
 });
 
-Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<span class="hljs-string">'...'</span>);
+Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<span class="hljs-comment">/* ... */</span>);
 
 <span class="hljs-comment">// -&gt; select * from "articles";</span>
 <span class="hljs-comment">// -&gt; select * from "users" where "id" in (?, ?, ?) limit 3;</span>
@@ -107,7 +107,7 @@ Article.objects.with(<span class="hljs-string">'author'</span>).fetch().then(<sp
 <p>Azul.js was designed to be the most expressive ORM for Node.js. You&#39;ll write
 good code that others can easily understand. Want to find all articles that
 include a comment that is spam? Simple.</p>
-<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'comments.spam'</span>: <span class="hljs-literal">true</span> }).fetch().then(<span class="hljs-string">'...'</span>);
+<pre><code class="hljs js">Article.objects.where({ <span class="hljs-string">'comments.spam'</span>: <span class="hljs-literal">true</span> }).fetch().then(<span class="hljs-comment">/* ... */</span>);
 
 <span class="hljs-comment">// -&gt; select "articles".* from "articles"</span>
 <span class="hljs-comment">// -&gt; inner join "comments" on "comments"."article_id" = "articles"."id"</span>
