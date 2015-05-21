@@ -83,106 +83,143 @@
       <a href="#migration-basics">Migration Basics</a>
       <ul>
         
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods">Methods</a>
+      <ul>
+        
           <li>
-            <a href="#migration-basics-methods">Methods</a>
+            <a href="#methods-createtable">#createTable</a>
             <ul>
               
                 <li>
-                  <a href="#migration-basics-methods--createtable-">#createTable</a>
+                  <a href="#methods-createtable-primarykey">#primaryKey</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-methods--altertable-">#alterTable</a>
+                  <a href="#methods-createtable-unlessexists">#unlessExists</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-methods--droptable-">#dropTable</a>
+                  <a href="#methods-createtable-with">#with</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-createtable-table-index">table#index</a>
                 </li>
               
             </ul>
           </li>
         
           <li>
-            <a href="#migration-basics-field-types">Field Types</a>
+            <a href="#methods-altertable">#alterTable</a>
             <ul>
               
                 <li>
-                  <a href="#migration-basics-field-types--serial-">serial</a>
+                  <a href="#methods-altertable-table-index">table#index</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-types--integer-">integer</a>
+                  <a href="#methods-altertable-table-rename">table#rename</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-types--integer64-">integer64</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--string-">string</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--text-">text</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--binary-">binary</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--bool-">bool</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--date-">date</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--time-">time</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--datetime-">dateTime</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--float-">float</a>
-                </li>
-              
-                <li>
-                  <a href="#migration-basics-field-types--decimal-">decimal</a>
+                  <a href="#methods-altertable-table-drop">table#drop</a>
                 </li>
               
             </ul>
           </li>
         
           <li>
-            <a href="#migration-basics-field-options">Field Options</a>
+            <a href="#methods-droptable">#dropTable</a>
             <ul>
               
                 <li>
-                  <a href="#migration-basics-field-options--primarykey-">primaryKey</a>
+                  <a href="#methods-droptable-ifexists">#ifExists</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-field-types">Field Types</a>
+            <ul>
+              
+                <li>
+                  <a href="#methods-field-types-serial">serial</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-options--pk-">pk</a>
+                  <a href="#methods-field-types-integer">integer</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-options--notnull-">notNull</a>
+                  <a href="#methods-field-types-integer-4">integer64</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-options--unique-">unique</a>
+                  <a href="#methods-field-types-string">string</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-options--default-">default</a>
+                  <a href="#methods-field-types-text">text</a>
                 </li>
               
                 <li>
-                  <a href="#migration-basics-field-options--references-">references</a>
+                  <a href="#methods-field-types-binary">binary</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-bool">bool</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-date">date</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-time">time</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-datetime">dateTime</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-float">float</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-types-decimal">decimal</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-field-options">Field Options</a>
+            <ul>
+              
+                <li>
+                  <a href="#methods-field-options-primarykeypk">primaryKeypk</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-options-notnull">notNull</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-options-unique">unique</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-options-default">default</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-field-options-references">references</a>
                 </li>
               
             </ul>
@@ -251,11 +288,11 @@ in the order they are written. In this mode, you cannot write asynchronous code
 queries. If you need full control, <em>manual</em> mode can be enabled by simply
 returning a promise or <em>thenable</em> from the from the <code>up</code> or <code>down</code> function. In
 manual mode, you are responsible for executing all queries in your migration.</p>
-<h3 id="migration-basics-methods">Methods</h3>
-<h4 id="migration-basics-methods--createtable-"><code>#createTable</code></h4>
+<h2 id="methods">Methods</h2>
+<h3 id="methods-createtable"><code>#createTable</code></h3>
 <p>Create new tables. Pass the name of the table you want to create and a callback
 that will receive a table object with which you will be able to create columns
-of different <a href="#migration-basics-field-types">field types</a>.</p>
+of different <a href="#methods-field-types">field types</a>.</p>
 <pre><code class="hljs js">schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
   table.string(<span class="hljs-string">&apos;title&apos;</span>);
   table.text(<span class="hljs-string">&apos;body&apos;</span>);
@@ -263,19 +300,15 @@ of different <a href="#migration-basics-field-types">field types</a>.</p>
 
 <p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
-<ul>
-<li><p><code>primaryKey</code> Defines the primary key of the table. The default is <code>id</code>. Pass
+<h4 id="methods-createtable-primarykey"><code>#primaryKey</code> or <code>#pk</code></h4>
+<p>Defines the primary key of the table. The default is <code>id</code>. Pass
 <code>null</code> to create a table without a primary key. You can configure the primary
 key&apos;s type or options within your table definition callback. See below for an
 example.</p>
-</li>
-<li><p><code>pk</code> Alias of <code>primaryKey</code>.</p>
-</li>
-<li><p><code>unlessExists</code> Will not create the table if it already exists.</p>
-</li>
-<li><p><code>with</code> Allows delayed definition of the table columns &amp; indexes.</p>
-</li>
-</ul>
+<h4 id="methods-createtable-unlessexists"><code>#unlessExists</code></h4>
+<p>Will not create the table if it already exists.</p>
+<h4 id="methods-createtable-with"><code>#with</code></h4>
+<p>Allows delayed definition of the table columns &amp; indexes.</p>
 <pre><code class="hljs js">schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>)
 .pk(<span class="hljs-string">&apos;identifier&apos;</span>)
 .unlessExists()
@@ -284,26 +317,22 @@ example.</p>
    table.string(<span class="hljs-string">&apos;title&apos;</span>);
 });</code></pre>
 
-<h4 id="migration-basics-methods--altertable-"><code>#alterTable</code></h4>
+<h4 id="methods-createtable-table-index"><code>table#index</code></h4>
+<p>Add an index to the table.</p>
+<h3 id="methods-altertable"><code>#alterTable</code></h3>
 <p>Alter existing tables. Pass the name of the table you want to alter and a
 callback that will receive a table object with which you will be able to
-create columns of different <a href="#migration-basics-field-types">field types</a> as
+create columns of different <a href="#methods-field-types">field types</a> as
 well as drop existing columns.</p>
 <pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
   table.string(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// add a title column</span>
   table.drop(<span class="hljs-string">&apos;body&apos;</span>); <span class="hljs-comment">// drop the body column</span>
 });</code></pre>
 
-<ul>
-<li><code>drop</code> Drops a table column</li>
-</ul>
-<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
-  table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
-});</code></pre>
-
-<ul>
-<li><code>rename</code> Renames a table column</li>
-</ul>
+<h4 id="methods-altertable-table-index"><code>table#index</code></h4>
+<p>Add an index to the table.</p>
+<h4 id="methods-altertable-table-rename"><code>table#rename</code></h4>
+<p>Renames a table column.</p>
 <p>While not intuitive, a third argument, <code>type</code>, is required for a rename. This
 is because certain backends need this value in order to perform a rename. The
 value of the type <em>must match</em> the type used to create the column.</p>
@@ -311,18 +340,22 @@ value of the type <em>must match</em> the type used to create the column.</p>
   table.rename(<span class="hljs-string">&apos;title&apos;</span>, <span class="hljs-string">&apos;headline&apos;</span>, <span class="hljs-string">&apos;string&apos;</span>); <span class="hljs-comment">// rename the title column</span>
 });</code></pre>
 
+<h4 id="methods-altertable-table-drop"><code>table#drop</code></h4>
+<p>Drops a table column.</p>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
+});</code></pre>
 
-<h4 id="migration-basics-methods--droptable-"><code>#dropTable</code></h4>
+<h3 id="methods-droptable"><code>#dropTable</code></h3>
 <p>Drop existing tables.</p>
 <pre><code class="hljs js">schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);</code></pre>
 
 <p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
-<ul>
-<li><code>ifExists</code> Will only drop the table if it exists.</li>
-</ul>
-<h3 id="migration-basics-field-types">Field Types</h3>
-<h4 id="migration-basics-field-types--serial-"><code>serial</code></h4>
+<h4 id="methods-droptable-ifexists"><code>#ifExists</code></h4>
+<p>Will only drop the table if it exists.</p>
+<h3 id="methods-field-types">Field Types</h3>
+<h4 id="methods-field-types-serial"><code>serial</code></h4>
 <p>Automatically incrementing integer type usually used for <code>id</code> primary key
 columns.</p>
 <p>You can also use one of the following aliases:</p>
@@ -330,60 +363,58 @@ columns.</p>
 <li><code>auto</code></li>
 <li><code>increments</code></li>
 </ul>
-<h4 id="migration-basics-field-types--integer-"><code>integer</code></h4>
+<h4 id="methods-field-types-integer"><code>integer</code></h4>
 <p>Standard sized integer.</p>
-<h4 id="migration-basics-field-types--integer64-"><code>integer64</code></h4>
+<h4 id="methods-field-types-integer-4"><code>integer64</code></h4>
 <p>64 bit integer.</p>
-<h4 id="migration-basics-field-types--string-"><code>string</code></h4>
+<h4 id="methods-field-types-string"><code>string</code></h4>
 <p>A string. Accepts a <code>length</code> option which defaults to <code>255</code>.</p>
 <pre><code class="hljs js">table.string(<span class="hljs-string">&apos;title&apos;</span>, { length: <span class="hljs-number">80</span> });</code></pre>
 
-<h4 id="migration-basics-field-types--text-"><code>text</code></h4>
+<h4 id="methods-field-types-text"><code>text</code></h4>
 <p>Arbitrary length (long) text.</p>
-<h4 id="migration-basics-field-types--binary-"><code>binary</code></h4>
+<h4 id="methods-field-types-binary"><code>binary</code></h4>
 <p>Binary data.</p>
-<h4 id="migration-basics-field-types--bool-"><code>bool</code></h4>
+<h4 id="methods-field-types-bool"><code>bool</code></h4>
 <p>Boolean.</p>
-<h4 id="migration-basics-field-types--date-"><code>date</code></h4>
+<h4 id="methods-field-types-date"><code>date</code></h4>
 <p>A date type that does not include a time.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3--date-">SQLite3</a>.</em></p>
-<h4 id="migration-basics-field-types--time-"><code>time</code></h4>
+<p><em>Quirks in <a href="/guides/backends/#sqlite3-date">SQLite3</a>.</em></p>
+<h4 id="methods-field-types-time"><code>time</code></h4>
 <p>A time type that does not include a date.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3--time-">SQLite3</a>.</em></p>
-<h4 id="migration-basics-field-types--datetime-"><code>dateTime</code></h4>
+<p><em>Quirks in <a href="/guides/backends/#sqlite3-time">SQLite3</a>.</em></p>
+<h4 id="methods-field-types-datetime"><code>dateTime</code></h4>
 <p>A date and type type. Sometimes also known as a <em>timestamp</em>, this may or may
 not use a <em>timestamp</em> type depending on the database back-end, but will contain
 both the date and time components of a date.</p>
-<p><em>Quirks in <a href="/guides/backends/#sqlite3--datetime-">SQLite3</a>.</em></p>
-<h4 id="migration-basics-field-types--float-"><code>float</code></h4>
+<p><em>Quirks in <a href="/guides/backends/#sqlite3-datetime">SQLite3</a>.</em></p>
+<h4 id="methods-field-types-float"><code>float</code></h4>
 <p>A floating point number.</p>
-<h4 id="migration-basics-field-types--decimal-"><code>decimal</code></h4>
+<h4 id="methods-field-types-decimal"><code>decimal</code></h4>
 <p>A decimal type that accepts the options <code>precision</code> and <code>scale</code>.</p>
 <pre><code class="hljs js">table.decimal(<span class="hljs-string">&apos;amount&apos;</span>, { precision: <span class="hljs-number">20</span>, scale: <span class="hljs-number">10</span> });</code></pre>
 
 <p>If using options, you must specify at least the precision. Different adapters
 will handle options slightly differently. It is recommended to either omit both
 the <code>precision</code> and the <code>scale</code> or provide both for most consistent results.</p>
-<h3 id="migration-basics-field-options">Field Options</h3>
+<h3 id="methods-field-options">Field Options</h3>
 <p>Options are enabled by chaining any of the following methods onto the end of
 the field definition as shown in
-<a href="#migration-basics-methods--createtable-">the create table example</a>.</p>
-<h4 id="migration-basics-field-options--primarykey-"><code>primaryKey</code></h4>
+<a href="#methods-createtable">the create table example</a>.</p>
+<h4 id="methods-field-options-primarykeypk"><code>primaryKey</code> or <code>pk</code></h4>
 <p>Mark this column as being a primary key column.</p>
-<h4 id="migration-basics-field-options--pk-"><code>pk</code></h4>
-<p>Alias of <a href="#migration-basics-field-options--primarykey-"><code>primaryKey</code></a>.</p>
-<h4 id="migration-basics-field-options--notnull-"><code>notNull</code></h4>
+<h4 id="methods-field-options-notnull"><code>notNull</code></h4>
 <p>Mark this column as not accepting null values.</p>
-<h4 id="migration-basics-field-options--unique-"><code>unique</code></h4>
+<h4 id="methods-field-options-unique"><code>unique</code></h4>
 <p>Mark this column as containing unique values.</p>
-<h4 id="migration-basics-field-options--default-"><code>default</code></h4>
+<h4 id="methods-field-options-default"><code>default</code></h4>
 <p>Set the default value for this column.</p>
 <pre><code class="hljs js">table.string(<span class="hljs-string">&apos;name&apos;</span>).default(<span class="hljs-string">&apos;Anonymous&apos;</span>)</code></pre>
 
 <p><em>Security Note:</em> This method accepts only number and strings. Azul.js will
 escape the value that&apos;s sent to it to prevent security vulnerabilities, but we
 still recommend against sending user-input to this method.</p>
-<h4 id="migration-basics-field-options--references-"><code>references</code></h4>
+<h4 id="methods-field-options-references"><code>references</code></h4>
 <p>Set the column that this column references.</p>
 <pre><code class="hljs js">table.integer(<span class="hljs-string">&apos;article_id&apos;</span>).references(<span class="hljs-string">&apos;articles.id&apos;</span>)</code></pre>
 

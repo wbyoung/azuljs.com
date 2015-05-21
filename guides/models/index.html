@@ -161,63 +161,63 @@
       <ul>
         
           <li>
-            <a href="#methods-properties--save-">#save</a>
+            <a href="#methods-properties-save">#save</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--delete-">#delete</a>
+            <a href="#methods-properties-delete">#delete</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--attrs-">#attrs</a>
+            <a href="#methods-properties-attrs">#attrs</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--newrecord-">#newRecord</a>
+            <a href="#methods-properties-newrecord">#newRecord</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--persisted-">#persisted</a>
+            <a href="#methods-properties-persisted">#persisted</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--deleted-">#deleted</a>
+            <a href="#methods-properties-deleted">#deleted</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--dirty-">#dirty</a>
+            <a href="#methods-properties-dirty">#dirty</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--objects-">.objects</a>
+            <a href="#methods-properties-objects">.objects</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties--tablename-">.tableName</a>
+            <a href="#methods-properties-tablename">.tableName</a>
             <ul>
               
             </ul>
@@ -348,8 +348,8 @@ search by primary key:</p>
   <span class="hljs-comment">// the article with primary key 1 has been found</span>
 });</code></pre>
 
-<p>Reading from the database is asynchronous, so <a href="/guides/queries/#executing--fetch-"><code>fetch</code></a> and
-<a href="/guides/queries/#executing--find-"><code>find</code></a> return promises that resolve with the results from
+<p>Reading from the database is asynchronous, so <a href="/guides/queries/#executing-fetch"><code>fetch</code></a> and
+<a href="/guides/queries/#executing-find"><code>find</code></a> return promises that resolve with the results from
 the database.</p>
 <p>For more information on fetching objects from the database, see the <a href="/guides/queries/">full
 query guide</a>.</p>
@@ -404,7 +404,7 @@ article.save().then(<span class="hljs-function"><span class="hljs-keyword">funct
 });</code></pre>
 
 <h2 id="methods-properties">Methods &amp; Properties</h2>
-<h3 id="methods-properties--save-"><code>#save</code></h3>
+<h3 id="methods-properties-save"><code>#save</code></h3>
 <p>Saves the model if it hasn&apos;t already been saved. This method is used to persist
 in memory changes and must be called after creating, altering, or deleting a
 model in order for the changes to be saved to the database.</p>
@@ -412,12 +412,12 @@ model in order for the changes to be saved to the database.</p>
 succeeds.</p>
 <pre><code class="hljs js">model.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> </span>{ <span class="hljs-comment">/* ... */</span> });</code></pre>
 
-<h3 id="methods-properties--delete-"><code>#delete</code></h3>
+<h3 id="methods-properties-delete"><code>#delete</code></h3>
 <p>Marks the model for deletion.</p>
 <p>When a model has been marked for deletion &amp; saved, it will still exist in
 memory. Re-saving an object in this state will have no effect.</p>
 <p>See examples in the <a href="#manipulating-data-delete">deleting section</a>.</p>
-<h3 id="methods-properties--attrs-"><code>#attrs</code></h3>
+<h3 id="methods-properties-attrs"><code>#attrs</code></h3>
 <p>The attributes, keyed by database field name, currently set on this object.
 That is, a <code>Person</code> defined like so:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">&apos;person&apos;</span>, {
@@ -433,7 +433,7 @@ That is, a <code>Person</code> defined like so:</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--newrecord-"><code>#newRecord</code></h3>
+<h3 id="methods-properties-newrecord"><code>#newRecord</code></h3>
 <p>Determine if this is a new record. Model that do not have a <em>primary key</em> are
 considered new. New records will be inserted when a model is saved. To better
 understand this behavior, read about <a href="#manipulating-data-create-update-or-delete-">how the save method is
@@ -441,30 +441,30 @@ determined</a>.</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--persisted-"><code>#persisted</code></h3>
+<h3 id="methods-properties-persisted"><code>#persisted</code></h3>
 <p>Determine if this model is persisted, that is, it is not deleted nor new.</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--deleted-"><code>#deleted</code></h3>
+<h3 id="methods-properties-deleted"><code>#deleted</code></h3>
 <p>Determine if this model is deleted or has been marked for deletion.</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--dirty-"><code>#dirty</code></h3>
+<h3 id="methods-properties-dirty"><code>#dirty</code></h3>
 <p>Determine if this model has changes that have not yet been persisted to the
 database.</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--objects-"><code>.objects</code></h3>
+<h3 id="methods-properties-objects"><code>.objects</code></h3>
 <p>Access a <a href="/guides/queries/">query object</a> that will allow you to fetch models of
 this type from the database. Note that this can be customized by creating your
 own <a href="/guides/managers/#overriding-the-default-manager">custom manager</a>.</p>
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties--tablename-"><code>.tableName</code></h3>
+<h3 id="methods-properties-tablename"><code>.tableName</code></h3>
 <p>The name of the table in the database which contains the data.</p>
 <p>You can override this property like so:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>);
