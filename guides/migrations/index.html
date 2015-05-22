@@ -115,6 +115,10 @@
                 </li>
               
                 <li>
+                  <a href="#methods-createtable-table-field">table#field</a>
+                </li>
+              
+                <li>
                   <a href="#methods-createtable-table-index">table#index</a>
                 </li>
               
@@ -124,6 +128,10 @@
           <li>
             <a href="#methods-altertable">#alterTable</a>
             <ul>
+              
+                <li>
+                  <a href="#methods-altertable-table-field">table#field</a>
+                </li>
               
                 <li>
                   <a href="#methods-altertable-table-index">table#index</a>
@@ -346,6 +354,10 @@ example.</p>
    table.string(<span class="hljs-string">&apos;title&apos;</span>);
 });</code></pre>
 
+<h4 id="methods-createtable-table-field"><code>table#field(column, [options])</code></h4>
+<p>Create a column of the type given by <code>field</code>. See
+<a href="#methods-field-types">field types</a> for a comprehensive list of types, options,
+and examples.</p>
 <h4 id="methods-createtable-table-index"><code>table#index(columns, [options])</code></h4>
 <p>Add an index to the table.</p>
 <pre><code class="hljs js">table.index(<span class="hljs-string">&apos;boss_id&apos;</span>); <span class="hljs-comment">// name automatically set to boss_id_idx</span>
@@ -364,6 +376,10 @@ well as drop existing columns.</p>
 
 <p>This method is <a href="#reversible-migrations"><em>reversible</em></a> unless you
 <a href="#methods-altertable-table-drop"><code>drop</code></a> a column.</p>
+<h4 id="methods-altertable-table-field"><code>table#field(column, [options])</code></h4>
+<p>Create a column of the type given by <code>field</code>. See
+<a href="#methods-field-types">field types</a> for a comprehensive list of types, options,
+and examples.</p>
 <h4 id="methods-altertable-table-index"><code>table#index(columns, [options])</code></h4>
 <p>Add an index to the table. See
 <a href="#methods-createtable-table-index">create table examples</a>.</p>
