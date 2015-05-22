@@ -250,7 +250,7 @@ methods and properties:</p>
 </ul>
 <p>A migration for this would look involve creating the foreign key when creating
 the <code>articles</code> table:</p>
-<pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+<pre><code class="hljs js">exports.change = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
   schema.createTable(<span class="hljs-string">&apos;blogs&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
     table.string(<span class="hljs-string">&apos;title&apos;</span>);
   });
@@ -260,11 +260,6 @@ the <code>articles</code> table:</p>
     table.text(<span class="hljs-string">&apos;body&apos;</span>);
     table.integer(<span class="hljs-string">&apos;blog_id&apos;</span>).references(<span class="hljs-string">&apos;blogs.id&apos;</span>);
   });
-};
-
-exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
-  schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);
-  schema.dropTable(<span class="hljs-string">&apos;blogs&apos;</span>);
 };</code></pre>
 
 <h3 id="types-of-relationships-many-to-many">Many-to-Many</h3>
@@ -362,7 +357,7 @@ Promise.all([
 
 <p>A migration for this would look involve creating the join table for the
 relationship:</p>
-<pre><code class="hljs js">exports.up = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+<pre><code class="hljs js">exports.change = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
   schema.createTable(<span class="hljs-string">&apos;doctors&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
     table.string(<span class="hljs-string">&apos;name&apos;</span>);
   });
@@ -376,12 +371,6 @@ relationship:</p>
     table.integer(<span class="hljs-string">&apos;doctor_id&apos;</span>).references(<span class="hljs-string">&apos;doctors.id&apos;</span>);
     table.integer(<span class="hljs-string">&apos;patient_id&apos;</span>).references(<span class="hljs-string">&apos;patients.id&apos;</span>);
   });
-};
-
-exports.down = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
-  schema.dropTable(<span class="hljs-string">&apos;appointments&apos;</span>);
-  schema.dropTable(<span class="hljs-string">&apos;patients&apos;</span>);
-  schema.dropTable(<span class="hljs-string">&apos;doctors&apos;</span>);
 };</code></pre>
 
 <p>In some cases, it may not be not necessary to define the model through which

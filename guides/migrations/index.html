@@ -88,6 +88,13 @@
     </li>
   
     <li>
+      <a href="#reversible-migrations">Reversible Migrations</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
       <a href="#methods">Methods</a>
       <ul>
         
@@ -273,6 +280,17 @@ exports.down = <span class="hljs-function"><span class="hljs-keyword">function</
   schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);
 };</code></pre>
 
+<p>In fact, Azul.js is able to determine how to <a href="#reversible-migrations">reverse many
+migrations</a>. For these migrations, you&apos;ll only need to
+export a <code>change</code> function. The above example is reversible and could simply be
+written:</p>
+<pre><code class="hljs js">exports.change = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  schema.createTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+    table.string(<span class="hljs-string">&apos;title&apos;</span>);
+    table.text(<span class="hljs-string">&apos;body&apos;</span>);
+  });
+};</code></pre>
+
 <p>For examples of running multiple actions in a single migration, see the example
 migrations discussed in the <a href="/guides/relations/#types-of-relationships-one-to-many">relations
 documentation</a>.</p>
@@ -289,6 +307,15 @@ in the order they are written. In this mode, you cannot write asynchronous code
 queries. If you need full control, <em>manual</em> mode can be enabled by simply
 returning a promise or <em>thenable</em> from the from the <code>up</code> or <code>down</code> function. In
 manual mode, you are responsible for executing all queries in your migration.</p>
+<h2 id="reversible-migrations">Reversible Migrations</h2>
+<p>Azul.js is able to determine the reverse of migrations that do not make
+destructive changes. For instance, <em>creating</em> a table can be reversed because
+no additional information is needed to know that the reverse is to remove that
+table. On the other hand, if you write a migration to drop a table, more
+information would be needed to know how to re-create the table. Operations
+that <em>rename</em> will also be reversible.</p>
+<p>Each method below will discuss in more detail whether it can be used with the
+<code>change</code> function.</p>
 <h2 id="methods">Methods</h2>
 <h3 id="methods-createtable"><code>#createTable</code></h3>
 <p>Create new tables. Pass the name of the table you want to create and a callback
@@ -299,6 +326,7 @@ of different <a href="#methods-field-types">field types</a>.</p>
   table.text(<span class="hljs-string">&apos;body&apos;</span>);
 });</code></pre>
 
+<p>This method is always <a href="#reversible-migrations"><em>reversible</em></a>.</p>
 <p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
 <h4 id="methods-createtable-primarykey"><code>#primaryKey</code> or <code>#pk</code></h4>
@@ -334,6 +362,8 @@ well as drop existing columns.</p>
   table.drop(<span class="hljs-string">&apos;body&apos;</span>); <span class="hljs-comment">// drop the body column</span>
 });</code></pre>
 
+<p>This method is <a href="#reversible-migrations"><em>reversible</em></a> unless you
+<a href="#methods-altertable-table-drop"><code>drop</code></a> a column.</p>
 <h4 id="methods-altertable-table-index"><code>table#index(columns, [options])</code></h4>
 <p>Add an index to the table. See
 <a href="#methods-createtable-table-index">create table examples</a>.</p>
@@ -352,10 +382,12 @@ value of the type <em>must match</em> the type used to create the column.</p>
   table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
 });</code></pre>
 
+<p>This is not <a href="#reversible-migrations"><em>reversible</em></a>.</p>
 <h3 id="methods-droptable"><code>#dropTable</code></h3>
 <p>Drop existing tables.</p>
 <pre><code class="hljs js">schema.dropTable(<span class="hljs-string">&apos;articles&apos;</span>);</code></pre>
 
+<p>This method is never <a href="#reversible-migrations"><em>reversible</em></a>.</p>
 <p>Returns a <em>thenable</em> <a href="/guides/queries/#data-queries">basic query</a> with the
 following chainable methods:</p>
 <h4 id="methods-droptable-ifexists"><code>#ifExists</code></h4>
