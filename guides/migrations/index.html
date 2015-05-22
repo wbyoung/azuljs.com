@@ -126,6 +126,13 @@
           </li>
         
           <li>
+            <a href="#methods-renametable">#renameTable</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#methods-altertable">#alterTable</a>
             <ul>
               
@@ -134,15 +141,23 @@
                 </li>
               
                 <li>
-                  <a href="#methods-altertable-table-index">table#index</a>
-                </li>
-              
-                <li>
                   <a href="#methods-altertable-table-rename">table#rename</a>
                 </li>
               
                 <li>
                   <a href="#methods-altertable-table-drop">table#drop</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-altertable-table-index">table#index</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-altertable-table-renameindex">table#renameIndex</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-altertable-table-dropindex">table#dropIndex</a>
                 </li>
               
             </ul>
@@ -364,6 +379,11 @@ and examples.</p>
 table.index([<span class="hljs-string">&apos;first_name&apos;</span>, <span class="hljs-string">&apos;last_name&apos;</span>], { name: <span class="hljs-string">&apos;full_name_index&apos;</span> });</code></pre>
 
 
+<h3 id="methods-renametable"><code>#renameTable(from, to)</code></h3>
+<p>Rename a table.</p>
+<pre><code class="hljs js">schema.renameTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-string">&apos;posts&apos;</span>);</code></pre>
+
+<p>This method is always <a href="#reversible-migrations"><em>reversible</em></a>.</p>
 <h3 id="methods-altertable"><code>#alterTable</code></h3>
 <p>Alter existing tables. Pass the name of the table you want to alter and a
 callback that will receive a table object with which you will be able to
@@ -375,14 +395,12 @@ well as drop existing columns.</p>
 });</code></pre>
 
 <p>This method is <a href="#reversible-migrations"><em>reversible</em></a> unless you
-<a href="#methods-altertable-table-drop"><code>drop</code></a> a column.</p>
+use <a href="#methods-altertable-table-drop"><code>drop</code></a> to drop a column or
+<a href="#methods-altertable-table-dropindex"><code>dropIndex</code></a> to drop an index.</p>
 <h4 id="methods-altertable-table-field"><code>table#field(column, [options])</code></h4>
 <p>Create a column of the type given by <code>field</code>. See
 <a href="#methods-field-types">field types</a> for a comprehensive list of types, options,
 and examples.</p>
-<h4 id="methods-altertable-table-index"><code>table#index(columns, [options])</code></h4>
-<p>Add an index to the table. See
-<a href="#methods-createtable-table-index">create table examples</a>.</p>
 <h4 id="methods-altertable-table-rename"><code>table#rename</code></h4>
 <p>Renames a table column.</p>
 <p>While not intuitive, a third argument, <code>type</code>, is required for a rename. This
@@ -396,6 +414,23 @@ value of the type <em>must match</em> the type used to create the column.</p>
 <p>Drops a table column.</p>
 <pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
   table.drop(<span class="hljs-string">&apos;title&apos;</span>); <span class="hljs-comment">// drop the title column</span>
+});</code></pre>
+
+<p>This is not <a href="#reversible-migrations"><em>reversible</em></a>.</p>
+<h4 id="methods-altertable-table-index"><code>table#index(columns, [options])</code></h4>
+<p>Add an index to the table. See
+<a href="#methods-createtable-table-index">create table examples</a>.</p>
+<h4 id="methods-altertable-table-renameindex"><code>table#renameIndex(from, to)</code></h4>
+<p>Rename an index associated with a table. The full index name must be provided.</p>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;employees&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.renameIndex(<span class="hljs-string">&apos;full_name_index&apos;</span>, <span class="hljs-string">&apos;full_name_idx&apos;</span>);
+});</code></pre>
+
+<h4 id="methods-altertable-table-dropindex"><code>table#dropIndex([columns], [options])</code></h4>
+<p>Drops an index associated with a table.</p>
+<pre><code class="hljs js">schema.alterTable(<span class="hljs-string">&apos;employees&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+  table.dropIndex(<span class="hljs-string">&apos;boss_id&apos;</span>); <span class="hljs-comment">// drops employees_boss_id_idx</span>
+  table.dropIndex({ name: <span class="hljs-string">&apos;full_name_index&apos;</span> }); <span class="hljs-comment">// drops full_name_index</span>
 });</code></pre>
 
 <p>This is not <a href="#reversible-migrations"><em>reversible</em></a>.</p>
