@@ -78,7 +78,7 @@
       <ul>
         
           <li>
-            <a href="#postgresql-query-returning">Query#returning</a>
+            <a href="#postgresql-query-returning">Query#returning()</a>
             <ul>
               
             </ul>
@@ -92,7 +92,7 @@
       <ul>
         
           <li>
-            <a href="#mysql-query-returning">Query#returning</a>
+            <a href="#mysql-query-returning">Query#returning()</a>
             <ul>
               
             </ul>
@@ -106,7 +106,7 @@
       <ul>
         
           <li>
-            <a href="#sqlite3-query-returning">Query#returning</a>
+            <a href="#sqlite3-query-returning">Query#returning()</a>
             <ul>
               
             </ul>
@@ -152,20 +152,20 @@
 <h1 id="backends">Backends</h1>
 <h2 id="postgresql">PostgreSQL</h2>
 <p>All features are known to work with PostgreSQL.</p>
-<h3 id="postgresql-query-returning"><code>Query#returning</code></h3>
+<h3 id="postgresql-query-returning"><code>Query#returning(column)</code></h3>
 <p>An additional query method, <code>returning</code> can be used to return a specific value
 from <a href="/guides/queries/#data-queries-insert">insert queries</a>. This method is only fully supported
 in PostgreSQL.</p>
 <h2 id="mysql">MySQL</h2>
 <p>All features are known to work with MySQL.</p>
-<h3 id="mysql-query-returning"><code>Query#returning</code></h3>
+<h3 id="mysql-query-returning"><code>Query#returning(column)</code></h3>
 <p>Using MySQL, the only value that can be returned is the auto-incremented
 primary key. Requesting any other value will result in undefined behavior.</p>
 <h2 id="sqlite3">SQLite3</h2>
 <p>There are a few features that are currently not supported in SQLite3. If you&apos;d
 like to see these improved, please open <a href="https://github.com/wbyoung/azul/issues">an issue</a> or send over a
 <a href="https://github.com/wbyoung/azul/pulls">pull request</a> with support.</p>
-<h3 id="sqlite3-query-returning"><code>Query#returning</code></h3>
+<h3 id="sqlite3-query-returning"><code>Query#returning(column)</code></h3>
 <p>Using SQLite3, the only value that can be returned is the primary key if it is
 aliased to the <a href="https://www.sqlite.org/autoinc.html"><code>ROWID</code></a>. Requesting any other value will
 result in undefined behavior.</p>

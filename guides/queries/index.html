@@ -113,49 +113,49 @@
       <ul>
         
           <li>
-            <a href="#methods-where">#where</a>
+            <a href="#methods-where">#where()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-limit">#limit</a>
+            <a href="#methods-limit">#limit()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-offset">#offset</a>
+            <a href="#methods-offset">#offset()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-order">#order</a>
+            <a href="#methods-order">#order()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-groupby">#groupBy</a>
+            <a href="#methods-groupby">#groupBy()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-unique">#unique</a>
+            <a href="#methods-unique">#unique()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-clone">#clone</a>
+            <a href="#methods-clone">#clone()</a>
             <ul>
               
             </ul>
@@ -351,42 +351,42 @@
       <ul>
         
           <li>
-            <a href="#executing-execute">#execute</a>
+            <a href="#executing-execute">#execute()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#executing-fetch">#fetch</a>
+            <a href="#executing-fetch">#fetch()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#executing-fetchone">#fetchOne</a>
+            <a href="#executing-fetchone">#fetchOne()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#executing-find">#find</a>
+            <a href="#executing-find">#find()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#executing-findorcreate">#findOrCreate</a>
+            <a href="#executing-findorcreate">#findOrCreate()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#executing-then">#then</a>
+            <a href="#executing-then">#then()</a>
             <ul>
               
             </ul>
@@ -400,14 +400,14 @@
       <ul>
         
           <li>
-            <a href="#relationships-with">#with</a>
+            <a href="#relationships-with">#with()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#relationships-join">#join</a>
+            <a href="#relationships-join">#join()</a>
             <ul>
               
             </ul>
@@ -428,42 +428,42 @@
       <ul>
         
           <li>
-            <a href="#generic-queries-all">#all</a>
+            <a href="#generic-queries-all">#all()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#generic-queries-select">#select</a>
+            <a href="#generic-queries-select">#select()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#generic-queries-insert">#insert</a>
+            <a href="#generic-queries-insert">#insert()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#generic-queries-update">#update</a>
+            <a href="#generic-queries-update">#update()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#generic-queries-delete">#delete</a>
+            <a href="#generic-queries-delete">#delete()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#generic-queries-raw">#raw</a>
+            <a href="#generic-queries-raw">#raw()</a>
             <ul>
               
             </ul>
@@ -477,7 +477,7 @@
       <ul>
         
           <li>
-            <a href="#transactions-transaction">#transaction</a>
+            <a href="#transactions-transaction">#transaction()</a>
             <ul>
               
             </ul>
@@ -596,7 +596,7 @@ query</a>.</p>
 a query that contains no conditions via the <a href="/guides/models/#methods-properties-objects"><code>objects</code></a>
 property of your model class. For more details and customization of this base
 query, read about <a href="/guides/managers/">managers</a>.</p>
-<h3 id="methods-where"><code>#where</code></h3>
+<h3 id="methods-where"><code>#where(condition...)</code></h3>
 <p>Narrowing the scope of objects returned form the database is accomplished by
 using the <code>where</code> method.</p>
 <p>Simple queries can be achieved by simply passing an object with the conditions
@@ -613,15 +613,15 @@ that must be met:</p>
 <ul>
 <li><a href="#relationships-automatic-joining">Automatically joins</a> relationships</li>
 </ul>
-<h3 id="methods-limit"><code>#limit</code></h3>
+<h3 id="methods-limit"><code>#limit(n)</code></h3>
 <p>Limit the number of results for a query.</p>
 <pre><code class="hljs js">Article.objects.limit(<span class="hljs-number">8</span>); <span class="hljs-comment">// a maximum of 8 results will be returned</span></code></pre>
 
-<h3 id="methods-offset"><code>#offset</code></h3>
+<h3 id="methods-offset"><code>#offset(n)</code></h3>
 <p>Set the offset for a query.</p>
 <pre><code class="hljs js">Article.objects.offset(<span class="hljs-number">2</span>); <span class="hljs-comment">// skip the first 2 results</span></code></pre>
 
-<h3 id="methods-order"><code>#order</code></h3>
+<h3 id="methods-order"><code>#order(ordering...)</code></h3>
 <p>Order the results of a query.</p>
 <pre><code class="hljs js"><span class="hljs-comment">// sort by title descending</span>
 Article.objects.order(<span class="hljs-string">&apos;-title&apos;</span>);
@@ -633,7 +633,7 @@ Article.objects.order(<span class="hljs-string">&apos;-title&apos;</span>, <span
 <li>Can be used via the <code>orderBy</code> alias</li>
 <li><a href="#relationships-automatic-joining">Automatically joins</a> relationships</li>
 </ul>
-<h3 id="methods-groupby"><code>#groupBy</code></h3>
+<h3 id="methods-groupby"><code>#groupBy(column)</code></h3>
 <p>Groups the results of a query.</p>
 <pre><code class="hljs js">Article.objects.groupBy(<span class="hljs-string">&apos;title&apos;</span>);</code></pre>
 
@@ -650,10 +650,10 @@ useful.
 </div>
 </div>
 
-<h3 id="methods-unique"><code>#unique</code></h3>
+<h3 id="methods-unique"><code>#unique()</code></h3>
 <p>Performs a <a href="#methods-groupby"><code>groupBy</code></a> with the primary key of the model. This
 is useful when <a href="#relationships-join">joining relations</a>.</p>
-<h3 id="methods-clone"><code>#clone</code></h3>
+<h3 id="methods-clone"><code>#clone()</code></h3>
 <p>Create a new query that has the exact same conditions as this query. This
 method can be used to ensure that executing a query will not use a
 <a href="#basics-caching">cached result</a>.</p>
@@ -799,14 +799,14 @@ Article.objects.where({ createdAt$weekday: <span class="hljs-string">&apos;monda
 
 <p><em>Requires extension in <a href="/guides/backends/#sqlite3-lookups">SQLite3</a>.</em></p>
 <h2 id="executing">Executing</h2>
-<h3 id="executing-execute"><code>#execute</code></h3>
+<h3 id="executing-execute"><code>#execute()</code></h3>
 <p>Executes a query. Once executed, subsequent calls will use the result from the
 first execution. <a href="#basics-caching">Read the details in caching</a>.</p>
 <pre><code class="hljs js">query.execute(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(results)</span> </span>{
   <span class="hljs-comment">// execution complete</span>
 });</code></pre>
 
-<h3 id="executing-fetch"><code>#fetch</code></h3>
+<h3 id="executing-fetch"><code>#fetch()</code></h3>
 <p>Essentially an alias for <a href="#executing-execute"><code>execute</code></a>, this method is
 preferred in most cases for readability when reading data from the database.</p>
 <pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* ... */</span> }); <span class="hljs-comment">// reads better</span>
@@ -815,7 +815,7 @@ Article.objects.execute().then(<span class="hljs-function"><span class="hljs-key
 <p><strong>Advanced:</strong> For <a href="#data-queries">data queries</a>, this method actually ensures
 that the resolved object is transformed to an array rather than a standard
 result object.</p>
-<h3 id="executing-fetchone"><code>#fetchOne</code></h3>
+<h3 id="executing-fetchone"><code>#fetchOne()</code></h3>
 <p>This method fetches a single result. Like <code>fetch</code>, this method executes the
 query. It will reject the promise with one of the following codes if a single
 result is not found.</p>
@@ -830,12 +830,12 @@ defined on it:</p>
 <li><code>sql</code> the SQL of the query</li>
 <li><code>args</code> the arguments bound to the SQL statement</li>
 </ul>
-<h3 id="executing-find"><code>#find</code></h3>
+<h3 id="executing-find"><code>#find(pk)</code></h3>
 <p>Find is a shortcut method to find a single result by primary key:</p>
 <pre><code class="hljs js">query.find(<span class="hljs-number">3</span>);
 query.where({ pk: <span class="hljs-number">3</span> }).limit(<span class="hljs-number">1</span>).fetchOne(); <span class="hljs-comment">// the same</span></code></pre>
 
-<h3 id="executing-findorcreate"><code>#findOrCreate</code></h3>
+<h3 id="executing-findorcreate"><code>#findOrCreate(attrs)</code></h3>
 <p>Find or create is a shortcut method to use with models to find a single result
 or create one if it does not exist:</p>
 <pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> });</code></pre>
@@ -855,7 +855,7 @@ used if the object is created. For instance:</p>
 <pre><code class="hljs js">Article.objects.findOrCreate({ title: <span class="hljs-string">&apos;Azul.js 1.0&apos;</span> }, { author: <span class="hljs-string">&apos;Whitney&apos;</span> });</code></pre>
 
 
-<h3 id="executing-then"><code>#then</code></h3>
+<h3 id="executing-then"><code>#then(fulfillment, rejection)</code></h3>
 <p>Query objects are <em>thenable</em> objects, meaning that you can return them inside
 of a promise &amp; they will be executed before the next promise handler.</p>
 <pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
@@ -893,7 +893,7 @@ following models have been defined:</p>
   article: db.belongsTo()
 });</code></pre>
 
-<h3 id="relationships-with"><code>#with</code></h3>
+<h3 id="relationships-with"><code>#with(association...)</code></h3>
 <p>Pre-fetch <a href="/guides/relations/">related objects</a> to avoid executing <em>N + 1</em> queries.</p>
 <p>A poor implementation of fetching all articles and each of the article&apos;s
 comments may look something like:</p>
@@ -924,7 +924,7 @@ to execute a single query to fetch the required comments.</p>
   });
 });</code></pre>
 
-<h3 id="relationships-join"><code>#join</code></h3>
+<h3 id="relationships-join"><code>#join(association)</code></h3>
 <p>In certain cases, you may need to access data from two tables in order to form
 a query.</p>
 <p>For instance, finding articles that have a comment marked as spam. This query
@@ -988,22 +988,22 @@ be built conveniently using the models that you&apos;ve already defined.</p>
 <li>The resulting data will be model objects for <code>all</code> and <code>raw</code> queries.</li>
 <li>You do not provide a table name.</li>
 </ol>
-<h3 id="generic-queries-all"><code>#all</code></h3>
+<h3 id="generic-queries-all"><code>#all()</code></h3>
 <p>Create a <a href="#data-queries-select">select query</a> bound to this model that
 will transform the resulting data into model objects. The resulting query is
 synonymous with the original, but can be used for style and clarity:</p>
 <pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });
 Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> </span>{ <span class="hljs-comment">/**/</span> });</code></pre>
 
-<h3 id="generic-queries-select"><code>#select</code></h3>
+<h3 id="generic-queries-select"><code>#select([columns])</code></h3>
 <p>Create a <a href="#data-queries-select">select query</a> bound to this model that
 <em>does not</em> convert the resulting data into model objects.</p>
-<pre><code class="hljs js">Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
+<pre><code class="hljs js">Article.objects.all().select().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
   <span class="hljs-built_in">console</span>.log(rows);
 });
 <span class="hljs-comment">// ~&gt; [ { id: 4, title: &apos;Breaking News&apos; } ]</span></code></pre>
 
-<h3 id="generic-queries-insert"><code>#insert</code></h3>
+<h3 id="generic-queries-insert"><code>#insert([values])</code></h3>
 <p>Create an <a href="#data-queries-insert">insert query</a> bound to this model.</p>
 <pre><code class="hljs js">Article.objects.insert({ title: <span class="hljs-string">&apos;News&apos;</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rows)</span> </span>{
   <span class="hljs-built_in">console</span>.log(rows);
@@ -1012,7 +1012,7 @@ Article.objects.all().fetch().then(<span class="hljs-function"><span class="hljs
 <span class="hljs-comment">// !&gt; [&apos;News&apos;]</span>
 <span class="hljs-comment">// ~&gt; [ { id: 9 } ]</span></code></pre>
 
-<h3 id="generic-queries-update"><code>#update</code></h3>
+<h3 id="generic-queries-update"><code>#update([values])</code></h3>
 <p>Create an <a href="#data-queries-update">update query</a> bound to this model.</p>
 <p>For instance, you could update a single attribute of a specific object in the
 database:</p>
@@ -1020,14 +1020,14 @@ database:</p>
 <span class="hljs-comment">// -&gt; update &quot;articles&quot; set &quot;title&quot; = ? where &quot;id&quot; = ?</span>
 <span class="hljs-comment">// !&gt; [&apos;Breaking News&apos;, 1]</span></code></pre>
 
-<h3 id="generic-queries-delete"><code>#delete</code></h3>
+<h3 id="generic-queries-delete"><code>#delete()</code></h3>
 <p>Create an <a href="#data-queries-delete">delete query</a> bound to this model.</p>
 <p>To delete multiple records in the database via one query:</p>
 <pre><code class="hljs js">Comment.objects.where({ spam: <span class="hljs-literal">true</span> }).delete();
 <span class="hljs-comment">// -&gt; delete from &quot;comments&quot; where &quot;spam&quot; = ?</span>
 <span class="hljs-comment">// !&gt; [true]</span></code></pre>
 
-<h3 id="generic-queries-raw"><code>#raw</code></h3>
+<h3 id="generic-queries-raw"><code>#raw(sql, [args])</code></h3>
 <p>Create a <a href="#data-queries-raw">raw query</a> bound to this model that will transform the
 resulting data into model objects.</p>
 <p>Be very cautious of <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> when using raw queries.</p>
@@ -1045,7 +1045,7 @@ query.fetch().then(<span class="hljs-function"><span class="hljs-keyword">functi
 <p>Transaction objects can be created via <code>db.transaction()</code> or
 <code>db.query.transaction()</code>.</p>
 <p>For more details <a href="/guides/transactions/">see the transactions guide</a>.</p>
-<h3 id="transactions-transaction"><code>#transaction</code></h3>
+<h3 id="transactions-transaction"><code>#transaction([transaction])</code></h3>
 <p>When called with no arguments, this gets the transaction associated with the
 current query.</p>
 <p>When called with an argument, it creates a new query that uses the given

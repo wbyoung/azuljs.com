@@ -162,14 +162,14 @@
       <ul>
         
           <li>
-            <a href="#methods-properties-save">#save</a>
+            <a href="#methods-properties-save">#save()</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties-delete">#delete</a>
+            <a href="#methods-properties-delete">#delete()</a>
             <ul>
               
             </ul>
@@ -412,7 +412,7 @@ article.save().then(<span class="hljs-function"><span class="hljs-keyword">funct
 });</code></pre>
 
 <h2 id="methods-properties">Methods &amp; Properties</h2>
-<h3 id="methods-properties-save"><code>#save</code></h3>
+<h3 id="methods-properties-save"><code>#save([options])</code></h3>
 <p>Saves the model if it hasn&apos;t already been saved. This method is used to persist
 in memory changes and must be called after creating, altering, or deleting a
 model in order for the changes to be saved to the database.</p>
@@ -420,7 +420,7 @@ model in order for the changes to be saved to the database.</p>
 succeeds.</p>
 <pre><code class="hljs js">model.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> </span>{ <span class="hljs-comment">/* ... */</span> });</code></pre>
 
-<h3 id="methods-properties-delete"><code>#delete</code></h3>
+<h3 id="methods-properties-delete"><code>#delete()</code></h3>
 <p>Marks the model for deletion.</p>
 <p>When a model has been marked for deletion &amp; saved, it will still exist in
 memory. Re-saving an object in this state will have no effect.</p>
