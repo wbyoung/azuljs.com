@@ -176,14 +176,14 @@
           </li>
         
           <li>
-            <a href="#methods-properties-attrs">#attrs</a>
+            <a href="#methods-properties-json">#json</a>
             <ul>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-properties-dbattrs">#dbattrs</a>
+            <a href="#methods-properties-attrs">#attrs</a>
             <ul>
               
             </ul>
@@ -425,7 +425,7 @@ succeeds.</p>
 <p>When a model has been marked for deletion &amp; saved, it will still exist in
 memory. Re-saving an object in this state will have no effect.</p>
 <p>See examples in the <a href="#manipulating-data-delete">deleting section</a>.</p>
-<h3 id="methods-properties-attrs"><code>#attrs</code></h3>
+<h3 id="methods-properties-json"><code>#json</code></h3>
 <p>The attributes of a model object. For instance, a <code>Person</code> defined like so:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">&apos;person&apos;</span>, {
   firstName: db.attr(),
@@ -434,17 +434,17 @@ memory. Re-saving an object in this state will have no effect.</p>
 
 <span class="hljs-keyword">var</span> person = Person.create({ firstName: <span class="hljs-string">&apos;Whitney&apos;</span>, lastName: <span class="hljs-string">&apos;Young&apos;</span> });</code></pre>
 
-<p>Would have <code>attrs</code> of:</p>
-<pre><code class="hljs js">person.attrs; <span class="hljs-comment">// =&gt; { pk: undefined, firstName: &apos;Whitney&apos;, lastName: &apos;Young&apos; }</span></code></pre>
+<p>Would have <code>json</code> of:</p>
+<pre><code class="hljs js">person.json; <span class="hljs-comment">// =&gt; { id: undefined, firstName: &apos;Whitney&apos;, lastName: &apos;Young&apos; }</span></code></pre>
 
 <ul>
 <li>readonly</li>
 </ul>
-<h3 id="methods-properties-dbattrs"><code>#dbattrs</code></h3>
+<h3 id="methods-properties-attrs"><code>#attrs</code></h3>
 <p>The attributes, keyed by database field name, currently set on this object.
-That is, a <code>Person</code> defined <a href="#methods-properties-attrs">as shown in the above
-example</a> would have <code>dbattrs</code> of:</p>
-<pre><code class="hljs js">person.dbattrs; <span class="hljs-comment">// =&gt; { id: undefined, first_name: &apos;Whitney&apos;, last_name: &apos;Young&apos; }</span></code></pre>
+That is, a <code>Person</code> defined <a href="#methods-properties-json">as shown in the above
+example</a> would have <code>attrs</code> of:</p>
+<pre><code class="hljs js">person.attrs; <span class="hljs-comment">// =&gt; { id: undefined, first_name: &apos;Whitney&apos;, last_name: &apos;Young&apos; }</span></code></pre>
 
 <ul>
 <li>readonly</li>
