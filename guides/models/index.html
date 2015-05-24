@@ -176,6 +176,20 @@
           </li>
         
           <li>
+            <a href="#methods-properties-toobject">#toObject()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-tojson">#toJSON()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
             <a href="#methods-properties-json">#json</a>
             <ul>
               
@@ -425,6 +439,55 @@ succeeds.</p>
 <p>When a model has been marked for deletion &amp; saved, it will still exist in
 memory. Re-saving an object in this state will have no effect.</p>
 <p>See examples in the <a href="#manipulating-data-delete">deleting section</a>.</p>
+<h3 id="methods-properties-toobject"><code>#toObject()</code></h3>
+<p>This method is used by <a href="#methods-properties-tojson"><code>toJSON</code></a> and may be useful
+when customizing your your model&apos;s conversion to a JSON object. See example
+usage in <a href="#methods-properties-tojson">overriding <code>toJSON</code></a>. This method must
+not be overridden. It will always return the unaltered version of the model
+object&apos;s attributes &amp; values.</p>
+<h3 id="methods-properties-tojson"><code>#toJSON()</code></h3>
+<p>This method is used by the <a href="#methods-properties-json"><code>json</code></a> property and can
+be overridden to customize your model&apos;s conversion to a JSON object. For
+instance, you could include relationships in your JSON like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">&apos;author&apos;</span>, {
+  name: db.attr(),
+  books: db.hasMany(),
+  toJSON: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.extend(<span class="hljs-keyword">this</span>._super(), {
+      books: _.invoke(<span class="hljs-keyword">this</span>.books, <span class="hljs-string">&apos;toNestable&apos;</span>)
+    });
+  },
+});
+
+<span class="hljs-keyword">var</span> Book = db.model(<span class="hljs-string">&apos;book&apos;</span>, {
+  title: db.attr(),
+  author: db.belongsTo(),
+  toJSON: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.extend(<span class="hljs-keyword">this</span>.toNestable(), {
+      author: <span class="hljs-keyword">this</span>.author.toObject()
+    });
+  },
+  toNestable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.omit(<span class="hljs-keyword">this</span>.toObject(), <span class="hljs-string">&apos;authorId&apos;</span>);
+  },
+});
+
+<span class="hljs-comment">/*
+ * author.json
+ * {
+ *   id: 395,
+ *   name: &apos;Whitney&apos;,
+ *   books: [{ id: 721, title: &apos;Intro to Azul.js&apos; }]
+ * }
+ *
+ * book.json
+ * {
+ *   id: 721,
+ *   title: &apos;Intro to Azul.js&apos;,
+ *   author: { id: 395, name: &apos;Whitney&apos; },
+ * }
+ */</span></code></pre>
+
 <h3 id="methods-properties-json"><code>#json</code></h3>
 <p>The attributes of a model object. For instance, a <code>Person</code> defined like so:</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">&apos;person&apos;</span>, {

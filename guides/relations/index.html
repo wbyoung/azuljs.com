@@ -127,7 +127,7 @@
       <ul>
         
           <li>
-            <a href="#methods-belongsto">#belongsTo</a>
+            <a href="#methods-belongsto">#belongsTo()</a>
             <ul>
               
                 <li>
@@ -143,18 +143,18 @@
                 </li>
               
                 <li>
-                  <a href="#methods-belongsto-createassociation">#createAssociation</a>
+                  <a href="#methods-belongsto-createassociation">#createAssociation()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-belongsto-fetchassociation">#fetchAssociation</a>
+                  <a href="#methods-belongsto-fetchassociation">#fetchAssociation()</a>
                 </li>
               
             </ul>
           </li>
         
           <li>
-            <a href="#methods-hasmany">#hasMany</a>
+            <a href="#methods-hasmany">#hasMany()</a>
             <ul>
               
                 <li>
@@ -170,27 +170,27 @@
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-createassociation">#createAssociation</a>
+                  <a href="#methods-hasmany-createassociation">#createAssociation()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-addassociation">#addAssociation</a>
+                  <a href="#methods-hasmany-addassociation">#addAssociation()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-addassociations">#addAssociations</a>
+                  <a href="#methods-hasmany-addassociations">#addAssociations()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-removeassociation">#removeAssociation</a>
+                  <a href="#methods-hasmany-removeassociation">#removeAssociation()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-removeassociations">#removeAssociations</a>
+                  <a href="#methods-hasmany-removeassociations">#removeAssociations()</a>
                 </li>
               
                 <li>
-                  <a href="#methods-hasmany-clearassociations">#clearAssociations</a>
+                  <a href="#methods-hasmany-clearassociations">#clearAssociations()</a>
                 </li>
               
             </ul>
@@ -500,7 +500,7 @@ they are used for <a href="#types-of-relationships-many-to-many">many-to-many</a
 relationships. For shortcuts like the example shown above, those methods will
 not be available.</p>
 <h2 id="methods">Methods</h2>
-<h3 id="methods-belongsto"><code>#belongsTo</code></h3>
+<h3 id="methods-belongsto"><code>#belongsTo([options])</code></h3>
 <p>A belongs-to relationship adds the following properties and methods:</p>
 <p><code>association</code> is a placeholder for the name of the belongs-to relation being
 defined. If the name of the relation was <code>author</code>, i.e.
@@ -526,7 +526,7 @@ model name as the first argument. For instance to associate <code>Article</code>
 <li><code>primaryKey</code> The name of the primary key in the relationship.</li>
 <li><code>foreignKey</code> The name of the foreign key in the relationship.</li>
 </ul>
-<h4 id="methods-belongsto-association"><code>#association</code></h4>
+<h4 id="methods-belongsto-association"><code>#association=</code></h4>
 <p>Access the relation. This will throw an error if the relation has not yet been
 loaded. Load the association before accessing it using
 <a href="/guides/queries/#relationships-with"><code>with</code></a> or via
@@ -575,11 +575,11 @@ specify this attribute yourself when you setup the relationship:</p>
   authorId: db.attr(<span class="hljs-string">&apos;author_dbid&apos;</span>),
 });</code></pre>
 
-<h4 id="methods-belongsto-createassociation"><code>#createAssociation</code></h4>
+<h4 id="methods-belongsto-createassociation"><code>#createAssociation([attrs])</code></h4>
 <p>Create a new object of the relationship type.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> blog = article.createBlog({ title: <span class="hljs-string">&apos;Blog&apos;</span> });</code></pre>
 
-<h4 id="methods-belongsto-fetchassociation"><code>#fetchAssociation</code></h4>
+<h4 id="methods-belongsto-fetchassociation"><code>#fetchAssociation()</code></h4>
 <p>Fetch the associated object.</p>
 <pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
   <span class="hljs-keyword">return</span> article.fetchBlog();
@@ -598,7 +598,7 @@ specify this attribute yourself when you setup the relationship:</p>
 });
 <span class="hljs-comment">// see bluebird.js for details on tap</span></code></pre>
 
-<h3 id="methods-hasmany"><code>#hasMany</code></h3>
+<h3 id="methods-hasmany"><code>#hasMany([options])</code></h3>
 <p>A has-many relationship adds the following properties and methods:</p>
 <p><code>association</code> is a placeholder for the name of the has-many relation being
 defined. If the name of the relation was <code>articles</code>, i.e.
@@ -673,14 +673,14 @@ make the related objects available through the
   <span class="hljs-built_in">console</span>.log(articles);
 });</code></pre>
 
-<h4 id="methods-hasmany-createassociation"><code>#createAssociation</code></h4>
+<h4 id="methods-hasmany-createassociation"><code>#createAssociation([attrs])</code></h4>
 <p>Create a new object of the relationship type. This will also set the foreign
 key on the created object.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> article = blog.createArticle({ title: <span class="hljs-string">&apos;Azul&apos;</span> });
 blog.id; <span class="hljs-comment">// =&gt; 7</span>
 article.blogId; <span class="hljs-comment">// =&gt; 7</span></code></pre>
 
-<h4 id="methods-hasmany-addassociation"><code>#addAssociation</code></h4>
+<h4 id="methods-hasmany-addassociation"><code>#addAssociation(model)</code></h4>
 <p>This method is used to add objects to the relationship. The changes will remain
 in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
@@ -696,13 +696,13 @@ code could be simplified like so:</p>
   <span class="hljs-keyword">return</span> blog.addArticle(article);
 });</code></pre>
 
-<h4 id="methods-hasmany-addassociations"><code>#addAssociations</code></h4>
+<h4 id="methods-hasmany-addassociations"><code>#addAssociations(models)</code></h4>
 <p>Allows <a href="#methods-hasmany-addassociations">adding</a> of multiple associations.
 Pass an array or multiple arguments.</p>
 <pre><code class="hljs js">blog.addArticles([article1, article2]);
 blog.addArticles(article1, article2);</code></pre>
 
-<h4 id="methods-hasmany-removeassociation"><code>#removeAssociation</code></h4>
+<h4 id="methods-hasmany-removeassociation"><code>#removeAssociation(model)</code></h4>
 <p>This method is used to remove objects to the relationship. The changes will
 remain in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
 <pre><code class="hljs js">Promise.all([ Article.objects.find(<span class="hljs-number">1</span>), Blog.objects.find(<span class="hljs-number">4</span>) ])
@@ -713,13 +713,13 @@ remain in memory until <a href="/guides/models/#methods-properties-save">saved</
 
 <p>Like <a href="#methods-hasmany-addassociation"><code>addAssociation()</code></a>, this method
 returns a <em>thenable</em> object that simply saves the object.</p>
-<h4 id="methods-hasmany-removeassociations"><code>#removeAssociations</code></h4>
+<h4 id="methods-hasmany-removeassociations"><code>#removeAssociations(models)</code></h4>
 <p>Allows <a href="#methods-hasmany-removeassociation">removing</a> of multiple
 associations. Pass an array or multiple arguments.</p>
 <pre><code class="hljs js">blog.removeArticles([article1, article2]);
 blog.removeArticles(article1, article2);</code></pre>
 
-<h4 id="methods-hasmany-clearassociations"><code>#clearAssociations</code></h4>
+<h4 id="methods-hasmany-clearassociations"><code>#clearAssociations()</code></h4>
 <p>Clear all related objects.</p>
 <pre><code class="hljs js">blog.clearArticles();</code></pre>
 
