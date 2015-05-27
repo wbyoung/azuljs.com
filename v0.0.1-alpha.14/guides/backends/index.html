@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Azul.js &#x2014; Backends</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="generic v0.0.1-alpha.14" data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Azul.js</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/v0.0.1-alpha.14/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.14/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.14/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.14/guides/migrations/">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.14/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.14/guides/transactions/">Transactions</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.14/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.14/guides/core/">Core</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/wbyoung/azul">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Backends <a href="/releases/" class="release">v0.0.1-alpha.14</a></h1>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc well">
+
+
+  <ul>
+  
+    <li>
+      <a href="#postgresql">PostgreSQL</a>
+      <ul>
+        
+          <li>
+            <a href="#postgresql-query-returning">Query#returning()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#mysql">MySQL</a>
+      <ul>
+        
+          <li>
+            <a href="#mysql-query-returning">Query#returning()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#sqlite3">SQLite3</a>
+      <ul>
+        
+          <li>
+            <a href="#sqlite3-query-returning">Query#returning()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3-lookups">Lookups</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3-date">date</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3-time">time</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#sqlite3-datetime">dateTime</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-8 col-sm-pull-3">
+
+<h1 id="backends">Backends</h1>
+<h2 id="postgresql">PostgreSQL</h2>
+<p>All features are known to work with PostgreSQL.</p>
+<h3 id="postgresql-query-returning"><code>Query#returning(column)</code></h3>
+<p>An additional query method, <code>returning</code> can be used to return a specific value
+from <a href="/v0.0.1-alpha.14/guides/queries/#data-queries-insert">insert queries</a>. This method is only fully supported
+in PostgreSQL.</p>
+<h2 id="mysql">MySQL</h2>
+<p>All features are known to work with MySQL.</p>
+<h3 id="mysql-query-returning"><code>Query#returning(column)</code></h3>
+<p>Using MySQL, the only value that can be returned is the auto-incremented
+primary key. Requesting any other value will result in undefined behavior.</p>
+<h2 id="sqlite3">SQLite3</h2>
+<p>There are a few features that are currently not supported in SQLite3. If you&apos;d
+like to see these improved, please open <a href="https://github.com/wbyoung/azul/issues">an issue</a> or send over a
+<a href="https://github.com/wbyoung/azul/pulls">pull request</a> with support.</p>
+<h3 id="sqlite3-query-returning"><code>Query#returning(column)</code></h3>
+<p>Using SQLite3, the only value that can be returned is the primary key if it is
+aliased to the <a href="https://www.sqlite.org/autoinc.html"><code>ROWID</code></a>. Requesting any other value will
+result in undefined behavior.</p>
+<h3 id="sqlite3-lookups">Lookups</h3>
+<p>The following lookups are unsupported without
+<a href="https://github.com/mapbox/node-sqlite3/wiki/Extensions">an extension</a> that adds a
+<a href="https://www.sqlite.org/c3ref/create_function.html">SQL function</a>:</p>
+<ul>
+<li><code>regex</code> and <code>iregex</code> require a <code>REGEXP(pattern, value)</code> function</li>
+<li><code>year</code> requires a <code>YEAR(date)</code> function</li>
+<li><code>month</code> requires a <code>MONTH(date)</code> function</li>
+<li><code>day</code> requires a <code>DAY(date)</code> function</li>
+<li><code>weekday</code> requires a <code>WEEKDAY(date)</code> function</li>
+<li><code>hour</code> requires a <code>HOUR(date)</code> function</li>
+<li><code>minute</code> requires a <code>MINUTE(date)</code> function</li>
+<li><code>second</code> requires a <code>SECOND(date)</code> function</li>
+</ul>
+<h3 id="sqlite3-date"><code>date</code></h3>
+<p>SQLite3 stores <code>date</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value.</p>
+<p>One way around this is to use <a href="/v0.0.1-alpha.14/guides/core/#objects-extending-classes-properties">properties</a> to convert
+the value as it comes back from the database:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> property = azul.Core.property;
+
+<span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  publishedValue: db.attr(<span class="hljs-string">&apos;published&apos;</span>),
+  published: property(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">this</span>.publishedValue);
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+    <span class="hljs-keyword">this</span>.publishedValue = value.getTime();
+  })
+});
+
+<span class="hljs-keyword">var</span> article = Article.create({ published: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() });</code></pre>
+
+<h3 id="sqlite3-time"><code>time</code></h3>
+<p>SQLite3 stores <code>time</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value. See the example in the
+<a href="#sqlite3-date">section above</a>.</p>
+<h3 id="sqlite3-datetime"><code>dateTime</code></h3>
+<p>SQLite3 stores <code>dateTime</code> as a number &amp; Azul.js does not currently support
+distinguishing this type in any way. Data will always be read from the database
+as numbers even if a date was used to store the value. See the example in the
+<a href="#sqlite3-date">section above</a>.</p>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
