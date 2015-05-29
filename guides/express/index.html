@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Azul.js &mdash; Express Addon</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:600,400,300">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="generic dev" data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Azul.js</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <li ><a href="/#overview">Overview</a></li>
+            <li ><a href="/getting-started/">Getting Started</a></li>
+            
+            <li  class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/guides/models/">Models</a></li>
+                <li><a href="/guides/queries/">Queries</a></li>
+                <li><a href="/guides/relations/">Relations</a></li>
+                <li><a href="/guides/migrations/">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/guides/managers/">Managers</a></li>
+                <li><a href="/guides/transactions/">Transactions</a></li>
+                <li class="divider"></li>
+                <li><a href="/guides/backends/">Backends</a></li>
+                <li><a href="/guides/core/">Core</a></li>
+                <li class="divider"></li>
+                <li><a href="/guides/express/">Express Addon</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/wbyoung/azul">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Express Addon <a href="/releases/" class="release">dev</a></h1>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc well">
+
+
+  <ul>
+  
+    <li>
+      <a href="#overview">Overview</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods-properties">Methods &amp; Properties</a>
+      <ul>
+        
+          <li>
+            <a href="#methods-properties-route">#route()</a>
+            <ul>
+              
+                <li>
+                  <a href="#methods-properties-route-options-transaction">options.transaction</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-route-options-wrap">options.wrap</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-route-dependency-injection">Dependency Injection</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-route-advanced">Advanced</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-transaction">#transaction</a>
+            <ul>
+              
+                <li>
+                  <a href="#methods-properties-transaction-implicit-commit">Implicit Commit</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-transaction-explicit-commit">Explicit Commit</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-transaction-explicit-rollback">Explicit Rollback</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-properties-transaction-parameterized-binding">Parameterized Binding</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-rollback">#rollback</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#full-example">Full Example</a>
+      <ul>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-8 col-sm-pull-3">
+
+<h1 id="express-addon">Express Addon</h1>
+<h2 id="overview">Overview</h2>
+<p>The <a href="https://github.com/wbyoung/azul-express">Express addon</a> is designed to make working with Azul.js and
+<a href="http://expressjs.com/">Express</a> as convenient as possible. It currently serves two main
+functions:</p>
+<ol>
+<li>Dependency injection of models &amp; queries</li>
+<li>Transaction management</li>
+</ol>
+<p>This quick example shows how to use transactions for all requests with Express.
+See the <a href="#full-example">full example</a> for details.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> azulExpress = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul-express&apos;</span>)(db);
+<span class="hljs-keyword">var</span> route = azulExpress.route;
+<span class="hljs-keyword">var</span> transaction = azulExpress.transaction;
+
+app.use(transaction);
+app.post(<span class="hljs-string">&apos;/articles&apos;</span>, route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Article, Author)</span> </span>{
+  <span class="hljs-keyword">return</span> Author.objects.findOrCreate({ name: req.body.author })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(author)</span> </span>{
+    <span class="hljs-keyword">return</span> author.createArticle({ title: req.body.title }).save();
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+    res.send({ article: article.json });
+  });
+}));</code></pre>
+
+<h2 id="methods-properties">Methods &amp; Properties</h2>
+<p>The methods &amp; properties below assume that you have provided a database to the
+addon. To do so, require and call the module&apos;s exported function. In one line,
+that is:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> azulExpress = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul-express&apos;</span>)(db);</code></pre>
+
+<h3 id="methods-properties-route"><code>#route(decoratedRoute, [options])</code></h3>
+<p>Create an <a href="http://expressjs.com/4x/api.html#app.METHOD">Express route</a> by wrapping a <em>decorated</em> route. The
+wrapper respects any <a href="#methods-properties-transaction">middleware</a> that is
+active via <a href="#methods-properties-route-dependency-injection">dependency
+injection</a> on the decorated
+route.</p>
+<p>A decorated route looks like an Express route, but has additional parameters.
+Decorations may be:</p>
+<ul>
+<li>A parameter named <code>query</code></li>
+<li>A capitalized model class name, i.e. <code>Model</code></li>
+</ul>
+<p>Decorated routes have the following signature:</p>
+<p><code>[err], req, res, [next], [query], [...Model]</code></p>
+<p>When using Azul.js with Express, we recommend wrapping all routes that use
+Azul.js models or queries and
+<a href="/guides/express/anti-patterns/#anti-pattern-naming-models">leaving your models unnamed</a> to
+ensure that all routes properly define the models on which they depend:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> route = azulExpress.route;
+
+db.model(<span class="hljs-string">&apos;article&apos;</span>, { <span class="hljs-comment">// intentionally unnamed</span>
+  title: db.attr()
+});
+
+app.get(<span class="hljs-string">&apos;/articles&apos;</span>, route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Article)</span> </span>{
+  <span class="hljs-keyword">return</span> Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+    res.send({ articles: _.map(articles, <span class="hljs-string">&apos;json&apos;</span>) });
+  });
+}));</code></pre>
+
+<p>Decorated routes can also return promises (as shown above). Rejected promises
+will be passed on to Express error middleware.</p>
+<p>You can also use <code>azulExpress()</code> as a shortcut for <code>azulExpress.route()</code>.</p>
+<h4 id="methods-properties-route-options-transaction"><code>options.transaction</code></h4>
+<p>Whether to enable a transaction for this route. This is redundant if
+<a href="#methods-properties-transaction">transaction middleware</a> is active.</p>
+<h4 id="methods-properties-route-options-wrap"><code>options.wrap</code></h4>
+<p>You must provide your decorated function directly to
+<a href="#methods-properties-route"><code>route</code></a>. This option is provided in case you need
+to pre-wrap the route.</p>
+<p>For instance, to support <a href="https://github.com/tj/co"><code>co</code></a> for generator based control flow:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> co = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;co&apos;</span>);
+<span class="hljs-keyword">var</span> azco = _.partial(azulExpress.route, _, { wrap: co.wrap });
+
+app.post(<span class="hljs-string">&apos;/articles&apos;</span>, azco(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(req, res, Article, Author)</span> </span>{
+  <span class="hljs-keyword">var</span> author = <span class="hljs-keyword">yield</span> Author.objects.findOrCreate({ name: req.body.author });
+  <span class="hljs-keyword">var</span> article = <span class="hljs-keyword">yield</span> author.createArticle({ title: req.body.title }).save();
+  res.send({ article: article.json });
+}));
+
+<span class="hljs-comment">// this will not work:</span>
+route(co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(req, res, Article, Author)</span> </span>{ <span class="hljs-comment">/* ... */</span> }));</code></pre>
+
+<h4 id="methods-properties-route-dependency-injection">Dependency Injection</h4>
+<p>The <a href="#methods-properties-route"><code>route</code></a> function
+provides dependency injection by creating a wrapper route that is compatible
+with Express and injecting Azul.js dependencies based on named parameters.</p>
+<p>When transactions are <em>not enabled</em>, injected dependencies will be:</p>
+<ul>
+<li>The <code>query</code> parameter will be a <a href="/guides/queries/#data-queries">basic query</a>,
+<code>db.query</code>.</li>
+<li>Any capitalized <code>Model</code> parameter will be the model class as defined on the
+database.</li>
+</ul>
+<p>When a transaction is <em>enabled</em> (either by the
+<a href="#methods-properties-transaction">transaction middleware</a> or the
+<a href="methods-properties-route-options-transaction">transaction option</a>), injected dependencies will be bound to the transaction:</p>
+<ul>
+<li>The <code>query</code> parameter will be a <a href="/guides/queries/#data-queries">basic query</a>,
+bound to the transaction.</li>
+<li>Any capitalized <code>Model</code> parameter will be a proxy class that works the same
+as the model class defined on the database. See
+<a href="#methods-properties-route-advanced">the advanced section</a> for more details.</li>
+</ul>
+<h4 id="methods-properties-route-advanced">Advanced</h4>
+<p><strong>Always using wrapped routes &amp; dependency injection</strong></p>
+<p>You may have noted that
+<a href="#methods-properties-route-dependency-injection">dependency injection</a> serves
+little purpose when transactions are not enabled. We do still suggest wrapping
+your routes and using dependency injection for a few reasons:</p>
+<ol>
+<li>Consistency</li>
+<li>Ease of enabling transactions</li>
+<li>Ensuring all routes use dependency injection rather than some relying on
+globals leading to the possibility of shadowing and/or misnamed
+dependencies. <a href="/guides/express/anti-patterns/#anti-pattern-naming-models">See an example of why this is considered an
+anti-pattern</a>.</li>
+</ol>
+<p><strong>Transaction bound, dependency injected model classes</strong></p>
+<p>When transactions are enabled, the dependency injection provided by
+<a href="#methods-properties-route"><code>route</code></a> will provide proxy classes. The classes
+themselves and the instances of those classes (including relations) should not
+live past the end of the current request. The transaction will have been
+committed and using them will result in undefined behavior.</p>
+<h3 id="methods-properties-transaction"><code>#transaction</code></h3>
+<p>Transaction middleware for express. A transaction is begun at the start of the
+request and is
+<a href="#methods-properties-transaction-explicit-commit">automatically commit</a> when
+a response is sent.</p>
+<pre><code class="hljs js">app.use(azulExpress.transaction);</code></pre>
+
+<p>This adds the following to the request and response objects:</p>
+<ul>
+<li><code>req.azul.transaction</code> A <a href="/guides/transaction/">transaction</a> object.</li>
+<li><code>req.azul.query</code> A <a href="/guides/queries/#data-queries">basic query</a> bound to the
+transaction.</li>
+<li><code>res.azul.commit</code> A function to
+<a href="#methods-properties-transaction-explicit-commit">explicitly commit</a> the
+transaction.</li>
+<li><code>res.azul.rollback</code> A function to
+<a href="#methods-properties-transaction-explicit-rollback">explicitly rollback</a> the
+transaction.</li>
+</ul>
+<h4 id="methods-properties-transaction-implicit-commit">Implicit Commit</h4>
+<p>All transactions will implicitly be committed when a response is sent. Various
+methods called on the response object, <code>res</code>, cause a response to begin being
+sent. View the <a href="http://expressjs.com/4x/api.html#res">Express</a> and <a href="https://nodejs.org/api/http.html#http_class_http_serverresponse">Node.js</a>
+documentation for details.</p>
+<p>Because methods to write a response are synchronous with regards to control
+flow, writes will be queued until after the transaction has been committed.
+That means that a call to <code>res.send()</code> (or any other method that writes) will
+not occur immediately. It will be queued and re-run after the transaction is
+committed.</p>
+<p>For most uses, this will not cause problems. If for some reason, you need to
+ensure that a write has been completed, <a href="#methods-properties-transaction-explicit-commit">explicitly commit the
+transaction</a> prior to sending
+a response.</p>
+<h4 id="methods-properties-transaction-explicit-commit">Explicit Commit</h4>
+<p>If you need to ensure that the commit has occurred before continuing, you can
+explicitly commit the transaction via <code>res.azul.commit()</code> and wait for the
+promise to resolve. You can do this before or after an implicit commit.</p>
+<pre><code class="hljs js">app.get(<span class="hljs-string">&apos;/endpoint&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res)</span> </span>{
+  asyncOperation().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    res.send({ status: <span class="hljs-string">&apos;complete&apos;</span> }); <span class="hljs-comment">// automatic commit triggered</span>
+    <span class="hljs-keyword">return</span> res.azul.commit(); <span class="hljs-comment">// explicitly wait for commit</span>
+  });
+});</code></pre>
+
+<h4 id="methods-properties-transaction-explicit-rollback">Explicit Rollback</h4>
+<p>You can explicitly issue a rollback for a transaction via
+<code>res.azul.rollback()</code>.</p>
+<h4 id="methods-properties-transaction-parameterized-binding">Parameterized Binding</h4>
+<p>When you use <a href="#methods-properties-route"><code>route</code></a>, all decorated parameters
+will be automatically bound to the transaction. See
+<a href="#methods-properties-route-dependency-injection">dependency injection</a> for
+details.</p>
+<h3 id="methods-properties-rollback"><code>#rollback</code></h3>
+<p>Enable rollback support for routes that fail. This will only be used in very
+specific scenarios:</p>
+<ul>
+<li>The <a href="#transaction"><code>transaction</code></a> middleware is active</li>
+<li>The route is not wrapped by <a href="#methods-properties-route"><code>route</code></a></li>
+<li>The route calls <code>next</code> with an error argument</li>
+</ul>
+<p>For instance, because the below route meets all of the above criteria, it
+benefits from this middleware being used.</p>
+<pre><code class="hljs js">app.use(azulExpress.transaction);
+
+app.post(<span class="hljs-string">&apos;/endpoint&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, next)</span> </span>{
+  insertData(db, req.transaction) <span class="hljs-comment">// assume this inserts &amp; uses the transaction</span>
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;Something terrible happened!&apos;</span>);
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    res.send({ status: <span class="hljs-string">&apos;complete&apos;</span> });
+  })
+  .catch(next);
+});
+
+app.use(azulExpress.rollback);</code></pre>
+
+<p>Note that an error is thrown explicitly within the promise chain and occurs in
+the application, not in the database. It will cause the <code>next</code> function to be
+called with an error, indicating that the route failed.</p>
+<p>With the rollback middleware active, this error will be seen and a <code>ROLLBACK</code>
+will be issued in the database.</p>
+<p>Without the middlware, a <code>COMMIT</code> would be issued when the error response is
+written and the inserted data will exist in the database even though an error
+occurred for the route.</p>
+<p>This is also aliased as <code>catch</code> and <code>error</code>.</p>
+<h2 id="full-example">Full Example</h2>
+<p>This example shows how to set up an app that uses the
+<a href="#methods-properties-transaction">transaction middleware</a> and
+<a href="#methods-properties-route">decorated routes</a>. All operations within the route
+for <code>POST /articles</code> will be performed in the same transaction.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
+<span class="hljs-keyword">var</span> app = express();
+<span class="hljs-keyword">var</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;body-parser&apos;</span>);
+<span class="hljs-keyword">var</span> BPromise = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;bluebird&apos;</span>);
+
+<span class="hljs-keyword">var</span> azul = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul&apos;</span>);
+<span class="hljs-keyword">var</span> env = process.env.NODE_ENV || <span class="hljs-string">&apos;development&apos;</span>;
+<span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./azulfile&apos;</span>)[env];
+<span class="hljs-keyword">var</span> db = azul(config);
+<span class="hljs-keyword">var</span> azulExpress = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul-express&apos;</span>)(db);
+<span class="hljs-keyword">var</span> azulLogger = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul-logger&apos;</span>);
+
+azulLogger(db.query);
+
+db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  title: db.attr(),
+  author: db.belongsTo(),
+});
+
+db.model(<span class="hljs-string">&apos;author&apos;</span>, {
+  name: db.attr(),
+  articles: db.hasMany(),
+});
+
+app.use(bodyParser.urlencoded());
+app.use(azulExpress.transaction);
+
+app.post(<span class="hljs-string">&apos;/articles&apos;</span>, azulExpress.route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Article, Author)</span> </span>{
+  <span class="hljs-keyword">return</span> Author.objects.findOrCreate({ name: req.body.author })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(author)</span> </span>{
+    <span class="hljs-keyword">return</span> author.createArticle({ title: req.body.title }).save();
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+    res.send({ article: article.json });
+  });
+}));
+
+<span class="hljs-keyword">var</span> server = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> host = server.address().address;
+  <span class="hljs-keyword">var</span> port = server.address().port;
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;Example app listening at http://%s:%s&apos;</span>, host, port);
+});</code></pre>
+
+<p>Note that the models <code>Aritcle</code> and <code>Author</code> are intentionally <a href="/guides/express/anti-patterns/#anti-pattern-naming-models">not assigned to
+variables</a>.</p>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

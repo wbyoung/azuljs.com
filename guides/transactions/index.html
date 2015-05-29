@@ -9,7 +9,7 @@
     <title>Azul.js &mdash; Transactions</title>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:400,300">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:600,400,300">
     <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
     <link rel="stylesheet" href="/styles/application.css">
     <!--[if lt IE 9]>
@@ -48,6 +48,8 @@
                 <li class="divider"></li>
                 <li><a href="/guides/backends/">Backends</a></li>
                 <li><a href="/guides/core/">Core</a></li>
+                <li class="divider"></li>
+                <li><a href="/guides/express/">Express Addon</a></li>
               </ul>
             </li>
           </ul>
@@ -157,7 +159,9 @@ transaction.begin().execute()
 .catch(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> transaction.rollback(); });</code></pre>
 
 <p>Read on to see how to associate transactions with <a href="#with-queries">queries</a> and
-<a href="#with-models">models</a></p>
+<a href="#with-models">models</a>. If you&apos;re using Express, we recommend reading the
+<a href="/guides/express/">Express guide</a> as well which makes using transactions on a
+per-request basis extremely simple.</p>
 <h2 id="methods">Methods</h2>
 <h3 id="methods-begin"><code>#begin()</code></h3>
 <p>Create a new begin query. Make sure you execute this query before any queries
