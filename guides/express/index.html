@@ -375,7 +375,6 @@ for <code>POST /articles</code> will be performed in the same transaction.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
 <span class="hljs-keyword">var</span> app = express();
 <span class="hljs-keyword">var</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;body-parser&apos;</span>);
-<span class="hljs-keyword">var</span> BPromise = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;bluebird&apos;</span>);
 
 <span class="hljs-keyword">var</span> azul = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;azul&apos;</span>);
 <span class="hljs-keyword">var</span> env = process.env.NODE_ENV || <span class="hljs-string">&apos;development&apos;</span>;
