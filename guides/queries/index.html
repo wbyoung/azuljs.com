@@ -662,19 +662,19 @@ method can be used to ensure that executing a query will not use a
 <h2 id="complex-conditions">Complex Conditions</h2>
 <p>Complex conditions can be created using <code>azul.w</code>. For instance, you would use
 <code>w</code> to create an <em>OR</em>:</p>
-<pre><code class="hljs js">Article.objects.where(w({ title: <span class="hljs-string">&apos;Azul&apos;</span> }, w.or, { title: <span class="hljs-string">&apos;Azul.js&apos;</span> }));</code></pre>
+<pre><code class="hljs js">Article.objects.where({ title: <span class="hljs-string">&apos;Azul&apos;</span> }, w.or, { title: <span class="hljs-string">&apos;Azul.js&apos;</span> });</code></pre>
 
 <p>A few more examples should make the use of <code>w</code> objects clear. There is support
 for <em>OR</em>, <em>NOT</em>, and <em>AND</em> operators. When no operator is specified, an <em>AND</em>
-is assumed.</p>
+is assumed. Operators can also be specified as strings.</p>
 <pre><code class="hljs js">w({ id: <span class="hljs-number">5</span> }, { title: <span class="hljs-string">&apos;Azul.js&apos;</span> }); <span class="hljs-comment">// defaults to AND</span>
 w(w.not, { title: <span class="hljs-string">&apos;Azul&apos;</span> }); <span class="hljs-comment">// a NOT condition</span>
 
 <span class="hljs-comment">// a complex condition representing</span>
 <span class="hljs-comment">// (first = &quot;Whitney&quot; OR first = &quot;Whit&quot;) AND last = &quot;Young&quot;</span>
-<span class="hljs-keyword">var</span> firstName = w({ first: <span class="hljs-string">&apos;Whitney&apos;</span> }, w.or, { first: <span class="hljs-string">&apos;Whit&apos;</span> });
+<span class="hljs-keyword">var</span> firstName = w({ first: <span class="hljs-string">&apos;Whitney&apos;</span> }, <span class="hljs-string">&apos;or&apos;</span>, { first: <span class="hljs-string">&apos;Whit&apos;</span> });
 <span class="hljs-keyword">var</span> lastName = { last: <span class="hljs-string">&apos;Young&apos;</span> };
-<span class="hljs-keyword">var</span> fullCondition = w(firstName, w.and, lastName);</code></pre>
+<span class="hljs-keyword">var</span> fullCondition = w(firstName, <span class="hljs-string">&apos;and&apos;</span>, lastName);</code></pre>
 
 <p>Conditions default to treating the left hand side as a field (column) name and
 the right hand side as a value. If you need to write a query that uses a field
