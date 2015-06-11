@@ -578,8 +578,9 @@ specify this attribute yourself when you setup the relationship:</p>
 });</code></pre>
 
 <h4 id="methods-belongsto-createassociation"><code>#createAssociation([attrs])</code></h4>
-<p>Create a new object of the relationship type.</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> blog = article.createBlog({ title: <span class="hljs-string">&apos;Blog&apos;</span> });</code></pre>
+<p>Create a new object of the relationship type and sets it as the related value.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> blog = article.createBlog({ title: <span class="hljs-string">&apos;Blog&apos;</span> });
+article.blog === blog; <span class="hljs-comment">// =&gt; true</span></code></pre>
 
 <h4 id="methods-belongsto-fetchassociation"><code>#fetchAssociation()</code></h4>
 <p>Fetch the associated object.</p>
@@ -677,7 +678,8 @@ make the related objects available through the
 
 <h4 id="methods-hasmany-createassociation"><code>#createAssociation([attrs])</code></h4>
 <p>Create a new object of the relationship type. This will also set the foreign
-key on the created object.</p>
+key on the created object and add it to the related items if they have been
+loaded.</p>
 <pre><code class="hljs js"><span class="hljs-keyword">var</span> article = blog.createArticle({ title: <span class="hljs-string">&apos;Azul&apos;</span> });
 blog.id; <span class="hljs-comment">// =&gt; 7</span>
 article.blogId; <span class="hljs-comment">// =&gt; 7</span></code></pre>
