@@ -524,9 +524,16 @@ model name as the first argument. For instance to associate <code>Article</code>
 
 <p><code>belongsTo</code> accepts the following options:</p>
 <ul>
-<li><code>inverse</code> The name of the inverse relationship.</li>
-<li><code>primaryKey</code> The name of the primary key in the relationship.</li>
-<li><code>foreignKey</code> The name of the foreign key in the relationship.</li>
+<li><code>inverse</code> The name of the inverse relationship. The default is to determine
+the inverse from the model name and values defined on the related model. The
+above example would search for either a <a href="#methods-hasmany"><code>hasMany</code></a> named
+<code>articles</code> or a <a href="#methods-hasone"><code>hasOne</code></a> named <code>article</code>.</li>
+<li><code>primaryKey</code> The name of the primary key in the relationship. This defaults
+to the primary key defined on the inverse relationship or <code>pk</code> if no inverse
+is defined.</li>
+<li><code>foreignKey</code> The name of the foreign key in the relationship. This defaults
+to <code>&lt;relationName&gt;Id</code>. The above example would have a default of
+<code>authorId</code>.</li>
 </ul>
 <h4 id="methods-belongsto-association"><code>#association=</code></h4>
 <p>Access the relation. This will throw an error if the relation has not yet been
@@ -627,9 +634,14 @@ and <code>Article</code> through the relation name <code>posts</code>:</p>
 
 <p><code>hasMany</code> accepts the following options:</p>
 <ul>
-<li><code>inverse</code> The name of the inverse relationship.</li>
-<li><code>primaryKey</code> The name of the primary key in the relationship.</li>
-<li><code>foreignKey</code> The name of the foreign key in the relationship.</li>
+<li><code>inverse</code> The name of the inverse relationship. The default is to determine
+the inverse from the model name. The above example would have an inverse of
+<code>author</code>.</li>
+<li><code>primaryKey</code> The name of the primary key in the relationship. This defaults
+to <code>pk</code>.</li>
+<li><code>foreignKey</code> The name of the foreign key in the relationship. This defaults
+to the foreign key defined on the inverse relationship or <code>&lt;inverse&gt;Id</code> if no
+inverse is defined. The above example would have a default of <code>authorId</code>.</li>
 <li><code>through</code> Specify the name of a relationship through which this collection is
 accessed.</li>
 <li><code>source</code> When using <code>through</code> this is the name of the relationship on the
