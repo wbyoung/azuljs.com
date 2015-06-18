@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Azul.js &#x2014; Express Addon Anti-Patterns</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:600,400,300">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="generic v0.0.1-alpha.15" data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Azul.js</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/v0.0.1-alpha.15/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/migrations/">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/transactions/">Transactions</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/core/">Core</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/express/">Express Addon</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/wbyoung/azul">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Express Addon Anti-Patterns <a href="/releases/" class="release">v0.0.1-alpha.15</a></h1>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc well">
+
+
+  <ul>
+  
+    <li>
+      <a href="#anti-pattern-naming-models">Anti-pattern: Naming Models</a>
+      <ul>
+        
+          <li>
+            <a href="#anti-pattern-naming-models-solution-dependency-injection">Solution: Dependency Injection</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-8 col-sm-pull-3">
+
+<h1 id="express-addon-anti-patterns">Express Addon Anti-Patterns</h1>
+<h2 id="anti-pattern-naming-models">Anti-pattern: Naming Models</h2>
+<p>The idea of naming your model classes when you define them is appealing to
+allow easy re-use. With this addon, though, it is considered an anti-pattern
+because it leads to easily overlooked mistakes.</p>
+<p>The code below illustrates this idea. The definition of <code>Article</code> and <code>Author</code>
+in the first two lines, hides the following mistakes:</p>
+<ul>
+<li><code>Author</code> is not provided as part in the second route&apos;s decorations</li>
+<li><code>Article</code> is misspelled in the second route&apos;s decorations</li>
+</ul>
+<p>This leads to the following bugs:</p>
+<ul>
+<li>Uses of <code>Author</code> in the second route will not be bound to the transaction</li>
+<li>Uses of <code>Article</code> in the second route will not be bound to the transaction</li>
+</ul>
+<p>Essentially, even though it appears that the second route is executing all
+queries in a transaction, none of them are.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, { title: db.attr(), author: db.belongsTo(), });
+<span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">&apos;author&apos;</span>, { name: db.attr(), articles: db.hasMany(), });
+
+<span class="hljs-keyword">var</span> transaction = azulExpress.transaction;
+<span class="hljs-keyword">var</span> route = azulExpress.route;
+
+<span class="hljs-comment">// no transaction</span>
+app.get(<span class="hljs-string">&apos;/articles&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res)</span> </span>{
+  <span class="hljs-keyword">return</span> Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+    res.send({ articles: _.map(articles, <span class="hljs-string">&apos;json&apos;</span>) });
+  });
+}));
+
+<span class="hljs-comment">// transaction enabled</span>
+app.post(<span class="hljs-string">&apos;/articles&apos;</span>, transaction, route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Aritcle)</span> </span>{
+  <span class="hljs-keyword">return</span> Author.objects.findOrCreate({ name: req.body.author })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(author)</span> </span>{
+    <span class="hljs-keyword">return</span> Article.create({ author: author title: req.body.title }).save();
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+    res.send({ article: article.json });
+  });
+}));</code></pre>
+
+<p>The above code has one minor advantage: routes that do not use transactions do
+not require the use of the addon&apos;s <a href="/v0.0.1-alpha.15/guides/express/#methods-properties-route"><code>route</code></a>
+wrapper for dependency injection since the models are accessible globally. This
+saves a few keystrokes, but the disadvantages outlined above outweigh the few
+keys saved.</p>
+<h3 id="anti-pattern-naming-models-solution-dependency-injection">Solution: Dependency Injection</h3>
+<p>The corrected version does not name the model classes and instead uses
+a <a href="/v0.0.1-alpha.15/guides/express/#methods-properties-route">decorated route</a> that provides dependency
+injection. The two issues outlined above would have become very clear since
+both would have produced runtime errors.</p>
+<pre><code class="hljs js">db.model(<span class="hljs-string">&apos;article&apos;</span>, { title: db.attr(), author: db.belongsTo(), });
+db.model(<span class="hljs-string">&apos;author&apos;</span>, { name: db.attr(), articles: db.hasMany(), });
+
+<span class="hljs-keyword">var</span> transaction = azulExpress.transaction;
+<span class="hljs-keyword">var</span> route = azulExpress.route;
+
+<span class="hljs-comment">// no transaction</span>
+app.get(<span class="hljs-string">&apos;/articles&apos;</span>, route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Article)</span> </span>{
+  <span class="hljs-keyword">return</span> Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+    res.send({ articles: _.map(articles, <span class="hljs-string">&apos;json&apos;</span>) });
+  });
+}));
+
+<span class="hljs-comment">// transaction enabled</span>
+app.post(<span class="hljs-string">&apos;/articles&apos;</span>, transaction, route(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, Author, Article)</span> </span>{
+  <span class="hljs-keyword">return</span> Author.objects.findOrCreate({ name: req.body.author })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(author)</span> </span>{
+    <span class="hljs-keyword">return</span> Article.create({ author: author title: req.body.title }).save();
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+    res.send({ article: article.json });
+  });
+}));</code></pre>
+
+<p>You could also define your models in a separate module and not import them into
+the module that defines your Express routes.</p>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

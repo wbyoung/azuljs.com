@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Azul.js &#x2014; Models</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Satisfy|Open+Sans:600,400,300">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/github.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="generic v0.0.1-alpha.15" data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Azul.js</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+            <li class="active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/v0.0.1-alpha.15/guides/models/">Models</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/queries/">Queries</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/relations/">Relations</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/migrations/">Migrations</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/managers/">Managers</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/transactions/">Transactions</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/backends/">Backends</a></li>
+                <li><a href="/v0.0.1-alpha.15/guides/core/">Core</a></li>
+                <li class="divider"></li>
+                <li><a href="/v0.0.1-alpha.15/guides/express/">Express Addon</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/wbyoung/azul">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Models <a href="/releases/" class="release">v0.0.1-alpha.15</a></h1>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-3 col-sm-push-9 guide-toc well">
+
+
+  <ul>
+  
+    <li>
+      <a href="#defining-models">Defining Models</a>
+      <ul>
+        
+          <li>
+            <a href="#defining-models-quick-example">Quick Example</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#defining-models-conventions">Conventions</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#defining-models-attributes">Attributes</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#defining-models-primary-key">Primary Key</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#defining-models-table-name">Table Name</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#manipulating-data">Manipulating Data</a>
+      <ul>
+        
+          <li>
+            <a href="#manipulating-data-create">Create</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#manipulating-data-read">Read</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#manipulating-data-update">Update</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#manipulating-data-delete">Delete</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#manipulating-data-create-update-or-delete-">Create, Update, or Delete?</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+    <li>
+      <a href="#methods-properties">Methods &amp; Properties</a>
+      <ul>
+        
+          <li>
+            <a href="#methods-properties-save">#save()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-delete">#delete()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-toobject">#toObject()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-tojson">#toJSON()</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-json">#json</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-attrs">#attrs</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-newrecord">#newRecord</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-persisted">#persisted</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-deleted">#deleted</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-dirty">#dirty</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-objects">.objects</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+          <li>
+            <a href="#methods-properties-tablename">.tableName</a>
+            <ul>
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </li>
+  
+  </ul>
+
+
+</div>
+<div class="col-sm-8 col-sm-pull-3">
+
+<h1 id="models">Models</h1>
+<p>Models are the basic unit of data within Azul.js. They allow you to manipulate
+data in the database while thinking in terms of objects rather than raw SQL
+queries.</p>
+<h2 id="defining-models">Defining Models</h2>
+<p>The following examples assume that you have completed the <a href="/getting-started/">steps for getting
+started</a> and have access to an Azul.js database instance,
+<code>db</code>. If you have not completed those steps, you should return and complete
+them before attempting to use models.</p>
+<h3 id="defining-models-quick-example">Quick Example</h3>
+<p>Models are easy to define with Azul.js. This example defines an <em>Article</em> that
+has a <code>title</code> and <code>body</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  title: db.attr(),
+  body: db.attr()
+});</code></pre>
+
+<h3 id="defining-models-conventions">Conventions</h3>
+<p>The above model would be associated with a database table <code>articles</code> having
+three columns, <code>id</code>, <code>title</code>, and <code>body</code>.</p>
+<p>Azul.js will default to a table name that is simply the pluralized version of
+the model name.</p>
+<p>All models will have a primary key column. The default name for this column is
+<em>id</em>. Usually you will want this to be a <em>serial</em> or <em>auto incrementing</em> column
+in your database.</p>
+<p>By default, Azul.js will determine database column names from attribute names.
+It assumes that database columns follow the standard convention of using
+underscore casing and will convert to underscore case. For instance, a
+<code>firstName</code> attribute would be mapped to a column name of <code>first_name</code>.</p>
+<h3 id="defining-models-attributes">Attributes</h3>
+<p>Attributes defined on a model are readable and writable properties that you can
+use to update and save your model.</p>
+<p>To specify a column name for an attribute, simply pass it as an argument to
+<code>db.attr</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {
+  title: db.attr(<span class="hljs-string">&apos;headline&apos;</span>),
+  body: db.attr(<span class="hljs-string">&apos;content&apos;</span>)
+});</code></pre>
+
+<p>Azul.js does not distinguish between different attribute types when defining
+models. The types will be cast when reading and writing from the database.
+See the <a href="/v0.0.1-alpha.15/guides/migrations/">migrations guide</a> for more details.</p>
+<p>The <code>attr</code> function is also available via the main <code>azul</code> export for
+convenience.</p>
+<div class="panel panel-info">
+<div class="panel-heading">
+  <span class="panel-title">Coming Soon&#x2026;</span>
+</div>
+<div class="panel-body">
+Defining your attributes both in the migration and the model is currently
+required. We&apos;ll be addressing this shortly so it&apos;s a bit less tedious to create
+new models.
+</div>
+</div>
+
+<h3 id="defining-models-primary-key">Primary Key</h3>
+<p>Each model in Azul.js requires a primary key. By default it will be <em>id</em>, but
+it can be overridden by defining the <code>pk</code> attribute:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>, {{
+  pk: attr(<span class="hljs-string">&apos;custom_identifier&apos;</span>)
+});</code></pre>
+
+<p>We recommend using a <em>serial</em> or <em>auto incrementing</em> column in your database
+for the primary key column. See the <a href="/v0.0.1-alpha.15/guides/migrations/">migrations guide</a> for
+more details.</p>
+<p>The primary is also accessible via the attribute alias <code>id</code> (even when <code>pk</code> is
+overridden).</p>
+<h3 id="defining-models-table-name">Table Name</h3>
+<p>The table name can be customized by defining the class property, <code>tableName</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>);
+
+Article.reopenClass({
+  tableName: <span class="hljs-string">&apos;publications&apos;</span>,
+});</code></pre>
+
+<h2 id="manipulating-data">Manipulating Data</h2>
+<p>Manipulating data in the database is the most fundamental task for Azul.js. As
+with all data based systems, you&apos;ll have to create, read, update, and delete
+the data that&apos;s stored in your database.</p>
+<p>All database operations are asynchronous. Azul.js uses promises for
+asynchronous control flow. All uses of <code>then</code> in the methods below indicate
+that the method returns a promise.</p>
+<p>The following examples will assume the <code>Article</code> model from above has been
+defined.</p>
+<h3 id="manipulating-data-create">Create</h3>
+<p>When you create instances of a model, it will be stored in memory until <code>save</code>
+has been called:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> article = Article.create({
+  title: <span class="hljs-string">&apos;Azul.js&apos;</span>,
+  body: <span class="hljs-string">&apos;Azul.js has been launched!&apos;</span>
+});
+
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has now been saved</span>
+});</code></pre>
+
+<p>Because the act of creating the object in the database is an asynchronous
+operation, the <code>save</code> method returns a promise that will resolve when the
+save has completed successfully.</p>
+<p>As you can see above, you can pass attributes to the <code>create</code> method that will
+be set on your model. Be sure that you trust your source of data when doing so
+as this can lead to a <a href="http://en.wikipedia.org/wiki/Mass_assignment_vulnerability">mass assignment vulnerability</a>.</p>
+<h3 id="manipulating-data-read">Read</h3>
+<p>Objects can easily be read from the database through
+<a href="/v0.0.1-alpha.15/guides/queries/">query objects</a>.</p>
+<pre><code class="hljs js">Article.objects.fetch().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(articles)</span> </span>{
+  <span class="hljs-comment">// all articles have been fetched &amp;</span>
+  <span class="hljs-comment">// articles contains an array of Article objects</span>
+});</code></pre>
+
+<p>If you&apos;re searching for just one object, you can also use the <code>find</code> method to
+search by primary key:</p>
+<pre><code class="hljs js">Article.objects.find(<span class="hljs-number">1</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(article)</span> </span>{
+  <span class="hljs-comment">// the article with primary key 1 has been found</span>
+});</code></pre>
+
+<p>Reading from the database is asynchronous, so <a href="/v0.0.1-alpha.15/guides/queries/#executing-fetch"><code>fetch</code></a> and
+<a href="/v0.0.1-alpha.15/guides/queries/#executing-find"><code>find</code></a> return promises that resolve with the results from
+the database.</p>
+<p>For more information on fetching objects from the database, see the <a href="/v0.0.1-alpha.15/guides/queries/">full
+query guide</a>.</p>
+<h3 id="manipulating-data-update">Update</h3>
+<p>Updating objects is quite simple. Assuming you have an article that is already
+persisted to the database, you can simply update the properties of your object
+and save it:</p>
+<pre><code class="hljs js">article.title = <span class="hljs-string">&apos;Azul.js 1.0 Release&apos;</span>;
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has been updated in the database</span>
+});</code></pre>
+
+<p>As seen before when <a href="#manipulating-data-create">creating and saving</a> an object,
+<code>save</code> returns a promise.</p>
+<h3 id="manipulating-data-delete">Delete</h3>
+<p>Deleting an object can be accomplished by calling <code>delete</code>. Like the creation
+of an object, changes will not be persisted in the database until <code>save</code> has
+been called:</p>
+<pre><code class="hljs js">article.delete(); <span class="hljs-comment">// marked for deletion</span>
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// the article has now been deleted</span>
+});</code></pre>
+
+<p>Again note that <code>save</code> returns a promise.</p>
+<h3 id="manipulating-data-create-update-or-delete-">Create, Update, or Delete?</h3>
+<p>The <code>save</code> method is used for creating, updating, and deleting objects. Azul.js
+determines which action to take based on the following rules:</p>
+<ul>
+<li>Objects without a <em>primary key</em> set will be created (<code>INSERT</code>)</li>
+<li>Objects that have changes will be updated (<code>UPDATE</code>)</li>
+<li>Objects that are marked for deletion will be deleted (<code>DELETE</code>)</li>
+</ul>
+<p>There are situations where you may want to force an insert to occur with a
+specific primary key. To do so, pass the <code>method</code> option to <code>save</code>:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> article = Article.create({ id: <span class="hljs-number">5</span>, title: <span class="hljs-string">&apos;Title&apos;</span>, body: <span class="hljs-string">&apos;Body...&apos;</span> });
+
+article.save({ method: <span class="hljs-string">&apos;insert&apos;</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// article inserted with specific primary key</span>
+});</code></pre>
+
+<p>You can also use the <code>method</code> option to force the update of an object that does
+not have any changes. Another way to accomplish the same thing would be to
+simply re-assign a property.</p>
+<pre><code class="hljs js">article.save({ method: <span class="hljs-string">&apos;update&apos;</span> }).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// update query executed even if the article was not changed</span>
+});
+
+<span class="hljs-comment">// alternative forced update:</span>
+article.id = article.id;
+article.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// update query executed</span>
+});</code></pre>
+
+<h2 id="methods-properties">Methods &amp; Properties</h2>
+<h3 id="methods-properties-save"><code>#save([options])</code></h3>
+<p>Saves the model if it hasn&apos;t already been saved. This method is used to persist
+in memory changes and must be called after creating, altering, or deleting a
+model in order for the changes to be saved to the database.</p>
+<p>The returned promise will resolve with the model instance when the save
+succeeds.</p>
+<pre><code class="hljs js">model.save().then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> </span>{ <span class="hljs-comment">/* ... */</span> });</code></pre>
+
+<h3 id="methods-properties-delete"><code>#delete()</code></h3>
+<p>Marks the model for deletion.</p>
+<p>When a model has been marked for deletion &amp; saved, it will still exist in
+memory. Re-saving an object in this state will have no effect.</p>
+<p>See examples in the <a href="#manipulating-data-delete">deleting section</a>.</p>
+<h3 id="methods-properties-toobject"><code>#toObject()</code></h3>
+<p>This method is used by <a href="#methods-properties-tojson"><code>toJSON</code></a> and may be useful
+when customizing your your model&apos;s conversion to a JSON object. See example
+usage in <a href="#methods-properties-tojson">overriding <code>toJSON</code></a>. This method must
+not be overridden. It will always return the unaltered version of the model
+object&apos;s attributes &amp; values.</p>
+<h3 id="methods-properties-tojson"><code>#toJSON()</code></h3>
+<p>This method is used by the <a href="#methods-properties-json"><code>json</code></a> property and can
+be overridden to customize your model&apos;s conversion to a JSON object. For
+instance, you could include relationships in your JSON like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Author = db.model(<span class="hljs-string">&apos;author&apos;</span>, {
+  name: db.attr(),
+  books: db.hasMany(),
+  toJSON: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.extend(<span class="hljs-keyword">this</span>._super(), {
+      books: _.invoke(<span class="hljs-keyword">this</span>.books, <span class="hljs-string">&apos;toNestable&apos;</span>)
+    });
+  },
+});
+
+<span class="hljs-keyword">var</span> Book = db.model(<span class="hljs-string">&apos;book&apos;</span>, {
+  title: db.attr(),
+  author: db.belongsTo(),
+  toJSON: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.extend(<span class="hljs-keyword">this</span>.toNestable(), {
+      author: <span class="hljs-keyword">this</span>.author.toObject()
+    });
+  },
+  toNestable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> _.omit(<span class="hljs-keyword">this</span>.toObject(), <span class="hljs-string">&apos;authorId&apos;</span>);
+  },
+});
+
+<span class="hljs-comment">/*
+ * author.json
+ * {
+ *   id: 395,
+ *   name: &apos;Whitney&apos;,
+ *   books: [{ id: 721, title: &apos;Intro to Azul.js&apos; }]
+ * }
+ *
+ * book.json
+ * {
+ *   id: 721,
+ *   title: &apos;Intro to Azul.js&apos;,
+ *   author: { id: 395, name: &apos;Whitney&apos; },
+ * }
+ */</span></code></pre>
+
+<h3 id="methods-properties-json"><code>#json</code></h3>
+<p>The attributes of a model object. For instance, a <code>Person</code> defined like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Person = db.model(<span class="hljs-string">&apos;person&apos;</span>, {
+  firstName: db.attr(),
+  lastName: db.attr()
+});
+
+<span class="hljs-keyword">var</span> person = Person.create({ firstName: <span class="hljs-string">&apos;Whitney&apos;</span>, lastName: <span class="hljs-string">&apos;Young&apos;</span> });</code></pre>
+
+<p>Would have <code>json</code> of:</p>
+<pre><code class="hljs js">person.json; <span class="hljs-comment">// =&gt; { id: undefined, firstName: &apos;Whitney&apos;, lastName: &apos;Young&apos; }</span></code></pre>
+
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-attrs"><code>#attrs</code></h3>
+<p>The attributes, keyed by database field name, currently set on this object.
+That is, a <code>Person</code> defined <a href="#methods-properties-json">as shown in the above
+example</a> would have <code>attrs</code> of:</p>
+<pre><code class="hljs js">person.attrs; <span class="hljs-comment">// =&gt; { id: undefined, first_name: &apos;Whitney&apos;, last_name: &apos;Young&apos; }</span></code></pre>
+
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-newrecord"><code>#newRecord</code></h3>
+<p>Determine if this is a new record. Model that do not have a <em>primary key</em> are
+considered new. New records will be inserted when a model is saved. To better
+understand this behavior, read about <a href="#manipulating-data-create-update-or-delete-">how the save method is
+determined</a>.</p>
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-persisted"><code>#persisted</code></h3>
+<p>Determine if this model is persisted, that is, it is not deleted nor new.</p>
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-deleted"><code>#deleted</code></h3>
+<p>Determine if this model is deleted or has been marked for deletion.</p>
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-dirty"><code>#dirty</code></h3>
+<p>Determine if this model has changes that have not yet been persisted to the
+database.</p>
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-objects"><code>.objects</code></h3>
+<p>Access a <a href="/v0.0.1-alpha.15/guides/queries/">query object</a> that will allow you to fetch models of
+this type from the database. Note that this can be customized by creating your
+own <a href="/v0.0.1-alpha.15/guides/managers/#overriding-the-default-manager">custom manager</a>.</p>
+<ul>
+<li>readonly</li>
+</ul>
+<h3 id="methods-properties-tablename"><code>.tableName</code></h3>
+<p>The name of the table in the database which contains the data.</p>
+<p>You can override this property like so:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Article = db.model(<span class="hljs-string">&apos;article&apos;</span>);
+
+Article.reopenClass({
+  tableName: <span class="hljs-string">&apos;publications&apos;</span>,
+});</code></pre>
+
+<ul>
+<li>readonly</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
