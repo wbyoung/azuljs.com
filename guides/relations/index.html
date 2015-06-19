@@ -198,6 +198,29 @@
             </ul>
           </li>
         
+          <li>
+            <a href="#methods-hasone">#hasOne()</a>
+            <ul>
+              
+                <li>
+                  <a href="#methods-hasone-options">Options</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-hasone-association">#association</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-hasone-createassociation">#createAssociation()</a>
+                </li>
+              
+                <li>
+                  <a href="#methods-hasone-fetchassociation">#fetchAssociation()</a>
+                </li>
+              
+            </ul>
+          </li>
+        
       </ul>
     </li>
   
@@ -405,15 +428,45 @@ relation is overly abstract (as the above example does).
 
 
 <h3 id="types-of-relationships-one-to-one">One-to-One</h3>
-<div class="panel panel-info">
-<div class="panel-heading">
-  <span class="panel-title">Coming Soon&#x2026;</span>
-</div>
-<div class="panel-body">
-We&apos;ll be adding one-to-one relationships via <code>belongsTo</code> and
-<code>hasOne</code> shortly.
-</div>
-</div>
+<p>In this example, we&apos;ll build a simple relationship between a <em>supplier</em> and its
+<em>account</em>.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">var</span> Supplier = db.model(<span class="hljs-string">&apos;name&apos;</span>, {
+  name: db.attr(),
+  account: db.hasOne()
+});
+
+<span class="hljs-keyword">var</span> Account = db.model(<span class="hljs-string">&apos;account&apos;</span>, {
+  accountNumber: db.attr(),
+  supplier: db.belongsTo()
+});</code></pre>
+
+<p>Each instance of the <code>Supplier</code> class will now be able to use the following
+methods and properties:</p>
+<ul>
+<li><a href="#methods-hasone-association"><code>Supplier#account</code></a></li>
+<li><a href="#methods-hasone-createassociation"><code>Supplier#createAccount()</code></a></li>
+<li><a href="#methods-hasone-fetchassociation"><code>Supplier#fetchAccount()</code></a></li>
+</ul>
+<p>And each instance of the <code>Account</code> class will now have:</p>
+<ul>
+<li><a href="#methods-belongsto-association"><code>Account#supplier</code></a></li>
+<li><a href="#methods-belongsto-associationid"><code>Account#supplierId</code></a></li>
+<li><a href="#methods-belongsto-createassociation"><code>Account#createSupplier()</code></a></li>
+<li><a href="#methods-belongsto-fetchassociation"><code>Account#fetchSupplier()</code></a></li>
+</ul>
+<p>A migration for this would look involve creating the foreign key when creating
+the <code>accounts</code> table:</p>
+<pre><code class="hljs js">exports.change = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(schema)</span> </span>{
+  schema.createTable(<span class="hljs-string">&apos;suppliers&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+    table.string(<span class="hljs-string">&apos;name&apos;</span>);
+  });
+
+  schema.createTable(<span class="hljs-string">&apos;accounts&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(table)</span> </span>{
+    table.string(<span class="hljs-string">&apos;account_number&apos;</span>);
+    table.integer(<span class="hljs-string">&apos;supplier_id&apos;</span>).references(<span class="hljs-string">&apos;suppliers.id&apos;</span>).unique();
+  });
+};</code></pre>
+
 
 <h2 id="through">Through</h2>
 <p>Through associations allow you to access and build more complex relationships
@@ -739,6 +792,54 @@ blog.removeArticles(article1, article2);</code></pre>
 <p>Clear all related objects.</p>
 <pre><code class="hljs js">blog.clearArticles();</code></pre>
 
+<h3 id="methods-hasone"><code>#hasOne([model], [options])</code></h3>
+<p>A has-one relationship adds the following properties and methods:</p>
+<p><code>association</code> is a placeholder for the name of the belongs-to relation being
+defined. If the name of the relation was <code>account</code>, i.e.
+<code>Model.reopen({ account: db.hasOne() })</code>, then <code>fetchAccount</code> would be one of
+the methods added to <code>Model</code>.</p>
+<ul>
+<li><a href="#methods-hasone-association"><code>association</code></a></li>
+<li><a href="#methods-hasone-createassociation"><code>createAssociation()</code></a></li>
+<li><a href="#methods-hasone-fetchassociation"><code>fetchAssociation()</code></a></li>
+</ul>
+<h4 id="methods-hasone-options">Options</h4>
+<p>If the property name does not match the name of the related model, pass the
+model name as the first argument. For instance to associate <code>Supplier</code>
+and <code>Account</code> through the relation name <code>accountDetails</code>:</p>
+<pre><code class="hljs js">Supplier.reopen({
+  accountDetails: db.hasMany(<span class="hljs-string">&apos;account&apos;</span>)
+})</code></pre>
+
+<p><code>hasOne</code> accepts the following options:</p>
+<ul>
+<li><code>inverse</code> The name of the inverse relationship. The default is to determine
+the inverse from the model name. The above example would have an inverse of
+<code>supplier</code>.</li>
+<li><code>primaryKey</code> The name of the primary key in the relationship. This defaults
+to <code>pk</code>.</li>
+<li><code>foreignKey</code> The name of the foreign key in the relationship. This defaults
+to the foreign key defined on the inverse relationship or <code>&lt;inverse&gt;Id</code> if no
+inverse is defined. The above example would have a default of <code>supplierId</code>.</li>
+<li><code>through</code> Specify the name of a relationship through which this collection is
+accessed.</li>
+<li><code>source</code> When using <code>through</code> this is the name of the relationship on the
+destination model. The default value is the name of the attribute for the
+relationship.</li>
+</ul>
+<h4 id="methods-hasone-association"><code>#association=</code></h4>
+<p>Access the relation. This will throw an error if the relation has not yet been
+loaded. Load the association before accessing it using
+<a href="/guides/queries/#relationships-with"><code>with</code></a> or via
+<a href="#methods-hasone-fetchassociation"><code>fetchAssociation</code></a>.</p>
+<p>This property is also a setter used to alter the relationship. The changes will
+remain in memory until <a href="/guides/models/#methods-properties-save">saved</a>:</p>
+<h4 id="methods-hasone-createassociation"><code>#createAssociation([attrs])</code></h4>
+<p>Create a new object of the relationship type and sets it as the related value.</p>
+<h4 id="methods-hasone-fetchassociation"><code>#fetchAssociation()</code></h4>
+<p>Fetch the associated object.</p>
+<p>Once fetched, the value will also be accessible via the
+<a href="#methods-hasone-association"><code>association</code></a> property.</p>
 
 
 </div>
